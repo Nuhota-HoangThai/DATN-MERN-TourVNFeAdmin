@@ -7,6 +7,21 @@ const ListOrder = () => {
   const [error, setError] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState({});
 
+  const formatDateVN = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // JavaScript months are 0-based.
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const formatOrderId = (id) => {
+    // Kiểm tra nếu id không đủ dài, trả về nguyên vẹn
+    if (id.length <= 8) return id;
+    // Lấy 5 ký tự đầu và 3 ký tự cuối
+    return `${id.substring(0, 5)}...${id.substring(id.length - 3)}`;
+  };
+
   const toggleDropdown = (orderId) => {
     setDropdownOpen((prev) => ({ ...prev, [orderId]: !prev[orderId] }));
   };
@@ -47,7 +62,7 @@ const ListOrder = () => {
   };
 
   if (loading) {
-    return <div className="text-center mt-5">Loading orders...</div>;
+    return <div className="text-center mt-5">Đang tải trang...</div>;
   }
 
   if (error) {
@@ -92,27 +107,38 @@ const ListOrder = () => {
         Danh sách đặt tour
       </h2>
       {orders.length > 0 ? (
-        <div className="overflow-x-auto rounded-xl">
-          <table className="min-w-full table-auto ">
+        <div className="overflow-x-auto rounded-xl  max-h-[550px] overflow-y-auto">
+          <table className="min-w-full table-auto">
             <thead className="bg-gray-800 text-white ">
               <tr>
-                <th className="px-4 py-2 text-left">Mã đặt</th>
-                <th className="px-4 py-2 text-left">Khách hàng</th>
+                <th className="px-4 py-2 text-left ">Mã đặt</th>
+                <th className="px-4 py-2 text-left">Ngày đặt</th>
+                <th className="px-4 py-2 text-left">Khách đặt</th>
                 <th className="px-4 py-2 text-left">Tour</th>
                 <th className="px-4 py-2 text-left">Trạng thái</th>
                 <th className="px-4 py-2 text-left">Hành động</th>
+                <th className="px-4 py-2 text-left">Xóa đơn</th>
               </tr>
             </thead>
             <tbody className="bg-white ">
               {orders.map((order) => (
-                <tr key={order._id} className="border-b">
-                  <td className="px-4 py-2">{order._id}</td>
-                  <td className="px-4 py-2">{order.user?.name || "N/A"}</td>
-                  <td className="px-4 py-2">{order.tour?.name || "N/A"}</td>
-                  <td className={`px-4 py-2 ${getStatusStyle(order.status)}`}>
+                <tr key={order._id} className="border-x border-b ">
+                  <td className="px-4 py-2 border-x">
+                    {formatOrderId(order._id)}
+                  </td>
+                  <td className="px-4 py-2 border-x">
+                    {formatDateVN(order.orderDate)}
+                  </td>
+                  <td className="px-4 py-2 border-x">
+                    {order.user?.name || "N/A"}
+                  </td>
+                  <td className="px-4 py-2 border-x">
+                    {order.tour?.nameTour || "N/A"}
+                  </td>
+                  <td className={`border-x ${getStatusStyle(order.status)}`}>
                     {order.status}
                   </td>
-                  <td className="px-4 py-2 flex justify-around items-center relative">
+                  <td className="border-x px-4 py-2 flex justify-center items-center relative">
                     {order.status !== "completed" && (
                       <>
                         <button
@@ -168,6 +194,7 @@ const ListOrder = () => {
                       </>
                     )}
                   </td>
+                  <td className="border-x px-4 py-2">Xóa</td>
                 </tr>
               ))}
             </tbody>

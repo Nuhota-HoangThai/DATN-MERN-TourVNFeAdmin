@@ -10,6 +10,7 @@ const ProfileUser = () => {
     phone: "",
     email: "",
     address: "",
+    role: "",
   });
 
   const fetchInfo = async () => {
@@ -32,6 +33,7 @@ const ProfileUser = () => {
       phone: user.phone,
       email: user.email,
       address: user.address,
+      role: user.role,
     });
   };
 
@@ -76,6 +78,7 @@ const ProfileUser = () => {
         phone: "",
         email: "",
         address: "",
+        role: "",
       });
     } catch (error) {
       console.error("Error updating user:", error);
@@ -102,6 +105,9 @@ const ProfileUser = () => {
                 Địa chỉ
               </th>
               <th scope="col" className="py-3 px-6">
+                Vai trò
+              </th>
+              <th scope="col" className="py-3 px-6">
                 Cập nhật
               </th>
               <th scope="col" className="py-3 px-6">
@@ -111,10 +117,7 @@ const ProfileUser = () => {
           </thead>
           <tbody>
             {allUsers.map((user) => (
-              <tr
-                key={user._id}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-              >
+              <tr key={user._id} className="bg-white border-b  ">
                 {editingId === user._id ? (
                   // Editable inputs
                   <>
@@ -170,6 +173,19 @@ const ProfileUser = () => {
                         }
                       />
                     </td>
+                    <td className="py-4 px-6">
+                      <input
+                        className="input input-bordered w-full"
+                        type="text"
+                        defaultValue={user.role}
+                        onChange={(e) =>
+                          setEditFormData({
+                            ...editFormData,
+                            role: e.target.value,
+                          })
+                        }
+                      />
+                    </td>
                   </>
                 ) : (
                   // Display mode
@@ -178,6 +194,7 @@ const ProfileUser = () => {
                     <td className="py-4 px-6">{user.phone}</td>
                     <td className="py-4 px-6">{user.email}</td>
                     <td className="py-4 px-6">{user.address}</td>
+                    <td className="py-4 px-6">{user.role}</td>
                   </>
                 )}
                 <td className="py-4 px-6">
