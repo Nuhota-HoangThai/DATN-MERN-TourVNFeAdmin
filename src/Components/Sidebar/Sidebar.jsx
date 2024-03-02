@@ -45,7 +45,7 @@ const Sidebar = () => {
             <p className="pl-2">Danh sách đặt hàng </p>
           </div>
         </Link>
-        <Link to={"/profileUser"} className="no-underline">
+        <Link to={"/listUser"} className="no-underline">
           <div className="flex items-center  my-3 mx-5 py-2 pl-8 rounded-lg bg-slate-100 ">
             <PiUserListDuotone />
             <p className="pl-2">Danh sách khách hàng </p>
