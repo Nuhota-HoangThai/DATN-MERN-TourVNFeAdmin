@@ -3,17 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 
-const AddUser = () => {
+const Register = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
+  // Khởi tạo trạng thái ban đầu cho formData
   const [formData, setFormData] = useState({
-    username: "",
+    name: "", // Đổi từ username thành name cho phù hợp với model User
     password: "",
     email: "",
     phone: "",
+    role: "customer", // role giữ nguyên, không cần cartData trong formData
     address: "",
-    role: "customer",
   });
 
   const changeHandler = (e) => {
@@ -24,12 +25,17 @@ const AddUser = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/user/addUser`, formData);
-      setSuccessMessage("Thêm người dùng thành công.");
-      setTimeout(() => {
-        navigate("/listUser");
-      }, 1000); // Redirect after 3 seconds
+      if (response.data.success) {
+        setSuccessMessage("Thêm người dùng thành công.");
+        setTimeout(() => {
+          navigate("/listUser"); // Chuyển hướng người dùng sau khi đăng ký thành công
+        }, 1000);
+      }
     } catch (error) {
-      console.error("Error during registration:", error.response.data);
+      console.error(
+        "Error during registration:",
+        error.response ? error.response.data : "No response from server"
+      );
     }
   };
 
@@ -78,18 +84,6 @@ const AddUser = () => {
           </div>
           <div className="mb-4">
             <input
-              type="address"
-              id="address"
-              name="address"
-              placeholder="Địa chỉ khách hàng hoặc công ty"
-              onChange={changeHandler}
-              value={formData.address}
-              className="mt-1 p-2 w-full border rounded-md"
-            />
-          </div>
-
-          <div className="mb-4">
-            <input
               type="password"
               id="password"
               name="password"
@@ -100,20 +94,25 @@ const AddUser = () => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="role"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Vai trò
-            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              placeholder="Địa chỉ"
+              onChange={changeHandler}
+              value={formData.address}
+              className="mt-1 p-2 w-full border rounded-md"
+            />
+          </div>
+          <div className="mb-4">
             <select
               name="role"
               id="role"
               className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               <option value="customer">Khách hàng</option>
-              <option value="admin">Quản trị viên</option>
               <option value="company">Công ty</option>
+              <option value="admin">Quản trị viên</option>
             </select>
           </div>
           <button
@@ -128,4 +127,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default Register;

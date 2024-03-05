@@ -42,6 +42,7 @@ const UpdateTour = () => {
     fetchTour();
   }, [id]);
   //console.log(previewImage);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
