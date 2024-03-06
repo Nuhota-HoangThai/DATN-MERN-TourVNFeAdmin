@@ -12,7 +12,7 @@ import { LiaThListSolid } from "react-icons/lia";
 
 const Sidebar = () => {
   return (
-    <div className="  bg-white">
+    <div className=" ml-4 my-4 bg-white h-dvh rounded-2xl">
       <h1 className="text-center pt-10 font-bold text-xl">QUẢN TRỊ VIÊN</h1>
       <div className="pt-8">
         <Link to={"/profileAmin"} className="no-underline">
@@ -58,10 +58,10 @@ const Sidebar = () => {
             <p className="pl-2">Thống kê</p>
           </div>
         </Link>
-        <Link to={"/role"} className="no-underline">
+        <Link to={"/typeTour"} className="no-underline">
           <div className="flex items-center  my-3 mx-5 py-2 pl-8 rounded-lg bg-slate-100 ">
             <PiHammerFill />
-            <p className="pl-2">Vai trò</p>
+            <p className="pl-2">Loại tour</p>
           </div>
         </Link>
       </div>

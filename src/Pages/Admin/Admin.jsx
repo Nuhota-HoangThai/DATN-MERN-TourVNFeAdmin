@@ -9,12 +9,12 @@ import ListOrder from "../../Components/ListOrder/ListOrder";
 import ProfileAdmin from "../../Components/ProfileAdmin/ProfileAdmin";
 import AddUser from "../../Components/AddUser/AddUser";
 import Statistical from "../../Components/Statistical/Statistical";
-import Role from "../../Components/Role/Role";
 import HomeAdmin from "./HomeAdmin";
 
 import UpdateTour from "../../Components/UpdateTour/UpdateTour";
 import UpdateUser from "../../Components/UpdateUser/UpdateUser";
 import Login from "./Login";
+import TypeTour from "../../Components/TypeTour/TypeTour";
 
 const Admin = () => {
   return (
@@ -34,11 +34,9 @@ const Admin = () => {
           <Route path="/profileAmin" element={<ProfileAdmin />} />
           <Route path="/addUser" element={<AddUser />} />
           <Route path="/statistical" element={<Statistical />} />
-          <Route path="/role" element={<Role />} />
-
+          <Route path="/typeTour" element={<TypeTour />} />
           <Route path="/update_tour/:id" element={<UpdateTour />} />
           <Route path="/update_user/:id" element={<UpdateUser />} />
-
           <Route path="/loginAdmin" element={<Login />} />
         </Routes>
       </div>
