@@ -24,7 +24,7 @@ const UpdateUser = () => {
         const res = await fetch(`${BASE_URL}/user/getUserById/${id}`);
         const data = await res.json();
         setUserData(data.user);
-        // Ensure data.user.image is properly handled if it's not an array
+
         if (data.user.image && typeof data.user.image === "string") {
           setPreviewImage(`${BASE_URL}/${data.user.image.replace(/\\/g, "/")}`); // Update the state with a single image URL
         }
@@ -38,8 +38,8 @@ const UpdateUser = () => {
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setImage(file); // Lưu trữ file hình ảnh được chọn
-      setPreviewImage(URL.createObjectURL(file)); // Cập nhật URL xem trước cho hình ảnh được chọn
+      setImage(file);
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
