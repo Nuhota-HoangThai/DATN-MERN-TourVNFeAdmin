@@ -29,7 +29,7 @@ const Login = () => {
 
       // Kiểm tra vai trò và chỉ cho phép đăng nhập nếu là admin hoặc công ty
       if (role === "admin" || role === "company") {
-        localStorage.setItem("auth-token", token);
+        localStorage.setItem(import.meta.env.VITE_AUTH_TOKEN, token);
         if (role === "admin") {
           navigate("/admin");
         } else if (role === "company") {
