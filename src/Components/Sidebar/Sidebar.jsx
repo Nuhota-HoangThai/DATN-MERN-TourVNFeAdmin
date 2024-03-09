@@ -15,10 +15,16 @@ const Sidebar = () => {
     <div className=" ml-4 my-4 bg-white h-dvh rounded-2xl">
       <h1 className="text-center pt-10 font-bold text-xl">QUẢN TRỊ VIÊN</h1>
       <div className="pt-8">
-        <Link to={"/profileAmin"} className="no-underline">
+        <Link to={"/addTourType"} className="no-underline">
           <div className="flex items-center  my-3 mx-5 py-2 pl-8 rounded-lg bg-slate-100 ">
             <ImProfile />
-            <p className="pl-2">Thông tin cá nhân </p>
+            <p className="pl-2">Thêm loại tour</p>
+          </div>
+        </Link>
+        <Link to={"/listType"} className="no-underline">
+          <div className="flex items-center  my-3 mx-5 py-2 pl-8 rounded-lg bg-slate-100 ">
+            <ImProfile />
+            <p className="pl-2">Ds Loại Tour</p>
           </div>
         </Link>
         <Link to={"/addTour"} className="no-underline ">

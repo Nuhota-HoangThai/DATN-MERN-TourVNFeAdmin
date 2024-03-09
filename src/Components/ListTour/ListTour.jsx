@@ -11,7 +11,7 @@ const ListTour = () => {
   const formatDateVN = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
-    const month = date.getMonth() + 1; // JavaScript months are 0-based.
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
@@ -21,6 +21,7 @@ const ListTour = () => {
       const res = await fetch(`${BASE_URL}/tour/getAllTours`);
       const data = await res.json();
       setAllTours(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching tours:", error);
     }
@@ -37,7 +38,7 @@ const ListTour = () => {
   const remove_tour = async (id) => {
     try {
       const response = await fetch(`${BASE_URL}/tour/removeTour/${id}`, {
-        method: "DELETE", // Ensure this matches the expected HTTP method in your backend
+        method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -48,7 +49,7 @@ const ListTour = () => {
         throw new Error("Failed to delete the tour");
       }
 
-      await fetchInfo(); // Refresh the list after deletion
+      await fetchInfo();
     } catch (error) {
       console.error("Error removing tour:", error);
     }
@@ -65,6 +66,9 @@ const ListTour = () => {
             <tr>
               <th scope="col" className="px-6 py-3">
                 Hình
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Loại tour
               </th>
               <th scope="col" className="px-6 py-3">
                 Tên chuyến du lịch
@@ -111,6 +115,7 @@ const ListTour = () => {
                     />
                   )}
                 </td>
+                <td className="px-6 py-4">{tour.tourType.typeName || "N/A"}</td>
                 <td className="px-6 py-4">{tour.nameTour}</td>
                 <td className="px-6 py-4">{tour.maxParticipants}</td>
                 <td className="px-6 py-4">{tour.price}</td>

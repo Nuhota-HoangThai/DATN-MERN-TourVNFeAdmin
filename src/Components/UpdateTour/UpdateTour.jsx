@@ -16,10 +16,27 @@ const UpdateTour = () => {
     regions: "",
     startDate: "",
     endDate: "",
+    tourType: "",
   });
 
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState([upload]);
+  const [tourTypes, setTourTypes] = useState([]);
+
+  // Fetch tour types
+  useEffect(() => {
+    const fetchTourTypes = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
+        const data = await response.json();
+        setTourTypes(data.tourTypes);
+      } catch (error) {
+        console.error("Error fetching tour types:", error);
+      }
+    };
+
+    fetchTourTypes();
+  }, []);
 
   useEffect(() => {
     const fetchTour = async () => {
@@ -27,12 +44,12 @@ const UpdateTour = () => {
         const res = await fetch(`${BASE_URL}/tour/getTourById/${id}`);
         const data = await res.json();
         setTourData(data.tour);
-        // Ensure data.tour.image is an array before mapping
+
         if (Array.isArray(data.tour.image)) {
           const imagesUrls = data.tour.image.map(
             (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`
           );
-          setPreviewImage(imagesUrls); // Correctly update the state here
+          setPreviewImage(imagesUrls);
         }
       } catch (error) {
         console.error("Error fetching tour:", error);
@@ -125,6 +142,25 @@ const UpdateTour = () => {
           />
         </div>
 
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Loại tour
+          </label>
+          <select
+            className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 rounded-md"
+            value={tourData.tourType}
+            onChange={(e) =>
+              setTourData({ ...tourData, tourType: e.target.value })
+            }
+          >
+            <option value="">Chọn loại tour</option>
+            {tourTypes.map((type) => (
+              <option key={type._id} value={type._id}>
+                {type.typeName}
+              </option>
+            ))}
+          </select>
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Tên tour
