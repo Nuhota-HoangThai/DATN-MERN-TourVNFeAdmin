@@ -51,7 +51,6 @@ const AddTour = () => {
   };
 
   useEffect(() => {
-    // Reuse the fetching logic from TourTypesList or create a custom hook
     const fetchTourTypes = async () => {
       try {
         const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
@@ -68,13 +67,14 @@ const AddTour = () => {
   // Cài đặt cho Slider
   const sliderSettings = {
     dots: true,
-    infinite: true, // Đặt là true nếu bạn muốn Slider lặp lại khi chạy hết các hình
+    infinite: true,
     speed: 500,
-    slidesToShow: 1, // Hiển thị 1 hình ảnh tại một thời điểm
-    slidesToScroll: 1, // Di chuyển 1 hình ảnh khi scroll hoặc nhấn nút
+    slidesToShow: 1,
+    slidesToScroll: 1,
     initialSlide: 0,
     autoplay: true,
     autoplaySpeed: 1500,
+    arrows: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -83,6 +83,7 @@ const AddTour = () => {
           slidesToScroll: 1,
           infinite: true,
           dots: true,
+          arrows: false,
         },
       },
       {
@@ -91,6 +92,7 @@ const AddTour = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 1,
+          arrows: false,
         },
       },
       {
@@ -98,6 +100,7 @@ const AddTour = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          arrows: false,
         },
       },
     ],
@@ -111,7 +114,7 @@ const AddTour = () => {
         }}
       >
         <div className="max-w-screen-lg mx-auto p-6 bg-gray-100 my-5 shadow-md rounded-lg ">
-          <h1 className="text-2xl font-bold  text-center">
+          <h1 className="text-2xl font-bold mb-10 text-center">
             Thêm chuyến du lịch
           </h1>
           <div className="grid grid-cols-2">
@@ -251,15 +254,16 @@ const AddTour = () => {
               <div className="mb-4 text-center ">
                 <label htmlFor="file-input" className="cursor-pointer my-2 ">
                   {images.length > 0 ? (
-                    <Slider {...sliderSettings} className="mx-5">
+                    <Slider {...sliderSettings} className="mx-5 ">
                       {images.map((image, index) => {
                         if (image instanceof Blob) {
                           const imageUrl = URL.createObjectURL(image);
                           return (
                             <div key={index} className="">
                               <img
+                                className="rounded-full"
                                 src={imageUrl}
-                                alt={`Preview ${index}`}
+                                alt="Hình ảnh địa điểm "
                                 onLoad={() => URL.revokeObjectURL(imageUrl)}
                                 style={{
                                   width: "100%",
