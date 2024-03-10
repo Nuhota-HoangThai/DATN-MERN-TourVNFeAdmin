@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 
 import defaultImage from "../../assets/images/logoicon.png";
-import { CgUserAdd } from "react-icons/cg";
 import { MdClear } from "react-icons/md";
 
 const ListUser = () => {
@@ -62,16 +61,17 @@ const ListUser = () => {
 
   return (
     <div className="w-full px-5 py-4">
-      <h1 className="text-2xl font-bold mb-6">Thông tin khách hàng</h1>
-      <Link to={"/addUser"} className="no-underline">
-        <div className="flex items-center  my-3 mx-5 py-2 pl-8 rounded-lg bg-slate-100 ">
-          <CgUserAdd />
+      <h1 className="text-2xl font-bold my-3 text-center">
+        Thông tin khách hàng
+      </h1>
+      <Link to={"/addUser"} className="no-underline flex justify-end">
+        <div className="flex items-center justify-center my-3 w-48 py-2 rounded-lg bg-blue-950 text-white">
           <p className="pl-2">Thêm người dùng</p>
         </div>
       </Link>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-black">
-          <thead className="text-xs text-white uppercase bg-gray-800">
+        <table className="w-full text-sm text-left ">
+          <thead className="text-xs text-white uppercase bg-blue-950">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Hình
@@ -93,6 +93,9 @@ const ListUser = () => {
               </th>
               <th scope="col" className="py-3 px-6">
                 Hành động
+              </th>
+              <th scope="col" className="py-3 px-6">
+                Xóa
               </th>
             </tr>
           </thead>
@@ -125,13 +128,16 @@ const ListUser = () => {
                 <td className="py-4 px-6">{user.email}</td>
                 <td className="py-4 px-6">{user.address}</td>
                 <td className="py-4 px-6">{translateRole(user.role)}</td>
-                <td className="py-4 px-6 flex justify-around">
+                <td className="py-4 px-6  ">
                   <button
-                    className="btn btn-secondary btn-sm"
+                    className="py-4 px-6"
                     onClick={() => navigate(`/update_user/${user._id}`)}
                   >
                     Sửa
                   </button>
+                </td>
+                <td className="py-4 px-6 ">
+                  {" "}
                   <MdClear
                     onClick={() => remove_user(user._id)}
                     className="cursor-pointer text-red-500 hover:text-red-700"

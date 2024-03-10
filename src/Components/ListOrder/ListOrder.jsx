@@ -46,6 +46,16 @@ const ListOrder = () => {
     fetchOrders();
   }, []);
 
+  const translateStatus = (status) => {
+    const statusTranslations = {
+      pending: "Chờ xử lý",
+      confirmed: "Đã xác nhận",
+      cancelled: "Đã hủy",
+      completed: "Hoàn thành",
+    };
+    return statusTranslations[status] || "N/A";
+  };
+
   const getStatusStyle = (status) => {
     switch (status) {
       case "pending":
@@ -102,7 +112,7 @@ const ListOrder = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div className="max-w-6xl mx-auto mt-10">
       <h2 className="text-2xl font-semibold text-center mb-6">
         Danh sách đặt tour
       </h2>
@@ -135,8 +145,12 @@ const ListOrder = () => {
                   <td className="px-4 py-2 border-x">
                     {order.tour?.nameTour || "N/A"}
                   </td>
-                  <td className={`border-x ${getStatusStyle(order.status)}`}>
-                    {order.status}
+                  <td
+                    className={`border-x px-4 py-2 ${getStatusStyle(
+                      order.status
+                    )}`}
+                  >
+                    {translateStatus(order.status)}
                   </td>
                   <td className="border-x px-4 py-2 flex justify-center items-center relative">
                     {order.status !== "completed" && (

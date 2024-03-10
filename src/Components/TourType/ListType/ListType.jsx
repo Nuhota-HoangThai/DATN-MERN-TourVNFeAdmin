@@ -4,8 +4,6 @@ import { BASE_URL } from "../../../utils/config";
 import ToursList from "../../TourType/ToursList/ToursList";
 import { Link } from "react-router-dom";
 
-import { ImProfile } from "react-icons/im";
-
 function TourTypesList() {
   const [tourTypes, setTourTypes] = useState([]);
   const [selectedTourTypeId, setSelectedTourTypeId] = useState("");
@@ -37,11 +35,10 @@ function TourTypesList() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-5">
+    <div className="max-w-6xl mx-auto p-5">
       <h2 className="text-2xl font-semibold text-center my-3">Loại Tour</h2>
       <Link to={"/addTourType"} className="no-underline flex justify-end">
         <div className="flex items-center justify-center my-3 w-48 py-2 rounded-lg bg-blue-950 text-white">
-          <ImProfile />
           <p className="pl-2">Thêm loại tour</p>
         </div>
       </Link>
