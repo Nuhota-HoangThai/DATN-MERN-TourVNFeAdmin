@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
-import { MdClear } from "react-icons/md";
+
 import defaultImage from "../../assets/images/logoicon.png";
+import { CgUserAdd } from "react-icons/cg";
+import { MdClear } from "react-icons/md";
 
 const ListUser = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -61,6 +63,12 @@ const ListUser = () => {
   return (
     <div className="w-full px-5 py-4">
       <h1 className="text-2xl font-bold mb-6">Thông tin khách hàng</h1>
+      <Link to={"/addUser"} className="no-underline">
+        <div className="flex items-center  my-3 mx-5 py-2 pl-8 rounded-lg bg-slate-100 ">
+          <CgUserAdd />
+          <p className="pl-2">Thêm người dùng</p>
+        </div>
+      </Link>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-black">
           <thead className="text-xs text-white uppercase bg-gray-800">

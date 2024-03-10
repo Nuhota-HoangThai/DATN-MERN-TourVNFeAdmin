@@ -109,7 +109,7 @@ const ListOrder = () => {
       {orders.length > 0 ? (
         <div className="overflow-x-auto rounded-xl  max-h-[550px] overflow-y-auto">
           <table className="min-w-full table-auto">
-            <thead className="bg-gray-800 text-white ">
+            <thead className="bg-blue-950 text-white ">
               <tr>
                 <th className="px-4 py-2 text-left ">Mã đặt</th>
                 <th className="px-4 py-2 text-left">Ngày đặt</th>

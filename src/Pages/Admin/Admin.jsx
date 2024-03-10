@@ -20,14 +20,14 @@ import ListType from "../../Components/TourType/ListType/ListType";
 
 const Admin = () => {
   return (
-    <div className="grid grid-cols-5 gap-4 ">
-      <div className=" col-span-1 h-full w-full">
+    <div className="grid grid-cols-5 gap-1">
+      <div className=" col-span-1 w-full">
         <Sidebar />
       </div>
 
       <div className="col-span-4">
         <Routes>
-          <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/" element={<HomeAdmin />} />
           <Route path="/lisTour" element={<ListTour />} />
           <Route path="/addTour" element={<AddTour />} />
           <Route path="/listTour" element={<ListTour />} />
@@ -36,7 +36,7 @@ const Admin = () => {
           <Route path="/profileAmin" element={<ProfileAdmin />} />
           <Route path="/addUser" element={<AddUser />} />
           <Route path="/statistical" element={<Statistical />} />
-          {/* <Route path="/addTypeTour" element={<AddTourType />} /> */}
+
           <Route path="/update_tour/:id" element={<UpdateTour />} />
           <Route path="/update_user/:id" element={<UpdateUser />} />
           <Route path="/loginAdmin" element={<Login />} />

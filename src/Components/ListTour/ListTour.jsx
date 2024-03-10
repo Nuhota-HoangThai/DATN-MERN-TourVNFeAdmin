@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+
 import { MdClear } from "react-icons/md";
+import { TiShoppingCart } from "react-icons/ti";
 
 const ListTour = () => {
   const navigate = useNavigate();
@@ -56,13 +58,19 @@ const ListTour = () => {
   };
 
   return (
-    <div className="w-full  p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">
+    <div className="w-full p-4">
+      <h1 className="text-2xl font-bold my-3 text-center">
         Tất cả danh mục Chuyến du lịch
       </h1>
+      <Link to={"/addTour"} className="no-underline flex justify-end ">
+        <div className="flex items-center justify-center my-3 w-48 py-2 rounded-lg bg-blue-950 text-white">
+          <TiShoppingCart />
+          <p className="pl-2">Thêm tour</p>
+        </div>
+      </Link>
       <div className="overflow-x-auto rounded-xl  max-h-[580px] overflow-y-auto">
         <table className="min-w-full table-auto text-sm text-left">
-          <thead className="text-xs text-white uppercase bg-gray-800">
+          <thead className="text-xs text-white uppercase bg-blue-950">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Hình
