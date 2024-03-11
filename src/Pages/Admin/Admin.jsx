@@ -17,6 +17,7 @@ import Login from "./Login";
 
 import AddTourType from "../../Components/TourType/AddTourType/AddTourType";
 import ListType from "../../Components/TourType/ListType/ListType";
+import UpdateTourType from "../../Components/TourType/UpdateTourType/UpdateTourType";
 
 const Admin = () => {
   return (
@@ -42,6 +43,7 @@ const Admin = () => {
           <Route path="/loginAdmin" element={<Login />} />
           <Route path="/addTourType" element={<AddTourType />} />
           <Route path="/listType" element={<ListType />} />
+          <Route path="/updateTourType/:id" element={<UpdateTourType />} />
         </Routes>
       </div>
     </div>
