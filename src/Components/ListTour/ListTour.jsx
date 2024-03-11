@@ -56,6 +56,19 @@ const ListTour = () => {
     }
   };
 
+  const formatRegion = (region) => {
+    switch (region) {
+      case "mn":
+        return "Miền Nam";
+      case "mb":
+        return "Miền Bắc";
+      case "mt":
+        return "Miền Trung";
+      default:
+        return "Không xác định";
+    }
+  };
+
   return (
     <div className="w-full p-4">
       <h1 className="text-2xl font-bold my-3 text-center">Danh sách tour</h1>
@@ -68,9 +81,9 @@ const ListTour = () => {
         <table className="min-w-full table-auto text-sm text-left">
           <thead className="text-xs text-white uppercase bg-blue-950">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              {/* <th scope="col" className="px-6 py-3">
                 Hình
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 Loại tour
               </th>
@@ -106,7 +119,7 @@ const ListTour = () => {
           <tbody>
             {allTours.map((tour) => (
               <tr key={tour._id} className="bg-white border-b">
-                <td className="px-6 py-4">
+                {/* <td className="px-6 py-4">
                   {Array.isArray(tour.image) ? (
                     <img
                       src={BASE_URL + "/" + tour.image[0].replace(/\\/g, "/")}
@@ -120,15 +133,26 @@ const ListTour = () => {
                       className="w-24"
                     />
                   )}
-                </td>
+                </td> */}
                 <td className="px-6 py-4">{tour.tourType.typeName || "N/A"}</td>
                 <td className="px-6 py-4">{tour.nameTour}</td>
                 <td className="px-6 py-4">{tour.maxParticipants}</td>
                 <td className="px-6 py-4">{tour.price}</td>
-                <td className="px-6 py-4">{tour.regions}</td>
+                <td className="px-6 py-4">{formatRegion(tour.regions)}</td>
                 <td className="px-6 py-4">{formatDateVN(tour.startDate)}</td>
                 <td className="px-6 py-4">{formatDateVN(tour.endDate)}</td>
-                <td className="px-6 py-4">{tour.description}</td>
+                <td className="px-6 py-4">
+                  <div
+                    style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: "200px",
+                    }}
+                  >
+                    {tour.description}
+                  </div>
+                </td>
                 <td className="px-6 py-4 ">
                   <button
                     className="btn btn-secondary btn-sm"
