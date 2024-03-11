@@ -229,9 +229,9 @@ const AddTour = () => {
                   id="regions"
                   className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 >
-                  <option value="miền Bắc">Miền Bắc</option>
-                  <option value="miền Trung">Miền Trung</option>
-                  <option value="miền Nam">Miền Nam</option>
+                  <option value="mb">Miền Bắc</option>
+                  <option value="mt">Miền Trung</option>
+                  <option value="mn">Miền Nam</option>
                 </select>
               </div>
               <div className="mb-4">
