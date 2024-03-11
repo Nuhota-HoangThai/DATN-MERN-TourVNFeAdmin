@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
 
+import { MdClear } from "react-icons/md";
+
 const ListOrder = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +12,7 @@ const ListOrder = () => {
   const formatDateVN = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
-    const month = date.getMonth() + 1; // JavaScript months are 0-based.
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
@@ -26,25 +28,45 @@ const ListOrder = () => {
     setDropdownOpen((prev) => ({ ...prev, [orderId]: !prev[orderId] }));
   };
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/order/listOrders`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setOrders(data);
-      } catch (error) {
-        console.error("There was a problem with fetching orders:", error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/order/listOrders`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error("There was a problem with fetching orders:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchOrders();
   }, []);
+
+  const remove_order = async (id) => {
+    try {
+      const response = await fetch(`${BASE_URL}/order/removeOrder/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete the order");
+      }
+
+      await fetchOrders();
+    } catch (error) {
+      console.error("Error removing order:", error);
+    }
+  };
 
   const translateStatus = (status) => {
     const statusTranslations = {
@@ -208,7 +230,12 @@ const ListOrder = () => {
                       </>
                     )}
                   </td>
-                  <td className="border-x px-4 py-2">Xóa</td>
+                  <td className="border-x px-4 py-2">
+                    <MdClear
+                      onClick={() => remove_order(order._id)}
+                      className="cursor-pointer text-red-500 hover:text-red-700"
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
