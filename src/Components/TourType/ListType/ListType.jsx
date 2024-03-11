@@ -39,7 +39,7 @@ function TourTypesList() {
     if (window.confirm("Bạn có chắc muốn xóa loại tour này?")) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/tourType/${id}`, {
+        const response = await fetch(`${BASE_URL}/tourType/deleteType/${id}`, {
           method: "DELETE",
         });
         if (!response.ok) throw new Error("Xóa thất bại!");
