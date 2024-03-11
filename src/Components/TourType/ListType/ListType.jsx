@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
 import ToursList from "../../TourType/ToursList/ToursList";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function TourTypesList() {
   const [tourTypes, setTourTypes] = useState([]);
   const [selectedTourTypeId, setSelectedTourTypeId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const fetchTourTypes = async () => {
     setIsLoading(true);
@@ -32,6 +33,28 @@ function TourTypesList() {
 
   const selectTourType = (id) => {
     setSelectedTourTypeId(id);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Bạn có chắc muốn xóa loại tour này?")) {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${BASE_URL}/tourType/${id}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) throw new Error("Xóa thất bại!");
+
+        fetchTourTypes();
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const handleUpdate = (id) => {
+    navigate(`/updateTourType/${id}`); // Corrected usage
   };
 
   return (
@@ -64,20 +87,50 @@ function TourTypesList() {
               >
                 Mô tả
               </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs uppercase tracking-wider"
+              >
+                Cập nhật
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs uppercase tracking-wider"
+              >
+                Xóa
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {tourTypes.map((tourType) => (
               <tr
                 key={tourType._id}
-                onClick={() => selectTourType(tourType._id)}
                 className="hover:bg-gray-50 cursor-pointer"
               >
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td
+                  onClick={() => selectTourType(tourType._id)}
+                  className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
                   {tourType.typeName}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {tourType.description}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button
+                    onClick={() => handleUpdate(tourType._id)}
+                    className=""
+                  >
+                    Cập nhật
+                  </button>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button
+                    onClick={() => handleDelete(tourType._id)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Xóa
+                  </button>
                 </td>
               </tr>
             ))}
