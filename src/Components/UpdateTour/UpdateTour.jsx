@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 import upload from "../../assets/images/upload.png";
 const UpdateTour = () => {
   const { id } = useParams();
@@ -44,7 +48,7 @@ const UpdateTour = () => {
         const res = await fetch(`${BASE_URL}/tour/getTourById/${id}`);
         const data = await res.json();
         setTourData(data.tour);
-
+        //console.log(data.tour);
         if (Array.isArray(data.tour.image)) {
           const imagesUrls = data.tour.image.map(
             (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
@@ -78,8 +82,8 @@ const UpdateTour = () => {
         method: "PUT",
         body: formData,
       });
-      const data = await response.json(); // Giả sử server trả về JSON
-      console.log(data);
+      const data = await response.json();
+      setTourData(data.tour);
       if (!response.ok) {
         throw new Error("Failed to update tour");
       }
@@ -217,9 +221,9 @@ const UpdateTour = () => {
             }
           >
             <option value="">Chọn miền</option>
-            <option value="Miền Bắc">Miền Bắc</option>
-            <option value="Miền Trung">Miền Trung</option>
-            <option value="Miền Nam">Miền Nam</option>
+            <option value="mb">Miền Bắc</option>
+            <option value="mt">Miền Trung</option>
+            <option value="mn">Miền Nam</option>
           </select>
         </div>
         <div className="grid grid-cols-2  gap-6">
@@ -257,13 +261,11 @@ const UpdateTour = () => {
           <label className="block text-sm font-medium text-gray-700">
             Thông tin chi tiết
           </label>
-          <input
-            placeholder="Nhập thông tin chi tiết tour"
-            className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            type="text"
+          <ReactQuill
+            theme="snow"
             value={tourData.description}
-            onChange={(e) =>
-              setTourData({ ...tourData, description: e.target.value })
+            onChange={(content) =>
+              setTourData({ ...tourData, description: content })
             }
           />
         </div>
