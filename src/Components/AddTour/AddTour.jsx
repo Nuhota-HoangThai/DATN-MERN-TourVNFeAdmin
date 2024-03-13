@@ -5,6 +5,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const AddTour = () => {
   const [images, setImages] = useState([]);
 
@@ -13,6 +16,12 @@ const AddTour = () => {
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  const [description, setDescription] = useState("");
+
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
+  };
 
   const Add_Tour = async (e) => {
     e.preventDefault();
@@ -241,12 +250,9 @@ const AddTour = () => {
                 >
                   Thông tin chi tiết
                 </label>
-                <input
-                  type="text"
-                  name="description"
-                  id="description"
-                  placeholder="Mô tả chi tiết chuyến du lịch"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                <ReactQuill
+                  value={description}
+                  onChange={handleDescriptionChange}
                 />
               </div>
             </div>

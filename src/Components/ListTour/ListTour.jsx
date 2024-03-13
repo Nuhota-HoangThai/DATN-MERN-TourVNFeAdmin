@@ -119,21 +119,6 @@ const ListTour = () => {
           <tbody>
             {allTours.map((tour) => (
               <tr key={tour._id} className="border-b bg-white">
-                {/* <td className="px-6 py-4">
-                  {Array.isArray(tour.image) ? (
-                    <img
-                      src={BASE_URL + "/" + tour.image[0].replace(/\\/g, "/")}
-                      alt=""
-                      className="w-24"
-                    />
-                  ) : (
-                    <img
-                      src={BASE_URL + "/" + tour.image.replace(/\\/g, "/")}
-                      alt=""
-                      className="w-24"
-                    />
-                  )}
-                </td> */}
                 <td className="px-6 py-4">{tour.tourType.typeName || "N/A"}</td>
                 <td className="px-6 py-4">{tour.nameTour}</td>
                 <td className="px-6 py-4">{tour.maxParticipants}</td>
@@ -143,15 +128,14 @@ const ListTour = () => {
                 <td className="px-6 py-4">{formatDateVN(tour.endDate)}</td>
                 <td className="px-6 py-4">
                   <div
+                    dangerouslySetInnerHTML={{ __html: tour.description }}
                     style={{
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       maxWidth: "200px",
                     }}
-                  >
-                    {tour.description}
-                  </div>
+                  ></div>
                 </td>
                 <td className="px-6 py-4 ">
                   <button
