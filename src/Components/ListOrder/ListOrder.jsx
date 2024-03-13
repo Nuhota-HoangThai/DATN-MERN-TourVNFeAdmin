@@ -30,7 +30,7 @@ const ListOrder = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/order/listOrders`);
+      const response = await fetch(`${BASE_URL}/booking/listBookings`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -50,7 +50,7 @@ const ListOrder = () => {
 
   const remove_order = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/order/removeOrder/${id}`, {
+      const response = await fetch(`${BASE_URL}/booking/removeBooking/${id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
