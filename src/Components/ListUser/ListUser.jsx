@@ -61,47 +61,47 @@ const ListUser = () => {
 
   return (
     <div className="w-full px-5 py-4">
-      <h1 className="text-2xl font-bold my-3 text-center">
+      <h1 className="my-3 text-center text-2xl font-bold">
         Thông tin khách hàng
       </h1>
-      <Link to={"/addUser"} className="no-underline flex justify-end">
-        <div className="flex items-center justify-center my-3 w-48 py-2 rounded-lg bg-blue-950 text-white">
+      <Link to={"/addUser"} className="flex justify-end no-underline">
+        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
           <p className="pl-2">Thêm người dùng</p>
         </div>
       </Link>
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left ">
-          <thead className="text-xs text-white uppercase bg-blue-950">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-left text-sm ">
+          <thead className="bg-blue-950 text-xs uppercase text-white">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Hình
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 Tên
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 SĐT
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 Email
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 Địa chỉ
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 Vai trò
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 Hành động
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="px-6 py-3">
                 Xóa
               </th>
             </tr>
           </thead>
           <tbody>
             {allUsers.map((user) => (
-              <tr key={user._id} className="bg-white border-b">
+              <tr key={user._id} className="border-b bg-white">
                 <td className="px-6 py-4">
                   {Array.isArray(user.image) && user.image.length > 0 ? (
                     <img
@@ -123,20 +123,20 @@ const ListUser = () => {
                     />
                   )}
                 </td>
-                <td className="py-4 px-6">{user.name}</td>
-                <td className="py-4 px-6">{user.phone}</td>
-                <td className="py-4 px-6">{user.email}</td>
-                <td className="py-4 px-6">{user.address}</td>
-                <td className="py-4 px-6">{translateRole(user.role)}</td>
-                <td className="py-4 px-6  ">
+                <td className="px-6 py-4">{user.name}</td>
+                <td className="px-6 py-4">{user.phone}</td>
+                <td className="px-6 py-4">{user.email}</td>
+                <td className="px-6 py-4">{user.address}</td>
+                <td className="px-6 py-4">{translateRole(user.role)}</td>
+                <td className="px-6 py-4  ">
                   <button
-                    className="py-4 px-6"
+                    className="px-6 py-4"
                     onClick={() => navigate(`/update_user/${user._id}`)}
                   >
                     Sửa
                   </button>
                 </td>
-                <td className="py-4 px-6 ">
+                <td className="px-6 py-4 ">
                   {" "}
                   <MdClear
                     onClick={() => remove_user(user._id)}

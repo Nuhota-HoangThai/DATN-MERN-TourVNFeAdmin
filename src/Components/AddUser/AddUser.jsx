@@ -34,19 +34,19 @@ const Register = () => {
     } catch (error) {
       console.error(
         "Error during registration:",
-        error.response ? error.response.data : "No response from server"
+        error.response ? error.response.data : "No response from server",
       );
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center  bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-6 text-red-700">
+    <div className="flex min-h-screen items-center justify-center  bg-gray-100">
+      <div className="w-96 rounded bg-white p-8 shadow-md">
+        <h1 className="mb-6 text-2xl font-bold text-red-700">
           Thêm người dùng mới
         </h1>
         {successMessage && (
-          <div className="text-green-500 mb-4">{successMessage}</div>
+          <div className="mb-4 text-green-500">{successMessage}</div>
         )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -57,7 +57,7 @@ const Register = () => {
               placeholder="Họ tên"
               onChange={changeHandler}
               value={formData.name}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 w-full rounded-md border p-2"
             />
           </div>
           <div className="mb-4">
@@ -68,7 +68,7 @@ const Register = () => {
               placeholder="Số điện thoại"
               onChange={changeHandler}
               value={formData.phone}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 w-full rounded-md border p-2"
             />
           </div>
           <div className="mb-4">
@@ -79,7 +79,7 @@ const Register = () => {
               placeholder="Địa chỉ email"
               onChange={changeHandler}
               value={formData.email}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 w-full rounded-md border p-2"
             />
           </div>
           <div className="mb-4">
@@ -90,7 +90,7 @@ const Register = () => {
               placeholder="Mật khẩu"
               onChange={changeHandler}
               value={formData.password}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 w-full rounded-md border p-2"
             />
           </div>
           <div className="mb-4">
@@ -101,14 +101,14 @@ const Register = () => {
               placeholder="Địa chỉ"
               onChange={changeHandler}
               value={formData.address}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 w-full rounded-md border p-2"
             />
           </div>
           <div className="mb-4">
             <select
               name="role"
               id="role"
-              className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
             >
               <option value="customer">Khách hàng</option>
               <option value="company">Công ty</option>
@@ -117,7 +117,7 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-red-700 text-white p-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full rounded-md bg-red-700 p-2 text-white hover:bg-red-600 focus:border-blue-300 focus:outline-none focus:ring"
           >
             Thêm
           </button>

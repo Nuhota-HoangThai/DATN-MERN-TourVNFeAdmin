@@ -71,15 +71,15 @@ const ListTour = () => {
 
   return (
     <div className="w-full p-4">
-      <h1 className="text-2xl font-bold my-3 text-center">Danh sách tour</h1>
-      <Link to={"/addTour"} className="no-underline flex justify-end ">
-        <div className="flex items-center justify-center my-3 w-48 py-2 rounded-lg bg-blue-950 text-white">
+      <h1 className="my-3 text-center text-2xl font-bold">Danh sách tour</h1>
+      <Link to={"/addTour"} className="flex justify-end no-underline ">
+        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
           <p className="pl-2">Thêm tour</p>
         </div>
       </Link>
-      <div className="overflow-x-auto rounded-xl  max-h-[580px] overflow-y-auto">
-        <table className="min-w-full table-auto text-sm text-left">
-          <thead className="text-xs text-white uppercase bg-blue-950">
+      <div className="max-h-[580px] overflow-x-auto  overflow-y-auto rounded-xl">
+        <table className="min-w-full table-auto text-left text-sm">
+          <thead className="bg-blue-950 text-xs uppercase text-white">
             <tr>
               {/* <th scope="col" className="px-6 py-3">
                 Hình
@@ -118,7 +118,7 @@ const ListTour = () => {
           </thead>
           <tbody>
             {allTours.map((tour) => (
-              <tr key={tour._id} className="bg-white border-b">
+              <tr key={tour._id} className="border-b bg-white">
                 {/* <td className="px-6 py-4">
                   {Array.isArray(tour.image) ? (
                     <img

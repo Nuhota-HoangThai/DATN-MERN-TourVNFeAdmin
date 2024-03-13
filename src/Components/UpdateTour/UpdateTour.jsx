@@ -47,7 +47,7 @@ const UpdateTour = () => {
 
         if (Array.isArray(data.tour.image)) {
           const imagesUrls = data.tour.image.map(
-            (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`
+            (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
           );
           setPreviewImage(imagesUrls);
         }
@@ -95,7 +95,7 @@ const UpdateTour = () => {
       const filesArray = Array.from(e.target.files);
       setImage(filesArray); // Lưu trữ tất cả các file hình ảnh được chọn
       const filesArrayUrls = filesArray.map((file) =>
-        URL.createObjectURL(file)
+        URL.createObjectURL(file),
       );
       setPreviewImage(filesArrayUrls); // Cập nhật các URL xem trước cho tất cả hình ảnh được chọn
     }
@@ -110,11 +110,11 @@ const UpdateTour = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-5 bg-white shadow-lg rounded-lg md:p-8">
-      <h1 className="text-xl font-semibold mb-4">Cập nhật Tour</h1>
+    <div className="mx-auto max-w-4xl rounded-lg bg-white p-5 shadow-lg md:p-8">
+      <h1 className="mb-4 text-xl font-semibold">Cập nhật Tour</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="mb-4 flex justify-center">
-          <label htmlFor="file-input" className="cursor-pointer flex gap-4">
+          <label htmlFor="file-input" className="flex cursor-pointer gap-4">
             {previewImage.length > 0 ? (
               previewImage.map((image, index) => (
                 <img
@@ -147,7 +147,7 @@ const UpdateTour = () => {
             Loại tour
           </label>
           <select
-            className="mt-1 block w-full border border-gray-300 shadow-sm py-2 px-3 rounded-md"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
             value={tourData.tourType}
             onChange={(e) =>
               setTourData({ ...tourData, tourType: e.target.value })
@@ -167,7 +167,7 @@ const UpdateTour = () => {
           </label>
           <input
             placeholder="Nhập tên tour"
-            className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3  focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400"
+            className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             type="text"
             value={tourData.nameTour}
             onChange={(e) =>
@@ -182,7 +182,7 @@ const UpdateTour = () => {
             </label>
             <input
               placeholder="Số chỗ trống"
-              className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400"
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               type="number"
               value={tourData.maxParticipants}
               onChange={(e) =>
@@ -196,7 +196,7 @@ const UpdateTour = () => {
             </label>
             <input
               placeholder="Nhập giá tour"
-              className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400"
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               type="number"
               value={tourData.price}
               onChange={(e) =>
@@ -210,7 +210,7 @@ const UpdateTour = () => {
             Khu vực du lịch
           </label>
           <select
-            className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             value={tourData.regions}
             onChange={(e) =>
               setTourData({ ...tourData, regions: e.target.value })
@@ -230,7 +230,7 @@ const UpdateTour = () => {
             </label>
             <input
               placeholder="Nhập ngày khởi hành"
-              className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400"
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               type="date"
               value={formatDateVN(tourData.startDate)}
               onChange={(e) =>
@@ -244,7 +244,7 @@ const UpdateTour = () => {
             </label>
             <input
               placeholder="Nhập ngày kết thúc"
-              className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400"
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               type="date"
               value={formatDateVN(tourData.endDate)}
               onChange={(e) =>
@@ -259,7 +259,7 @@ const UpdateTour = () => {
           </label>
           <input
             placeholder="Nhập thông tin chi tiết tour"
-            className="mt-1 block w-full border border-gray-800 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400"
+            className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             type="text"
             value={tourData.description}
             onChange={(e) =>
@@ -269,7 +269,7 @@ const UpdateTour = () => {
         </div>
         <button
           type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-150"
+          className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           Cập nhật Tour
         </button>

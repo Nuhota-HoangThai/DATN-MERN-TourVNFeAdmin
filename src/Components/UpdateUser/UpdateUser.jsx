@@ -74,13 +74,13 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="update-user-form max-w-4xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-semibold mb-8 text-center text-blue-900">
+    <div className="update-user-form mx-auto mt-10 max-w-4xl rounded-lg bg-white p-8 shadow-lg">
+      <h1 className="mb-8 text-center text-3xl font-semibold text-blue-900">
         Cập nhật thông tin người dùng
       </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="mb-4 flex justify-center">
-          <label htmlFor="file-input" className="cursor-pointer flex gap-4">
+          <label htmlFor="file-input" className="flex cursor-pointer gap-4">
             <img
               src={previewImage}
               alt="Preview"
@@ -105,7 +105,7 @@ const UpdateUser = () => {
             value={userData.name}
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
             placeholder="Tên"
-            className="input input-bordered w-full p-3 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="flex flex-col">
@@ -120,7 +120,7 @@ const UpdateUser = () => {
               setUserData({ ...userData, phone: e.target.value })
             }
             placeholder="Số điện thoại"
-            className="input input-bordered w-full p-3 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="flex flex-col">
@@ -135,7 +135,7 @@ const UpdateUser = () => {
               setUserData({ ...userData, email: e.target.value })
             }
             placeholder="Email"
-            className="input input-bordered w-full p-3 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="flex flex-col">
@@ -150,7 +150,7 @@ const UpdateUser = () => {
               setUserData({ ...userData, address: e.target.value })
             }
             placeholder="Địa chỉ"
-            className="input input-bordered w-full p-3 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         <div className="flex flex-col">
@@ -162,7 +162,7 @@ const UpdateUser = () => {
             name="role"
             value={userData.role}
             onChange={(e) => setUserData({ ...userData, role: e.target.value })}
-            className="select select-bordered w-full p-3 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            className="select select-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
           >
             <option value="customer">Khách hàng</option>
             <option value="company">Công ty</option>
@@ -171,7 +171,7 @@ const UpdateUser = () => {
         </div>
         <button
           type="submit"
-          className="btn btn-primary w-full py-3 mt-4 bg-blue-900 hover:bg-blue-800 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
+          className="btn btn-primary mt-4 w-full rounded-lg bg-blue-900 py-3 text-center text-base font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2  focus:ring-offset-blue-200"
         >
           Cập nhật
         </button>

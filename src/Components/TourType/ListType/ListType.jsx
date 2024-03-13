@@ -58,22 +58,22 @@ function TourTypesList() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-5">
-      <h2 className="text-2xl font-semibold text-center my-3">Loại Tour</h2>
-      <Link to={"/addTourType"} className="no-underline flex justify-end">
-        <div className="flex items-center justify-center my-3 w-48 py-2 rounded-lg bg-blue-950 text-white">
+    <div className="mx-auto max-w-6xl p-5">
+      <h2 className="my-3 text-center text-2xl font-semibold">Loại Tour</h2>
+      <Link to={"/addTourType"} className="flex justify-end no-underline">
+        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
           <p className="pl-2">Thêm loại tour</p>
         </div>
       </Link>
       {isLoading && (
-        <div className="text-center text-lg font-medium my-4">Đang tải...</div>
+        <div className="my-4 text-center text-lg font-medium">Đang tải...</div>
       )}
       {error && (
-        <div className="text-red-500 text-center my-4">Lỗi: {error}</div>
+        <div className="my-4 text-center text-red-500">Lỗi: {error}</div>
       )}
       {!isLoading && !error && (
-        <table className="min-w-full  shadow overflow-hidden rounded-md">
-          <thead className="bg-blue-950 text-white font-bold">
+        <table className="min-w-full  overflow-hidden rounded-md shadow">
+          <thead className="bg-blue-950 font-bold text-white">
             <tr>
               <th
                 scope="col"
@@ -101,22 +101,22 @@ function TourTypesList() {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="divide-y divide-gray-200 bg-white">
             {tourTypes.map((tourType) => (
               <tr
                 key={tourType._id}
-                className="hover:bg-gray-50 cursor-pointer"
+                className="cursor-pointer hover:bg-gray-50"
               >
                 <td
                   onClick={() => selectTourType(tourType._id)}
-                  className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                  className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
                 >
                   {tourType.typeName}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                   {tourType.description}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                   <button
                     onClick={() => handleUpdate(tourType._id)}
                     className=""
@@ -124,7 +124,7 @@ function TourTypesList() {
                     Cập nhật
                   </button>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                   <button
                     onClick={() => handleDelete(tourType._id)}
                     className="text-red-600 hover:text-red-900"

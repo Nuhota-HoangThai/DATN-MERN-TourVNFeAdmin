@@ -31,7 +31,7 @@ const AddTour = () => {
       .then((resp) => {
         if (!resp.ok) {
           throw new Error(
-            `HTTP error! status: ${resp.status}, statusText: ${resp.statusText}`
+            `HTTP error! status: ${resp.status}, statusText: ${resp.statusText}`,
           );
         }
         return resp.json();
@@ -113,8 +113,8 @@ const AddTour = () => {
           Add_Tour(e);
         }}
       >
-        <div className="max-w-screen-lg mx-auto p-6 bg-gray-100 my-5 shadow-md rounded-lg ">
-          <h1 className="text-2xl font-bold mb-10 text-center">
+        <div className="mx-auto my-5 max-w-screen-lg rounded-lg bg-gray-100 p-6 shadow-md ">
+          <h1 className="mb-10 text-center text-2xl font-bold">
             Thêm chuyến du lịch
           </h1>
           <div className="grid grid-cols-2">
@@ -122,7 +122,7 @@ const AddTour = () => {
               <div className="mb-4">
                 <label
                   htmlFor="tourType"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Loại Tour
                 </label>
@@ -131,7 +131,7 @@ const AddTour = () => {
                   id="tourType"
                   value={selectedTourType}
                   onChange={(e) => setSelectedTourType(e.target.value)}
-                  className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                 >
                   <option value="">Chọn loại tour</option>
                   {tourTypes.map((type) => (
@@ -144,7 +144,7 @@ const AddTour = () => {
               <div className="mb-4">
                 <label
                   htmlFor="nameTour"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Chuyến du lịch
                 </label>
@@ -153,13 +153,13 @@ const AddTour = () => {
                   name="nameTour"
                   id="nameTour"
                   placeholder="Tiêu đề chuyến du lịch"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="price"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Giá/khách
                 </label>
@@ -168,14 +168,14 @@ const AddTour = () => {
                   name="price"
                   id="price"
                   placeholder="Giá"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
 
               <div className="mb-4">
                 <label
                   htmlFor="maxParticipants"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Số lượng khách
                 </label>
@@ -184,13 +184,13 @@ const AddTour = () => {
                   name="maxParticipants"
                   id="maxParticipants"
                   placeholder="Số lượng khách"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="startDate"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Ngày khởi hành
                 </label>
@@ -199,13 +199,13 @@ const AddTour = () => {
                   name="startDate"
                   id="startDate"
                   placeholder="Ngày khởi hành"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="endDate"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Ngày kết thúc
                 </label>
@@ -214,20 +214,20 @@ const AddTour = () => {
                   name="endDate"
                   id="endDate"
                   placeholder="Ngày kết thúc"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="regions"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Khu vực du lịch
                 </label>
                 <select
                   name="regions"
                   id="regions"
-                  className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                 >
                   <option value="mb">Miền Bắc</option>
                   <option value="mt">Miền Trung</option>
@@ -237,7 +237,7 @@ const AddTour = () => {
               <div className="mb-4">
                 <label
                   htmlFor="description"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Thông tin chi tiết
                 </label>
@@ -246,13 +246,13 @@ const AddTour = () => {
                   name="description"
                   id="description"
                   placeholder="Mô tả chi tiết chuyến du lịch"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
             </div>
             <div className="ml-5 ">
               <div className="mb-4 text-center ">
-                <label htmlFor="file-input" className="cursor-pointer my-2 ">
+                <label htmlFor="file-input" className="my-2 cursor-pointer ">
                   {images.length > 0 ? (
                     <Slider {...sliderSettings} className="mx-5 ">
                       {images.map((image, index) => {
@@ -281,7 +281,7 @@ const AddTour = () => {
                     <div className="my-[50%]">
                       <img
                         src={upload}
-                        className="w-20 mx-auto  rounded-full border-4"
+                        className="mx-auto w-20  rounded-full border-4"
                         alt="Upload"
                       />
                       <h1 className="mt-3">Thêm hình ảnh</h1>
@@ -309,7 +309,7 @@ const AddTour = () => {
           {error && <div className="mb-4 text-sm text-red-500">{error}</div>}
           <button
             type="submit"
-            className="w-full bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline w-full rounded bg-blue-900 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
           >
             Thêm
           </button>

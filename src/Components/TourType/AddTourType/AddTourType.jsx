@@ -24,11 +24,11 @@ const AddTourType = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto my-10 bg-white p-8 border border-gray-200 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-center text-gray-800">
+    <div className="mx-auto my-10 max-w-md rounded-lg border border-gray-200 bg-white p-8 shadow-lg">
+      <h2 className="text-center text-2xl font-semibold text-gray-800">
         Thêm loại tour mới
       </h2>
-      {message && <p className="text-center mt-4 text-green-500">{message}</p>}
+      {message && <p className="mt-4 text-center text-green-500">{message}</p>}
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div>
           <label
@@ -43,7 +43,7 @@ const AddTourType = () => {
             value={typeName}
             onChange={(e) => setTypeName(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           />
         </div>
         <div>
@@ -58,12 +58,12 @@ const AddTourType = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           />
         </div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           Thêm loại tour
         </button>

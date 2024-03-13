@@ -12,7 +12,7 @@ const ToursList = ({ tourTypeId }) => {
       setError(null);
       try {
         const response = await fetch(
-          `${BASE_URL}/tour/getTourType/${tourTypeId}`
+          `${BASE_URL}/tour/getTourType/${tourTypeId}`,
         );
         if (!response.ok) throw new Error("Failed to fetch tours");
 
@@ -32,7 +32,7 @@ const ToursList = ({ tourTypeId }) => {
 
   return (
     <div className="tours-list">
-      <h3 className="text-xl font-semibold my-4">Danh sách Tour</h3>
+      <h3 className="my-4 text-xl font-semibold">Danh sách Tour</h3>
       {isLoading && <div>Đang tải...</div>}
       {error && <div className="text-red-500">Lỗi: {error}</div>}
       {!isLoading && !error && tours.length === 0 && (
@@ -43,7 +43,7 @@ const ToursList = ({ tourTypeId }) => {
           {tours.map((tour) => (
             <li
               key={tour._id}
-              className="bg-white shadow overflow-hidden rounded-md px-6 py-4"
+              className="overflow-hidden rounded-md bg-white px-6 py-4 shadow"
             >
               <div className="font-medium text-indigo-600">{tour.nameTour}</div>
               <div className="text-sm text-gray-500">{tour.description}</div>

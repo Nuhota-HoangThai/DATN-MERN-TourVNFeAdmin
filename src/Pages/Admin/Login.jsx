@@ -45,10 +45,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-96">
-        <h1 className="text-2xl font-bold text-red-700 mb-6">ĐĂNG NHẬP</h1>{" "}
-        {loginError && <div className="text-red-500 mb-4">{loginError}</div>}
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="w-96 rounded-lg bg-white p-8 shadow-2xl">
+        <h1 className="mb-6 text-2xl font-bold text-red-700">ĐĂNG NHẬP</h1>{" "}
+        {loginError && <div className="mb-4 text-red-500">{loginError}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
@@ -58,7 +58,7 @@ const Login = () => {
               placeholder="Địa chỉ email"
               onChange={changeHandler}
               value={formData.email}
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md bg-white text-gray-700 focus:border-red-500 focus:ring focus:ring-red-200 transition duration-200" // Adjusted colors for better contrast
+              className="mt-1 w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 transition duration-200 focus:border-red-500 focus:ring focus:ring-red-200" // Adjusted colors for better contrast
             />
           </div>
           <div className="mb-4">
@@ -69,7 +69,7 @@ const Login = () => {
               placeholder="Mật khẩu"
               onChange={changeHandler}
               value={formData.password}
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md bg-white text-gray-700 focus:border-red-500 focus:ring focus:ring-red-200 transition duration-200" // Adjusted colors for better contrast
+              className="mt-1 w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 transition duration-200 focus:border-red-500 focus:ring focus:ring-red-200" // Adjusted colors for better contrast
             />
           </div>
 
@@ -85,7 +85,7 @@ const Login = () => {
               Lưu đăng nhập
             </label>
           </div>
-          <div className="flex justify-between mb-4 text-gray-800">
+          <div className="mb-4 flex justify-between text-gray-800">
             <p>Chưa có tài khoản?</p>
             <Link to="/register" className="underline hover:text-gray-500">
               Đăng ký
@@ -93,7 +93,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-red-700 text-white p-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500 transition duration-200" // Adjusted button colors
+            className="w-full rounded-md bg-red-700 p-2 text-white transition duration-200 hover:bg-red-600 focus:border-red-500 focus:outline-none focus:ring" // Adjusted button colors
           >
             Đăng nhập
           </button>
