@@ -27,7 +27,7 @@ const Sidebar = () => {
         <Link to={"/listOrder"} className="no-underline">
           <div className="mx-5 my-5 flex items-center rounded-lg bg-slate-100 py-2 pl-8 ">
             <IoMdList />
-            <p className="pl-2">Danh sách đặt hàng</p>
+            <p className="pl-2">Danh sách đặt tour</p>
           </div>
         </Link>
         <Link to={"/listUser"} className="no-underline">

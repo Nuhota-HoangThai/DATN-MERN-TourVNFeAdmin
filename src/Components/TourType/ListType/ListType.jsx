@@ -57,87 +57,94 @@ function TourTypesList() {
     navigate(`/updateTourType/${id}`); // Corrected usage
   };
 
+  if (isLoading) {
+    return <div className="mt-5 text-center">Đang tải trang...</div>;
+  }
+
+  if (error) {
+    return <div className="mt-5 text-center text-red-500">Lỗi: {error}</div>;
+  }
+
   return (
     <div className="mx-auto max-w-6xl p-5">
-      <h2 className="my-3 text-center text-2xl font-semibold">Loại Tour</h2>
-      <Link to={"/addTourType"} className="flex justify-end no-underline">
-        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-          <p className="pl-2">Thêm loại tour</p>
-        </div>
-      </Link>
-      {isLoading && (
-        <div className="my-4 text-center text-lg font-medium">Đang tải...</div>
-      )}
-      {error && (
-        <div className="my-4 text-center text-red-500">Lỗi: {error}</div>
-      )}
-      {!isLoading && !error && (
-        <table className="min-w-full  overflow-hidden rounded-md shadow">
-          <thead className="bg-blue-950 font-bold text-white">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
-              >
-                Tên Loại Tour
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
-              >
-                Mô tả
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs uppercase tracking-wider"
-              >
-                Cập nhật
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs uppercase tracking-wider"
-              >
-                Xóa
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {tourTypes.map((tourType) => (
-              <tr
-                key={tourType._id}
-                className="cursor-pointer hover:bg-gray-50"
-              >
-                <td
-                  onClick={() => selectTourType(tourType._id)}
-                  className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+      <h2 className="my-3 text-center text-2xl  font-bold">Loại Tour</h2>
+      {tourTypes.length > 0 ? (
+        <div>
+          <Link to={"/addTourType"} className="flex justify-end no-underline">
+            <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+              <p className="pl-2">Thêm loại tour</p>
+            </div>
+          </Link>
+          <table className="min-w-full  overflow-hidden rounded-md shadow">
+            <thead className="bg-blue-950 font-bold text-white">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
                 >
-                  {tourType.typeName}
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                  {tourType.description}
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                  <button
-                    onClick={() => handleUpdate(tourType._id)}
-                    className=""
-                  >
-                    Cập nhật
-                  </button>
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                  <button
-                    onClick={() => handleDelete(tourType._id)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    Xóa
-                  </button>
-                </td>
+                  Tên Loại Tour
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
+                >
+                  Mô tả
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs uppercase tracking-wider"
+                >
+                  Cập nhật
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs uppercase tracking-wider"
+                >
+                  Xóa
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {tourTypes.map((tourType) => (
+                <tr
+                  key={tourType._id}
+                  className="cursor-pointer hover:bg-gray-50"
+                >
+                  <td
+                    onClick={() => selectTourType(tourType._id)}
+                    className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+                  >
+                    {tourType.typeName}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                    {tourType.description}
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                    <button
+                      onClick={() => handleUpdate(tourType._id)}
+                      className=""
+                    >
+                      Cập nhật
+                    </button>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                    <button
+                      onClick={() => handleDelete(tourType._id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      Xóa
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {selectedTourTypeId && <ToursList tourTypeId={selectedTourTypeId} />}
+        </div>
+      ) : (
+        <p className="mt-5 text-center">Không có loại tour nào!!!</p>
       )}
-      {selectedTourTypeId && <ToursList tourTypeId={selectedTourTypeId} />}
     </div>
   );
 }

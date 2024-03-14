@@ -135,7 +135,7 @@ const ListOrder = () => {
 
   return (
     <div className="mx-auto mt-10 max-w-6xl">
-      <h2 className="mb-6 text-center text-2xl font-semibold">
+      <h2 className="mb-6 text-center text-2xl font-bold">
         Danh sách đặt tour
       </h2>
       {bookings.length > 0 ? (
@@ -159,7 +159,7 @@ const ListOrder = () => {
                     {formatOrderId(booking._id)}
                   </td>
                   <td className="border-x px-4 py-2">
-                    {formatDateVN(booking.orderDate)}
+                    {formatDateVN(booking.bookingDate)}
                   </td>
                   <td className="border-x px-4 py-2">
                     {booking.user?.name || "N/A"}
