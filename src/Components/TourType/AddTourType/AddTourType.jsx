@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/config";
 
@@ -6,6 +7,7 @@ const AddTourType = () => {
   const [typeName, setTypeName] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ const AddTourType = () => {
       setMessage(response.data.message);
       setTypeName("");
       setDescription("");
+      navigate("/listType");
     } catch (error) {
       setMessage(error.response.data.message || "Lỗi tạo loại tour");
     }

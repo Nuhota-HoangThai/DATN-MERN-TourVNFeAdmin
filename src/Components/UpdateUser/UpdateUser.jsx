@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import upload from "../../assets/images/upload.png";
@@ -167,6 +167,7 @@ const UpdateUser = () => {
             <option value="customer">Khách hàng</option>
             <option value="company">Công ty</option>
             <option value="admin">Quản trị viên</option>
+            <option value="guide">Hướng dẫn viên</option>
           </select>
         </div>
         <button

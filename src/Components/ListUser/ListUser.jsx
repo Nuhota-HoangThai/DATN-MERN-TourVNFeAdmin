@@ -48,6 +48,7 @@ const ListUser = () => {
       admin: "Quản trị viên",
       customer: "Khách hàng",
       company: "Công ty",
+      guide: "Hướng dẫn viên",
     };
 
     return roleTranslations[role] || role;
@@ -55,7 +56,7 @@ const ListUser = () => {
 
   // Hàm sắp xếp người dùng theo vai trò
   const sortUsersByRole = (a, b) => {
-    const order = { admin: 1, company: 2, customer: 3 }; // Định nghĩa thứ tự ưu tiên
+    const order = { admin: 1, company: 2, guide: 3, customer: 4 }; // Định nghĩa thứ tự ưu tiên
     return order[a.role] - order[b.role];
   };
 
@@ -64,13 +65,13 @@ const ListUser = () => {
       <h1 className="my-3 text-center text-2xl font-bold">
         Thông tin khách hàng
       </h1>
+      <Link to={"/addUser"} className="flex justify-center no-underline">
+        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+          <p className="pl-2">Thêm người dùng</p>
+        </div>
+      </Link>
       {allUsers.length > 0 ? (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <Link to={"/addUser"} className="flex justify-end no-underline">
-            <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-              <p className="pl-2">Thêm người dùng</p>
-            </div>
-          </Link>
           <table className="w-full text-left text-sm ">
             <thead className="bg-blue-950 text-xs uppercase text-white">
               <tr>

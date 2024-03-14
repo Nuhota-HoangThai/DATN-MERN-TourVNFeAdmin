@@ -72,13 +72,13 @@ const ListTour = () => {
   return (
     <div className="w-full p-4">
       <h1 className="my-3 text-center text-2xl font-bold">Danh sách tour</h1>
+      <Link to={"/addTour"} className="flex justify-center no-underline ">
+        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+          <p className="pl-2">Thêm tour</p>
+        </div>
+      </Link>
       {allTours.length > 0 ? (
         <div className="max-h-[580px] overflow-x-auto  overflow-y-auto rounded-xl">
-          <Link to={"/addTour"} className="flex justify-end no-underline ">
-            <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-              <p className="pl-2">Thêm tour</p>
-            </div>
-          </Link>
           <table className="min-w-full table-auto text-left text-sm">
             <thead className="bg-blue-950 text-xs uppercase text-white">
               <tr>

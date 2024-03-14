@@ -113,6 +113,7 @@ const Register = () => {
               <option value="customer">Khách hàng</option>
               <option value="company">Công ty</option>
               <option value="admin">Quản trị viên</option>
+              <option value="guide">Hướng dẫn viên</option>
             </select>
           </div>
           <button

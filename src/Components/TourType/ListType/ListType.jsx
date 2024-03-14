@@ -68,15 +68,15 @@ function TourTypesList() {
   return (
     <div className="mx-auto max-w-6xl p-5">
       <h2 className="my-3 text-center text-2xl  font-bold">Loại Tour</h2>
+      <Link to={"/addTourType"} className="flex justify-center no-underline">
+        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+          <p className="pl-2">Thêm loại tour</p>
+        </div>
+      </Link>
       {tourTypes.length > 0 ? (
         <div>
-          <Link to={"/addTourType"} className="flex justify-end no-underline">
-            <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-              <p className="pl-2">Thêm loại tour</p>
-            </div>
-          </Link>
-          <table className="min-w-full  overflow-hidden rounded-md shadow">
-            <thead className="bg-blue-950 font-bold text-white">
+          <table className="  min-w-full overflow-hidden rounded-md  shadow">
+            <thead className=" bg-blue-950 font-bold text-white ">
               <tr>
                 <th
                   scope="col"
@@ -104,22 +104,30 @@ function TourTypesList() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className=" divide-y divide-gray-200 bg-white">
               {tourTypes.map((tourType) => (
                 <tr
                   key={tourType._id}
-                  className="cursor-pointer hover:bg-gray-50"
+                  className="cursor-pointer hover:bg-gray-50 "
                 >
                   <td
                     onClick={() => selectTourType(tourType._id)}
-                    className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+                    className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                   >
                     {tourType.typeName}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                  <td
+                    className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
+                    style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: "200px",
+                    }}
+                  >
                     {tourType.description}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium ">
                     <button
                       onClick={() => handleUpdate(tourType._id)}
                       className=""
@@ -127,7 +135,7 @@ function TourTypesList() {
                       Cập nhật
                     </button>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                     <button
                       onClick={() => handleDelete(tourType._id)}
                       className="text-red-600 hover:text-red-900"
