@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../../redux/user/userSlide";
+
 const Login = () => {
-  const [loginError, setLoginError] = useState("");
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [rememberMe, setRememberMe] = useState(false);
   const [formData, setFormData] = useState({
@@ -24,8 +32,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}/user/login`, formData);
-      const { token, role } = response.data;
+      dispatch(signInStart());
+      const res = await axios.post(`${BASE_URL}/user/login`, formData);
+      const { token, role } = res.data;
 
       // Kiểm tra vai trò và chỉ cho phép đăng nhập nếu là admin hoặc công ty
       if (role === "admin" || role === "company") {
@@ -36,11 +45,18 @@ const Login = () => {
           navigate("/company");
         }
       } else {
-        setLoginError("Chỉ dành cho Quản trị viên và Công ty.");
+        alert("Chỉ dành cho Quản trị viên và Công ty.");
       }
+
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
+        return;
+      }
+      dispatch(signInSuccess(data));
     } catch (error) {
-      setLoginError("Đăng nhập thất bại: Email hoặc mật khẩu không đúng.");
-      console.error("Lỗi đăng nhập", error);
+      dispatch(signInFailure(error.message));
     }
   };
 
@@ -48,7 +64,6 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-96 rounded-lg bg-white p-8 shadow-2xl">
         <h1 className="mb-6 text-2xl font-bold text-red-700">ĐĂNG NHẬP</h1>{" "}
-        {loginError && <div className="mb-4 text-red-500">{loginError}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
@@ -95,8 +110,9 @@ const Login = () => {
             type="submit"
             className="w-full rounded-md bg-red-700 p-2 text-white transition duration-200 hover:bg-red-600 focus:border-red-500 focus:outline-none focus:ring" // Adjusted button colors
           >
-            Đăng nhập
+            {loading ? "Đang tải trang..." : "Đăng nhập"}
           </button>
+          {error && <p className="mt-5 text-red-500">{error}</p>}
         </form>
       </div>
     </div>

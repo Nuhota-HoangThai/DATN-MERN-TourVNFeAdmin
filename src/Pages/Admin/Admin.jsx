@@ -18,6 +18,7 @@ import AddTourType from "../../Components/TourType/AddTourType/AddTourType";
 import ListType from "../../Components/TourType/ListType/ListType";
 import UpdateTourType from "../../Components/TourType/UpdateTourType/UpdateTourType";
 import ProfileUser from "../../Components/ProfileUser/ProfileUser";
+import Register from "./Register";
 
 const Admin = () => {
   return (
@@ -41,6 +42,7 @@ const Admin = () => {
           <Route path="/update_tour/:id" element={<UpdateTour />} />
           <Route path="/update_user/:id" element={<UpdateUser />} />
           <Route path="/loginAdmin" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/addTourType" element={<AddTourType />} />
           <Route path="/listType" element={<ListType />} />
           <Route path="/updateTourType/:id" element={<UpdateTourType />} />

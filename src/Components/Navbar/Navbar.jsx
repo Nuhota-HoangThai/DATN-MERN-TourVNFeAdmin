@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   // Lấy tên người dùng từ localStorage
-  const userName = localStorage.getItem("auth-token");
+  const userName = localStorage.getItem("");
 
   return (
     <div className="mb-2 flex items-center justify-between bg-white px-14 py-4 shadow-2xl">
@@ -22,9 +22,14 @@ const Navbar = () => {
           {userName}
         </div>
       ) : (
-        <Link to="/loginAdmin">
-          <span>Đăng nhập</span>
-        </Link>
+        <div>
+          <Link to="/loginAdmin">
+            <span>Đăng nhập</span>
+          </Link>
+          <Link to="/register">
+            <span>Đăng ký</span>
+          </Link>
+        </div>
       )}
     </div>
   );
