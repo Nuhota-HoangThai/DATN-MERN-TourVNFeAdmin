@@ -6,7 +6,6 @@ import AddTour from "../../Components/AddTour/AddTour";
 import ListTour from "../../Components/ListTour/ListTour";
 import ListUser from "../../Components/ListUser/ListUser";
 import ListOrder from "../../Components/ListOrder/ListOrder";
-import ProfileAdmin from "../../Components/ProfileAdmin/ProfileAdmin";
 import AddUser from "../../Components/AddUser/AddUser";
 import Statistical from "../../Components/Statistical/Statistical";
 import HomeAdmin from "./HomeAdmin";
@@ -18,6 +17,7 @@ import Login from "./Login";
 import AddTourType from "../../Components/TourType/AddTourType/AddTourType";
 import ListType from "../../Components/TourType/ListType/ListType";
 import UpdateTourType from "../../Components/TourType/UpdateTourType/UpdateTourType";
+import ProfileUser from "../../Components/ProfileUser/ProfileUser";
 
 const Admin = () => {
   return (
@@ -34,7 +34,7 @@ const Admin = () => {
           <Route path="/listTour" element={<ListTour />} />
           <Route path="/listOrder" element={<ListOrder />} />
           <Route path="/listUser" element={<ListUser />} />
-          <Route path="/profileAmin" element={<ProfileAdmin />} />
+          <Route path="/profileUser" element={<ProfileUser />} />
           <Route path="/addUser" element={<AddUser />} />
           <Route path="/statistical" element={<Statistical />} />
 
