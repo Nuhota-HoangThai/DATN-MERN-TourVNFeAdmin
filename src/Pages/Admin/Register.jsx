@@ -1,32 +1,31 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 
-const Register = () => {
+const SignUp = () => {
+  const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-    phone: "",
-  });
-
-  const changeHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true); // Ensure loading state is set to true when the request starts
-      const response = await axios.post(`${BASE_URL}/user/signup`, formData);
-      const data = response.data; // Axios automatically handles converting the response to JSON
+      setLoading(true);
+      const res = await fetch(`${BASE_URL}/user/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
@@ -34,98 +33,53 @@ const Register = () => {
       }
       setLoading(false);
       setError(null);
-
       navigate("/loginAdmin");
     } catch (error) {
       setLoading(false);
-      setError(error.response?.data?.message || error.message); // Better error handling with Axios
+      setError(error.message);
     }
   };
-
-  // chap nhan dieu khoan nguoi dung
-  const handleTermsChange = (e) => {
-    setAcceptedTerms(e.target.checked);
-  };
-
   return (
-    <div className="flex min-h-screen items-center justify-center  bg-gray-100">
-      <div className="w-96 rounded bg-white p-8 shadow-md">
-        <h1 className="mb-6 text-2xl font-bold text-red-700">ĐĂNG KÝ</h1>
+    <div className="mx-auto max-w-lg p-3">
+      <h1 className="my-7 text-center text-3xl font-semibold">Sign Up</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="username"
+          className="rounded-lg border p-3"
+          id="name"
+          onChange={handleChange}
+        />
+        <input
+          type="email"
+          placeholder="email"
+          className="rounded-lg border p-3"
+          id="email"
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          className="rounded-lg border p-3"
+          id="password"
+          onChange={handleChange}
+        />
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Họ tên"
-              onChange={changeHandler}
-              value={formData.name}
-              className="mt-1 w-full rounded-md border p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="Số điện thoại"
-              onChange={changeHandler}
-              value={formData.phone}
-              className="mt-1 w-full rounded-md border p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Địa chỉ email"
-              onChange={changeHandler}
-              value={formData.email}
-              className="mt-1 w-full rounded-md border p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Mật khẩu"
-              onChange={changeHandler}
-              value={formData.password}
-              className="mt-1 w-full rounded-md border p-2"
-            />
-          </div>
-
-          <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              name=""
-              id=""
-              checked={acceptedTerms}
-              onChange={handleTermsChange}
-            />
-            <p className="pl-2">Chấp nhận điều khoản người dùng.</p>
-          </div>
-          <div className="mb-4 flex justify-between">
-            <p>Đã có tài khoản </p>{" "}
-            <Link to="/login" className="text-indigo-900 underline">
-              Đăng nhập
-            </Link>
-          </div>
-          <button
-            type="submit"
-            disabled={!acceptedTerms}
-            className="w-full rounded-md bg-red-700 p-2 text-white hover:bg-red-600 focus:border-blue-300 focus:outline-none focus:ring"
-          >
-            {loading ? "Loading..." : "Sign Up"}
-          </button>
-          {error && <p className="mt-5 text-red-500">{error}</p>}
-        </form>
+        <button
+          disabled={loading}
+          className="rounded-lg bg-slate-700 p-3 uppercase text-white hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Sign Up"}
+        </button>
+      </form>
+      <div className="mt-5 flex gap-2">
+        <p>Have an account?</p>
+        <Link to={"/sign-in"}>
+          <span className="text-blue-700">Sign in</span>
+        </Link>
       </div>
+      {error && <p className="mt-5 text-red-500">{error}</p>}
     </div>
   );
 };
-
-export default Register;
+export default SignUp;

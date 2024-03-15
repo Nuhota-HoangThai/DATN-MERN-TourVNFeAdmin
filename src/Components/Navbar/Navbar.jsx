@@ -1,15 +1,15 @@
-import React from "react";
-import { GiMountains } from "react-icons/gi";
+import {} from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { GiMountains } from "react-icons/gi";
 
 const Navbar = () => {
-  // Lấy tên người dùng từ localStorage
-  const userName = localStorage.getItem("");
-
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div className="mb-2 flex items-center justify-between bg-white px-14 py-4 shadow-2xl">
       <Link
-        to="/"
+        to="/admin"
         className="group flex items-center gap-1 font-bold text-blue-900"
       >
         <GiMountains className="transform text-4xl transition duration-300 ease-in-out group-hover:rotate-12 group-hover:scale-110" />
@@ -17,20 +17,18 @@ const Navbar = () => {
           ViVu3Mien
         </span>
       </Link>
-      {userName ? (
-        <div className="rounded-full border bg-blue-200 px-4 py-2 text-blue-900">
-          {userName}
-        </div>
-      ) : (
-        <div>
-          <Link to="/loginAdmin">
-            <span>Đăng nhập</span>
-          </Link>
-          <Link to="/register">
-            <span>Đăng ký</span>
-          </Link>
-        </div>
-      )}
+
+      <div>
+        <Link to="/admin">
+          {currentUser ? (
+            <span className="text-slate-700">{currentUser.name}</span>
+          ) : (
+            <Link to="/loginAdmin" className="text-slate-700 hover:underline">
+              Đăng nhập
+            </Link>
+          )}{" "}
+        </Link>
+      </div>
     </div>
   );
 };
