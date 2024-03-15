@@ -1,9 +1,11 @@
-import {} from "react";
+import React from "react";
 import { GiMountains } from "react-icons/gi";
-import Admin from "../../assets/images/logoicon.png";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  // Lấy tên người dùng từ localStorage
+  const userName = localStorage.getItem("auth-token");
+
   return (
     <div className="mb-2 flex items-center justify-between bg-white px-14 py-4 shadow-2xl">
       <Link
@@ -15,9 +17,15 @@ const Navbar = () => {
           ViVu3Mien
         </span>
       </Link>
-      <Link to="/loginAdmin">
-        <img src={Admin} alt="" className="w-8 rounded-full border" />
-      </Link>
+      {userName ? (
+        <div className="rounded-full border bg-blue-200 px-4 py-2 text-blue-900">
+          {userName}
+        </div>
+      ) : (
+        <Link to="/loginAdmin">
+          <span>Đăng nhập</span>
+        </Link>
+      )}
     </div>
   );
 };
