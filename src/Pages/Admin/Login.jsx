@@ -6,9 +6,9 @@ import {
   signInStart,
   signInSuccess,
   signInFailure,
-} from "../../redux/user/userSlice.js";
+} from "../../redux/user/userSlice";
 
-const SignIn = () => {
+const Login = () => {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const SignIn = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
@@ -40,43 +40,50 @@ const SignIn = () => {
       navigate("/admin");
     } catch (error) {
       dispatch(signInFailure(error.message));
-      console.log(error.message);
     }
   };
   return (
-    <div className="mx-auto max-w-lg p-3">
-      <h1 className="my-7 text-center text-3xl font-semibold">Sign In</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="email"
-          className="rounded-lg border p-3"
-          id="email"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          className="rounded-lg border p-3"
-          id="password"
-          onChange={handleChange}
-        />
-
-        <button
-          disabled={loading}
-          className="rounded-lg bg-slate-700 p-3 uppercase text-white hover:opacity-95 disabled:opacity-80"
-        >
-          {loading ? "Loading..." : "Sign In"}
-        </button>
-      </form>
-      <div className="mt-5 flex gap-2">
-        <p>Dont have an account?</p>
-        <Link to={"/sign-up"}>
-          <span className="text-blue-700">Sign up</span>
-        </Link>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md rounded-xl bg-white px-8 py-10 shadow-lg">
+        <h1 className="text-center text-2xl font-bold text-gray-900">
+          Đăng nhập
+        </h1>
+        {error && <p className="mt-4 text-center text-red-500">{error}</p>}
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none"
+            id="email"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Mật khẩu"
+            className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none"
+            id="password"
+            onChange={handleChange}
+          />
+          <button
+            disabled={loading}
+            className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-indigo-300"
+          >
+            {loading ? "Đang tải..." : "Đăng nhập"}
+          </button>
+        </form>
+        <div className="mt-6 text-center">
+          <p className="text-sm">
+            Chưa có tài khoản?
+            <Link
+              to="/register"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              Đăng ký
+            </Link>
+          </p>
+        </div>
       </div>
-      {error && <p className="mt-5 text-red-500">{error}</p>}
     </div>
   );
 };
-export default SignIn;
+export default Login;
