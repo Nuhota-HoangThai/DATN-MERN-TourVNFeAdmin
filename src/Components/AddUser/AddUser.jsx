@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 
@@ -7,13 +7,12 @@ const Register = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
-  // Khởi tạo trạng thái ban đầu cho formData
   const [formData, setFormData] = useState({
-    name: "", // Đổi từ username thành name cho phù hợp với model User
+    name: "",
     password: "",
     email: "",
     phone: "",
-    role: "customer", // role giữ nguyên, không cần cartData trong formData
+    role: "customer",
     address: "",
   });
 
@@ -29,7 +28,7 @@ const Register = () => {
         setSuccessMessage("Thêm người dùng thành công.");
         setTimeout(() => {
           navigate("/listUser"); // Chuyển hướng người dùng sau khi đăng ký thành công
-        }, 1000);
+        }, 3000);
       }
     } catch (error) {
       console.error(
@@ -40,11 +39,9 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center  bg-gray-100">
-      <div className="w-96 rounded bg-white p-8 shadow-md">
-        <h1 className="mb-6 text-2xl font-bold text-red-700">
-          Thêm người dùng mới
-        </h1>
+    <div className="mx-4 my-4 flex min-h-screen items-center justify-center rounded-2xl bg-white ">
+      <div className="w-96 rounded bg-white p-8 shadow-2xl">
+        <h1 className="mb-6 text-2xl font-bold ">Thêm người dùng mới</h1>
         {successMessage && (
           <div className="mb-4 text-green-500">{successMessage}</div>
         )}
@@ -110,15 +107,15 @@ const Register = () => {
               id="role"
               className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
             >
-              <option value="customer">Khách hàng</option>
-              <option value="company">Công ty</option>
               <option value="admin">Quản trị viên</option>
+              <option value="staff">Nhân viên</option>
               <option value="guide">Hướng dẫn viên</option>
+              <option value="customer">Khách hàng</option>
             </select>
           </div>
           <button
             type="submit"
-            className="w-full rounded-md bg-red-700 p-2 text-white hover:bg-red-600 focus:border-blue-300 focus:outline-none focus:ring"
+            className="w-full rounded-md bg-blue-950 p-2 text-white hover:bg-blue-700 focus:border-blue-300 focus:outline-none focus:ring"
           >
             Thêm
           </button>

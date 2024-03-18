@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import upload from "../../assets/images/upload.png";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const UpdateUser = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     image: "",
-    username: "",
+    name: "",
     phone: "",
     email: "",
     address: "",
@@ -21,8 +25,13 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/user/getUserById/${id}`);
-        const data = await res.json();
+        const res = await axios.get(`${BASE_URL}/user/getUserById/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        const data = res.data;
+
         setUserData(data.user);
 
         if (data.user.image && typeof data.user.image === "string") {
@@ -33,7 +42,7 @@ const UpdateUser = () => {
       }
     };
     fetchUser();
-  }, [id]);
+  }, [id, token]);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -165,7 +174,7 @@ const UpdateUser = () => {
             className="select select-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
           >
             <option value="customer">Khách hàng</option>
-            <option value="company">Công ty</option>
+            <option value="staff">Nhân viên</option>
             <option value="admin">Quản trị viên</option>
             <option value="guide">Hướng dẫn viên</option>
           </select>

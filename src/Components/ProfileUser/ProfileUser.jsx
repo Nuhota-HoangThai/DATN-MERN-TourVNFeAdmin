@@ -58,7 +58,8 @@ const UserProfile = () => {
     const roles = {
       admin: "Quản trị viên",
       customer: "Khách hàng",
-      company: "Công ty",
+      staff: "Nhân viên",
+      guide: "Hướng dẫn viên",
     };
     return roles[role] || "Không xác định";
   };

@@ -73,7 +73,7 @@ const Login = () => {
         </form>
         <div className="mt-6 text-center">
           <p className="text-sm">
-            Chưa có tài khoản?
+            Chưa có tài khoản?{" "}
             <Link
               to="/register"
               className="font-medium text-indigo-600 hover:text-indigo-500"

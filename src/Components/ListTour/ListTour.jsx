@@ -129,17 +129,7 @@ const ListTour = () => {
                   <td className="px-6 py-4">{formatRegion(tour.regions)}</td>
                   <td className="px-6 py-4">{formatDateVN(tour.startDate)}</td>
                   <td className="px-6 py-4">{formatDateVN(tour.endDate)}</td>
-                  {/* <td className="px-6 py-4">
-                  <div
-                    dangerouslySetInnerHTML={{ __html: tour.description }}
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      maxWidth: "200px",
-                    }}
-                  ></div>
-                </td> */}
+
                   <td className="px-6 py-4 ">
                     <button
                       className="btn btn-secondary btn-sm"

@@ -33,7 +33,7 @@ const Register = () => {
       }
       setLoading(false);
       setError(null);
-      navigate("/loginAdmin");
+      navigate("/login");
     } catch (error) {
       setLoading(false);
       setError(error.message);

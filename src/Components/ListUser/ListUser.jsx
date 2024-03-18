@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
 
 import defaultImage from "../../assets/images/logoicon.png";
 import { MdClear } from "react-icons/md";
 
 const ListUser = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
   const fetchInfo = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/user/get_all_users`);
-      const data = await res.json();
+      const res = await axios.get(`${BASE_URL}/user/get_all_users`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      const data = res.data;
       setAllUsers(data.sort(sortUsersByRole)); // Sắp xếp ngay sau khi lấy dữ liệu
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -25,8 +33,7 @@ const ListUser = () => {
 
   const remove_user = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/user/removeUser/${id}`, {
-        method: "DELETE",
+      const response = await axios.delete(`${BASE_URL}/user/removeUser/${id}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -37,7 +44,7 @@ const ListUser = () => {
         throw new Error("Failed to delete the user");
       }
 
-      await fetchInfo(); // Refresh the list after deletion
+      await fetchInfo();
     } catch (error) {
       console.error("Error removing user:", error);
     }
@@ -47,7 +54,7 @@ const ListUser = () => {
     const roleTranslations = {
       admin: "Quản trị viên",
       customer: "Khách hàng",
-      company: "Công ty",
+      staff: "Nhân viên",
       guide: "Hướng dẫn viên",
     };
 
