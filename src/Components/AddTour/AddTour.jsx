@@ -23,6 +23,27 @@ const AddTour = () => {
     setDescription(value);
   };
 
+  const getDefaultConvergeTime = () => {
+    const now = new Date();
+
+    // Thêm giờ GMT+7 vào thời gian hiện tại
+    const localTime = new Date(
+      now.getTime() - now.getTimezoneOffset() * 60000 + 7 * 60 * 60 * 1000,
+    );
+
+    // Format ngày tháng năm theo dd/mm/yyyy
+    const day = localTime.getDate().toString().padStart(2, "0");
+    const month = (localTime.getMonth() + 1).toString().padStart(2, "0"); // Tháng trong JavaScript bắt đầu từ 0
+    const year = localTime.getFullYear();
+    const hours = localTime.getHours().toString().padStart(2, "0");
+    const minutes = localTime.getMinutes().toString().padStart(2, "0");
+
+    // Trả về chuỗi ngày giờ đã được format
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
+  const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
+
   const Add_Tour = async (e) => {
     e.preventDefault();
     setIsSuccess(false);
@@ -122,34 +143,12 @@ const AddTour = () => {
           Add_Tour(e);
         }}
       >
-        <div className="mx-auto my-5 max-w-screen-lg rounded-lg bg-gray-100 p-6 shadow-md ">
-          <h1 className="mb-10 text-center text-2xl font-bold">
+        <div className="mx-auto my-4 max-w-screen-lg rounded-2xl bg-gray-100 p-6 shadow-md ">
+          <h1 className="mb-5 text-center text-2xl font-bold">
             Thêm chuyến du lịch
           </h1>
           <div className="grid grid-cols-2">
             <div>
-              <div className="mb-4">
-                <label
-                  htmlFor="tourType"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Loại Tour
-                </label>
-                <select
-                  name="tourType"
-                  id="tourType"
-                  value={selectedTourType}
-                  onChange={(e) => setSelectedTourType(e.target.value)}
-                  className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                >
-                  <option value="">Chọn loại tour</option>
-                  {tourTypes.map((type) => (
-                    <option key={type._id} value={type._id}>
-                      {type.typeName}
-                    </option>
-                  ))}
-                </select>
-              </div>
               <div className="mb-4">
                 <label
                   htmlFor="nameTour"
@@ -165,83 +164,144 @@ const AddTour = () => {
                   className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="price"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Giá/khách
-                </label>
-                <input
-                  type="Number"
-                  name="price"
-                  id="price"
-                  placeholder="Giá"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="tourType"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Loại Tour
+                  </label>
+                  <select
+                    name="tourType"
+                    id="tourType"
+                    value={selectedTourType}
+                    onChange={(e) => setSelectedTourType(e.target.value)}
+                    className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  >
+                    <option value="">Chọn loại tour</option>
+                    {tourTypes.map((type) => (
+                      <option key={type._id} value={type._id}>
+                        {type.typeName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="startingGate"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Nơi khởi hành
+                  </label>
+                  <input
+                    type="text"
+                    name="startingGate"
+                    id="startingGate"
+                    placeholder="Nơi khởi hành"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="price"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Giá/khách
+                  </label>
+                  <input
+                    type="Number"
+                    name="price"
+                    id="price"
+                    placeholder="Giá"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="maxParticipants"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Số lượng khách
-                </label>
-                <input
-                  type="Number"
-                  name="maxParticipants"
-                  id="maxParticipants"
-                  placeholder="Số lượng khách"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                />
+                <div className="mb-4">
+                  <label
+                    htmlFor="maxParticipants"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Số lượng khách
+                  </label>
+                  <input
+                    type="Number"
+                    name="maxParticipants"
+                    id="maxParticipants"
+                    placeholder="Số lượng khách"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="startDate"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Ngày khởi hành
-                </label>
-                <input
-                  type="Date"
-                  name="startDate"
-                  id="startDate"
-                  placeholder="Ngày khởi hành"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="startDate"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Ngày khởi hành
+                  </label>
+                  <input
+                    type="Date"
+                    name="startDate"
+                    id="startDate"
+                    placeholder="Ngày khởi hành"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="endDate"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Ngày kết thúc
+                  </label>
+                  <input
+                    type="Date"
+                    name="endDate"
+                    id="endDate"
+                    placeholder="Ngày kết thúc"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="endDate"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Ngày kết thúc
-                </label>
-                <input
-                  type="Date"
-                  name="endDate"
-                  id="endDate"
-                  placeholder="Ngày kết thúc"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="regions"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Khu vực du lịch
-                </label>
-                <select
-                  name="regions"
-                  id="regions"
-                  className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                >
-                  <option value="mb">Miền Bắc</option>
-                  <option value="mt">Miền Trung</option>
-                  <option value="mn">Miền Nam</option>
-                </select>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="convergeTime"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Thời gian tập trung
+                  </label>
+                  <input
+                    type="datetime-local"
+                    name="convergeTime"
+                    id="convergeTime"
+                    value={convergeTime}
+                    onChange={(e) => setConvergeTime(e.target.value)}
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="regions"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Khu vực du lịch
+                  </label>
+                  <select
+                    name="regions"
+                    id="regions"
+                    className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  >
+                    <option value="mb">Miền Bắc</option>
+                    <option value="mt">Miền Trung</option>
+                    <option value="mn">Miền Nam</option>
+                  </select>
+                </div>
               </div>
               <div className="mb-4">
                 <label

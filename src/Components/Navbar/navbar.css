@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+.vivu3mien-logo {
+  font-family: "Pacifico", cursive; /* Thay 'Pacifico' bằng tên phông chữ bạn chọn */
+  text-transform: none;
+}
+
+.vivu3mien-logo:hover {
+  animation: rainbowText 1s infinite;
+}
+
+@keyframes rainbowText {
+  0% {
+    color: #0000ff;
+  }
+  14% {
+    color: #299ec9;
+  }
+  28% {
+    color: #4b23eb;
+  }
+  42% {
+    color: #21c4be;
+  }
+  57% {
+    color: #0000ff;
+  }
+  71% {
+    color: #20079e;
+  }
+  85% {
+    color: #0dafaf;
+  }
+  100% {
+    color: #0c0fd0;
+  }
+}

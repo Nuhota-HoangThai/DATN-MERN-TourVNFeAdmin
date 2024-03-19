@@ -22,12 +22,12 @@ import Register from "./Register";
 
 const Admin = () => {
   return (
-    <div className="grid grid-cols-5 gap-1">
-      <div className=" col-span-1 w-full">
+    <div className="layout grid grid-cols-5 gap-1">
+      <div className="sidebar sidebar col-span-1 w-full">
         <Sidebar />
       </div>
 
-      <div className="col-span-4">
+      <div className="content col-span-4">
         <Routes>
           <Route path="/admin" element={<HomeAdmin />} />
           <Route path="/lisTour" element={<ListTour />} />

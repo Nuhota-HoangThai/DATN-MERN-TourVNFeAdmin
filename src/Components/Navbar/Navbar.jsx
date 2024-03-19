@@ -1,33 +1,49 @@
 import {} from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import "./navbar.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/user/userSlice"; // Ensure the path is correct
 
-import { GiMountains } from "react-icons/gi";
+import logoViVu3Mien from "../../assets/images/logoViVu3Mien.jpg";
 
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("auth-token");
+    navigate("/loginAdmin");
+  };
   return (
-    <div className="mb-2 flex items-center justify-between bg-white px-14 py-4 shadow-2xl">
-      <Link
-        to="/admin"
-        className="group flex items-center gap-1 font-bold text-blue-900"
-      >
-        <GiMountains className="transform text-4xl transition duration-300 ease-in-out group-hover:rotate-12 group-hover:scale-110" />
-        <span className="text-3xl shadow-2xl transition duration-300 ease-in-out group-hover:text-blue-950 group-hover:shadow-lg">
-          ViVu3Mien
-        </span>
+    <div className="mb-2 flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
+      <Link to="/admin" className=" group flex items-center gap-1 ">
+        <img src={logoViVu3Mien} alt="" className="w-20" />
+        <div>
+          <div className="vivu3mien-logo text-2xl font-bold text-cyan-500">
+            ViVu3Mien
+          </div>
+          <div className="text-sm font-medium italic text-orange-400">
+            Phục vụ tận tâm
+          </div>
+        </div>
       </Link>
 
-      <div>
-        <Link to="/admin">
-          {currentUser ? (
-            <span className="text-slate-700">{currentUser.name}</span>
-          ) : (
-            <Link to="/loginAdmin" className="text-slate-700 hover:underline">
-              Đăng nhập
+      <div className="text-lg">
+        {currentUser ? (
+          <div className="flex gap-8">
+            <Link to="/admin">
+              <span>Xin chào: </span>
+              {currentUser.name}
             </Link>
-          )}{" "}
-        </Link>
+            <button onClick={handleLogout}>Đăng xuất</button>
+          </div>
+        ) : (
+          <Link to="/loginAdmin" className="text-slate-700 hover:underline">
+            Đăng nhập
+          </Link>
+        )}
       </div>
     </div>
   );

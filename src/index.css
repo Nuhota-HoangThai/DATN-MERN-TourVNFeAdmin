@@ -9,3 +9,19 @@ body {
   background-color: rgb(223, 223, 244);
   height: 100vh;
 }
+
+.layout {
+  display: flex;
+  min-height: 100vh; /* Chiều cao tối thiểu bằng với viewport */
+}
+
+.sidebar {
+  width: 250px; /* Chiều rộng cố định cho sidebar */
+  height: 100vh; /* Chiều cao toàn màn hình */
+  /* overflow-y: auto;  */
+}
+
+.content {
+  flex: 1; /* Chiếm lấy phần còn lại của màn hình */
+  overflow-y: auto;
+}

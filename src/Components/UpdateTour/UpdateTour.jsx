@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 
@@ -20,6 +20,7 @@ const UpdateTour = () => {
     regions: "",
     startDate: "",
     endDate: "",
+    convergeTime: "",
     tourType: "",
   });
 
@@ -113,6 +114,23 @@ const UpdateTour = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const getDefaultConvergeTime = () => {
+    const now = new Date();
+
+    // Không cần thêm giờ GMT+7 nếu bạn muốn sử dụng giờ máy chủ/local
+    const localTime = now;
+
+    // Format ngày tháng năm theo YYYY-MM-DD và giờ phút theo HH:mm
+    const year = localTime.getFullYear();
+    const month = (localTime.getMonth() + 1).toString().padStart(2, "0"); // Tháng trong JavaScript bắt đầu từ 0
+    const day = localTime.getDate().toString().padStart(2, "0");
+    const hours = localTime.getHours().toString().padStart(2, "0");
+    const minutes = localTime.getMinutes().toString().padStart(2, "0");
+
+    // Trả về chuỗi ngày giờ đã được format
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   return (
     <div className="mx-auto max-w-4xl rounded-lg bg-white p-5 shadow-lg md:p-8">
       <h1 className="mb-4 text-xl font-semibold">Cập nhật Tour</h1>
@@ -145,25 +163,40 @@ const UpdateTour = () => {
             multiple // Cho phép chọn nhiều hình ảnh
           />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Loại tour
-          </label>
-          <select
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
-            value={tourData.tourType}
-            onChange={(e) =>
-              setTourData({ ...tourData, tourType: e.target.value })
-            }
-          >
-            <option value="">Chọn loại tour</option>
-            {tourTypes.map((type) => (
-              <option key={type._id} value={type._id}>
-                {type.typeName}
-              </option>
-            ))}
-          </select>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Loại tour
+            </label>
+            <select
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
+              value={tourData.tourType}
+              onChange={(e) =>
+                setTourData({ ...tourData, tourType: e.target.value })
+              }
+            >
+              <option value="">Chọn loại tour</option>
+              {tourTypes.map((type) => (
+                <option key={type._id} value={type._id}>
+                  {type.typeName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Nơi khởi hành
+            </label>
+            <input
+              placeholder="Nhập nơi khởi hành"
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              type="text"
+              value={tourData.startingGate}
+              onChange={(e) =>
+                setTourData({ ...tourData, startingGate: e.target.value })
+              }
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -209,22 +242,42 @@ const UpdateTour = () => {
             />
           </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Khu vực du lịch
-          </label>
-          <select
-            className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            value={tourData.regions}
-            onChange={(e) =>
-              setTourData({ ...tourData, regions: e.target.value })
-            }
-          >
-            <option value="">Chọn miền</option>
-            <option value="mb">Miền Bắc</option>
-            <option value="mt">Miền Trung</option>
-            <option value="mn">Miền Nam</option>
-          </select>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Khu vực du lịch
+            </label>
+            <select
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              value={tourData.regions}
+              onChange={(e) =>
+                setTourData({ ...tourData, regions: e.target.value })
+              }
+            >
+              <option value="">Chọn miền</option>
+              <option value="mb">Miền Bắc</option>
+              <option value="mt">Miền Trung</option>
+              <option value="mn">Miền Nam</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Thời gian tập trung
+            </label>
+            <input
+              placeholder="Thời gian tập trung"
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              type="datetime-local"
+              value={
+                tourData.convergeTime
+                  ? tourData.convergeTime
+                  : getDefaultConvergeTime()
+              }
+              onChange={(e) =>
+                setTourData({ ...tourData, convergeTime: e.target.value })
+              }
+            />
+          </div>
         </div>
         <div className="grid grid-cols-2  gap-6">
           {" "}
