@@ -17,7 +17,7 @@ const Navbar = () => {
     navigate("/loginAdmin");
   };
   return (
-    <div className="mb-2 flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
+    <div className=" flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
       <Link to="/admin" className=" group flex items-center gap-1 ">
         <img src={logoViVu3Mien} alt="" className="w-20" />
         <div>

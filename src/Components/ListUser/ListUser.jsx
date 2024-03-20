@@ -68,15 +68,17 @@ const ListUser = () => {
   };
 
   return (
-    <div className="w-full px-5 py-4">
-      <h1 className="my-3 text-center text-2xl font-bold">
-        Thông tin khách hàng
-      </h1>
-      <Link to={"/addUser"} className="flex justify-center no-underline">
-        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-          <p className="pl-2">Thêm người dùng</p>
-        </div>
-      </Link>
+    <div className="w-full p-4">
+      <div className="flex justify-between">
+        <h1 className="my-2 text-center text-2xl  font-bold">
+          Thông tin khách hàng
+        </h1>
+        <Link to={"/addUser"} className="no-underline">
+          <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+            <p className="pl-2">Thêm người dùng</p>
+          </div>
+        </Link>
+      </div>
       {allUsers.length > 0 ? (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-left text-sm ">

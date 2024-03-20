@@ -1,48 +1,55 @@
-import {} from "react";
 import { Link } from "react-router-dom";
 
-import { IoMdList } from "react-icons/io";
-import { PiHammerFill } from "react-icons/pi";
+import { FaRegListAlt, FaUserFriends } from "react-icons/fa";
+import { GiPalmTree } from "react-icons/gi";
+import { MdOutlineBookOnline } from "react-icons/md";
 import { IoStatsChartOutline } from "react-icons/io5";
-import { PiUserListDuotone } from "react-icons/pi";
-import { LiaThListSolid } from "react-icons/lia";
+
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  return (
-    <div className=" my-4 ml-4 h-screen rounded-2xl bg-white">
-      <h1 className="pt-10 text-center text-xl font-bold">QUẢN TRỊ VIÊN</h1>
-      <div className="pt-10">
-        <Link to={"/listTour"} className="no-underline">
-          <div className="mx-5 my-5 flex items-center rounded-lg bg-slate-100 py-2 pl-8 ">
-            <LiaThListSolid />
-            <p className="pl-2">Danh sách tour</p>
-          </div>
-        </Link>
-        <Link to={"/listType"} className="no-underline">
-          <div className="mx-5 my-5 flex items-center rounded-lg bg-slate-100 py-2 pl-8 ">
-            <PiHammerFill />
-            <p className="pl-2">Danh sách loại tour</p>
-          </div>
-        </Link>
-        <Link to={"/listOrder"} className="no-underline">
-          <div className="mx-5 my-5 flex items-center rounded-lg bg-slate-100 py-2 pl-8 ">
-            <IoMdList />
-            <p className="pl-2">Danh sách đặt tour</p>
-          </div>
-        </Link>
-        <Link to={"/listUser"} className="no-underline">
-          <div className="mx-5 my-5 flex items-center rounded-lg bg-slate-100 py-2 pl-8 ">
-            <PiUserListDuotone />
-            <p className="pl-2">Danh sách khách hàng</p>
-          </div>
-        </Link>
+  const { currentUser } = useSelector((state) => state.user);
 
-        <Link to={"/statistical"} className="no-underline">
-          <div className="mx-5 my-5 flex items-center rounded-lg bg-slate-100 py-2 pl-8 ">
-            <IoStatsChartOutline />
-            <p className="pl-2">Thống kê</p>
-          </div>
-        </Link>
+  return (
+    <div className="h-screen bg-gray-800 text-white shadow-xl">
+      <h1 className="pt-10 text-center text-xl font-bold">
+        {currentUser?.role}
+      </h1>
+      <div className="mx-2 pt-10">
+        {[
+          {
+            icon: <FaRegListAlt />,
+            text: "Danh sách tour",
+            link: "/listTour",
+          },
+          {
+            icon: <GiPalmTree />,
+            text: "Danh sách loại tour",
+            link: "/listType",
+          },
+          {
+            icon: <MdOutlineBookOnline />,
+            text: "Danh sách đặt tour",
+            link: "/listOrder",
+          },
+          {
+            icon: <FaUserFriends />,
+            text: "Danh sách người dùng",
+            link: "/listUser",
+          },
+          {
+            icon: <IoStatsChartOutline />,
+            text: "Thống kê",
+            link: "/statistical",
+          },
+        ].map((item, index) => (
+          <Link to={item.link} key={index} className="no-underline">
+            <div className="my-5 flex items-center rounded-lg bg-gray-700 px-2 py-2 transition duration-200 ease-in-out hover:bg-gray-600">
+              <div className="text-lg text-yellow-400">{item.icon}</div>
+              <p className="pl-2">{item.text}</p>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

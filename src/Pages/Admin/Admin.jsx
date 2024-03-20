@@ -1,6 +1,6 @@
 import {} from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import AddTour from "../../Components/AddTour/AddTour";
 import ListTour from "../../Components/ListTour/ListTour";
@@ -21,13 +21,19 @@ import ProfileUser from "../../Components/ProfileUser/ProfileUser";
 import Register from "./Register";
 
 const Admin = () => {
+  const location = useLocation();
+
+  const isLoginPage = location.pathname === "/loginAdmin";
+
   return (
     <div className="layout grid grid-cols-5 gap-1">
-      <div className="sidebar sidebar col-span-1 w-full">
-        <Sidebar />
-      </div>
+      {!isLoginPage && (
+        <div className="sidebar col-span-1 w-full">
+          <Sidebar />
+        </div>
+      )}
 
-      <div className="content col-span-4">
+      <div className={`content ${isLoginPage ? "col-span-5" : "col-span-4"}`}>
         <Routes>
           <Route path="/admin" element={<HomeAdmin />} />
           <Route path="/lisTour" element={<ListTour />} />
@@ -38,7 +44,6 @@ const Admin = () => {
           <Route path="/profileUser" element={<ProfileUser />} />
           <Route path="/addUser" element={<AddUser />} />
           <Route path="/statistical" element={<Statistical />} />
-
           <Route path="/update_tour/:id" element={<UpdateTour />} />
           <Route path="/update_user/:id" element={<UpdateUser />} />
           <Route path="/loginAdmin" element={<Login />} />

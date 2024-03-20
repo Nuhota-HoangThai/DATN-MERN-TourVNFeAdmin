@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
 import ToursList from "../../TourType/ToursList/ToursList";
@@ -66,13 +66,15 @@ function TourTypesList() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-5">
-      <h2 className="my-3 text-center text-2xl  font-bold">Loại Tour</h2>
-      <Link to={"/addTourType"} className="flex justify-center no-underline">
-        <div className="my-3 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-          <p className="pl-2">Thêm loại tour</p>
-        </div>
-      </Link>
+    <div className="w-full p-4">
+      <div className="flex justify-between">
+        <h2 className="my-2 text-center text-2xl  font-bold">Loại Tour</h2>
+        <Link to={"/addTourType"} className=" no-underline">
+          <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+            <p className="pl-2">Thêm loại tour</p>
+          </div>
+        </Link>
+      </div>
       {tourTypes.length > 0 ? (
         <div>
           <table className="  min-w-full overflow-hidden rounded-md  shadow">
@@ -132,7 +134,7 @@ function TourTypesList() {
                       onClick={() => handleUpdate(tourType._id)}
                       className=""
                     >
-                      Cập nhật
+                      Sửa
                     </button>
                   </td>
                   <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">

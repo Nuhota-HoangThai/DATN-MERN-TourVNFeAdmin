@@ -80,23 +80,20 @@ const ListTour = () => {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 ">
       <div className="flex justify-between">
         <h1 className="my-2 text-center text-2xl font-bold">Danh sách tour</h1>
-        <Link to={"/addTour"} className="flex justify-center no-underline ">
+        <Link to={"/addTour"} className=" no-underline ">
           <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
             <p className="pl-2">Thêm tour</p>
           </div>
         </Link>
       </div>
       {allTours.length > 0 ? (
-        <div className="max-h-[580px]">
+        <div className="max-h-[500px]">
           <table className="min-w-full table-auto  text-left text-sm">
             <thead className="bg-blue-950 text-xs uppercase text-white">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
-                Hình
-              </th> */}
                 <th scope="col" className="px-6 py-3">
                   Loại tour
                 </th>
@@ -121,7 +118,9 @@ const ListTour = () => {
                 <th scope="col" className="px-6 py-3">
                   Thời gian tập trung
                 </th>
-                <th scope="col" className="px-6 py-3"></th>
+                <th scope="col" className="px-6 py-3">
+                  Nơi khởi hành
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Cập nhật
                 </th>
@@ -132,7 +131,7 @@ const ListTour = () => {
             </thead>
             <tbody>
               {allTours.map((tour) => (
-                <tr key={tour._id} className="hover:bg-gray-100">
+                <tr key={tour._id} className="bg-white hover:bg-gray-100">
                   <td className="border-b px-6 py-4">
                     {tour.tourType.typeName || "N/A"}
                   </td>
