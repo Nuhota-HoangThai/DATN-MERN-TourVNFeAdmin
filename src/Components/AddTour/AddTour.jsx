@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import upload from "../../assets/images/upload.png";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -9,6 +11,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const AddTour = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [images, setImages] = useState([]);
 
   const [tourTypes, setTourTypes] = useState([]);
@@ -54,7 +58,7 @@ const AddTour = () => {
     await fetch(`${BASE_URL}/tour/addTour`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        Authorization: "Bearer " + token,
       },
       body: formData,
     })
@@ -240,6 +244,39 @@ const AddTour = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                   <label
+                    htmlFor="priceForChildren"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Giá trẻ em (2-12) tuổi
+                  </label>
+                  <input
+                    type="number"
+                    name="priceForChildren"
+                    id="priceForChildren"
+                    placeholder="Giá cho trẻ em"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label
+                    htmlFor="priceForInfants"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Giá trẻ sơ sinh (dưới 2) tuổi
+                  </label>
+                  <input
+                    type="number"
+                    name="priceForInfants"
+                    id="priceForInfants"
+                    placeholder="Giá cho trẻ sơ sinh"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
                     htmlFor="startDate"
                     className="mb-2 block text-sm font-bold text-gray-700"
                   >
@@ -303,6 +340,23 @@ const AddTour = () => {
                     <option value="mn">Miền Nam</option>
                   </select>
                 </div>
+              </div>
+
+              {/* Additional fees field */}
+              <div className="mb-4">
+                <label
+                  htmlFor="additionalFees"
+                  className="mb-2 block text-sm font-bold text-gray-700"
+                >
+                  Phí phụ thu (phòng đơn)
+                </label>
+                <input
+                  type="number"
+                  name="additionalFees"
+                  id="additionalFees"
+                  placeholder="Phí bổ sung"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                />
               </div>
               <div className="mb-4">
                 <label
