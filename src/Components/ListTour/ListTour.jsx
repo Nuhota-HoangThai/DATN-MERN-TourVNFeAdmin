@@ -32,7 +32,7 @@ const ListTour = () => {
       const res = await fetch(`${BASE_URL}/tour/getAllTours`);
       const data = await res.json();
       setAllTours(data);
-      console.log(data);
+      //console.log(data);
     } catch (error) {
       console.error("Error fetching tours:", error);
     }
@@ -89,10 +89,10 @@ const ListTour = () => {
           </div>
         </Link>
       </div>
-      {allTours.length > 0 ? (
-        <div className="max-h-[500px]">
-          <table className="min-w-full table-auto  text-left text-sm">
-            <thead className="bg-blue-950 text-xs uppercase text-white">
+      <div className="max-h-[600px] overflow-auto">
+        {allTours.length > 0 ? (
+          <table className="min-w-full table-auto overflow-hidden rounded-2xl text-left text-sm">
+            <thead className=" bg-blue-950 text-xs uppercase text-white">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Loại tour
@@ -153,7 +153,7 @@ const ListTour = () => {
                   <td className="border-b px-6 py-4">{tour.startingGate}</td>
                   <td className="border-b px-6 py-4">
                     <button
-                      className="rounded bg-green-500 px-4 py-2 text-sm text-white hover:bg-green-700"
+                      className=" text-sm "
                       onClick={() => navigateToUpdateTour(tour._id)}
                     >
                       Sửa
@@ -161,19 +161,21 @@ const ListTour = () => {
                   </td>
 
                   <td className="border-b px-6 py-4">
-                    <MdClear
+                    <button
+                      className="text-red-500"
                       onClick={() => remove_tour(tour._id)}
-                      className="cursor-pointer text-xl text-red-500 hover:text-red-700"
-                    />
+                    >
+                      Xóa
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
-      ) : (
-        <p className="mt-5 text-center">Không có tour nào!!!</p>
-      )}
+        ) : (
+          <p className="mt-5 text-center">Không có tour nào!!!</p>
+        )}
+      </div>{" "}
     </div>
   );
 };

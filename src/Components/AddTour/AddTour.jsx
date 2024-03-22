@@ -139,11 +139,12 @@ const AddTour = () => {
   return (
     <>
       <form
+        className="max-h-[600px]"
         onSubmit={(e) => {
           Add_Tour(e);
         }}
       >
-        <div className="mx-auto my-4 max-w-screen-lg rounded-2xl bg-gray-100 p-6 shadow-md ">
+        <div className="mx-auto my-4  max-w-screen-lg rounded-2xl bg-gray-100 p-6 shadow-md ">
           <h1 className="mb-5 text-center text-2xl font-bold">
             Thêm chuyến du lịch
           </h1>

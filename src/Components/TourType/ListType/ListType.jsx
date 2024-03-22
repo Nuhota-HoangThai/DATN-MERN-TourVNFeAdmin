@@ -66,7 +66,7 @@ function TourTypesList() {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="max-h-[600px] w-full p-4">
       <div className="flex justify-between">
         <h2 className="my-2 text-center text-2xl  font-bold">Loại Tour</h2>
         <Link to={"/addTourType"} className=" no-underline">

@@ -37,7 +37,7 @@ const Login = () => {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate("/admin");
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }

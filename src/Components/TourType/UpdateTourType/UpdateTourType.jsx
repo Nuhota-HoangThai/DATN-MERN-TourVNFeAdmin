@@ -54,7 +54,7 @@ function UpdateTourType() {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-xl">
+    <div className="mx-auto mt-10 max-h-[600px] max-w-xl rounded-2xl bg-white p-8 shadow-2xl">
       <h2 className="mb-5 text-2xl font-semibold">Cập nhật loại tour</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">

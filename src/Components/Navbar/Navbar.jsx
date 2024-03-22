@@ -18,7 +18,7 @@ const Navbar = () => {
   };
   return (
     <div className=" flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
-      <Link to="/admin" className=" group flex items-center gap-1 ">
+      <Link to="/" className=" group flex items-center gap-1 ">
         <img src={logoViVu3Mien} alt="" className="w-20" />
         <div>
           <div className="vivu3mien-logo text-2xl font-bold text-cyan-500">

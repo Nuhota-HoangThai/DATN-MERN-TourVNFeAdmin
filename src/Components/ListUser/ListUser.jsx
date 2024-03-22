@@ -68,10 +68,10 @@ const ListUser = () => {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="max-h-[600px] w-full p-4">
       <div className="flex justify-between">
         <h1 className="my-2 text-center text-2xl  font-bold">
-          Thông tin khách hàng
+          Thông tin người dùng
         </h1>
         <Link to={"/addUser"} className="no-underline">
           <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
@@ -148,12 +148,12 @@ const ListUser = () => {
                     </button>
                   </td>
                   <td className="px-6 py-4 ">
-                    {" "}
-                    <MdClear
+                    <button
+                      className="text-red-500 hover:text-red-700"
                       onClick={() => remove_user(user._id)}
-                      className="cursor-pointer text-red-500 hover:text-red-700"
-                      size="24"
-                    />
+                    >
+                      Xóa
+                    </button>
                   </td>
                 </tr>
               ))}

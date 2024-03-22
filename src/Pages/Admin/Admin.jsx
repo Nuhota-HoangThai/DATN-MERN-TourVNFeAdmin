@@ -35,7 +35,7 @@ const Admin = () => {
 
       <div className={`content ${isLoginPage ? "col-span-5" : "col-span-4"}`}>
         <Routes>
-          <Route path="/admin" element={<HomeAdmin />} />
+          <Route path="/" element={<HomeAdmin />} />
           <Route path="/lisTour" element={<ListTour />} />
           <Route path="/addTour" element={<AddTour />} />
           <Route path="/listTour" element={<ListTour />} />

@@ -134,7 +134,7 @@ const ListOrder = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-6xl">
+    <div className="mx-auto my-8 max-h-[600px] max-w-6xl ">
       <h2 className="mb-6 text-center text-2xl font-bold">
         Danh sách đặt tour
       </h2>
@@ -174,7 +174,7 @@ const ListOrder = () => {
                   >
                     {translateStatus(booking.status)}
                   </td>
-                  <td className="relative flex items-center justify-center border-x px-4 py-2">
+                  <td className="relative flex items-center justify-center border-x px-4 py-2 ">
                     {booking.status !== "completed" && (
                       <>
                         <button
@@ -184,7 +184,7 @@ const ListOrder = () => {
                           Hành động
                         </button>
                         {dropdownOpen[booking._id] && (
-                          <div className="absolute right-0 z-10 mb-10 mt-36 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="absolute right-0 z-10 mb-10 mt-36 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div className="py-1">
                               {booking.status === "pending" && (
                                 <button
@@ -231,10 +231,12 @@ const ListOrder = () => {
                     )}
                   </td>
                   <td className="border-x px-4 py-2">
-                    <MdClear
+                    <button
+                      className="text-red-500"
                       onClick={() => remove_booking(booking._id)}
-                      className="cursor-pointer text-red-500 hover:text-red-700"
-                    />
+                    >
+                      Xóa
+                    </button>
                   </td>
                 </tr>
               ))}
