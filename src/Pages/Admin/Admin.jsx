@@ -46,8 +46,10 @@ const Admin = () => {
           <Route path="/statistical" element={<Statistical />} />
           <Route path="/update_tour/:id" element={<UpdateTour />} />
           <Route path="/update_user/:id" element={<UpdateUser />} />
+
           <Route path="/loginAdmin" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
           <Route path="/addTourType" element={<AddTourType />} />
           <Route path="/listType" element={<ListType />} />
           <Route path="/updateTourType/:id" element={<UpdateTourType />} />

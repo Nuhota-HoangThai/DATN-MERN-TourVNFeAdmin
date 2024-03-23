@@ -40,7 +40,7 @@ const Sidebar = () => {
           {
             icon: <IoStatsChartOutline />,
             text: "Thống kê",
-            link: "/statistical",
+            link: "/listAccess",
           },
         ].map((item, index) => (
           <Link to={item.link} key={index} className="no-underline">

@@ -155,6 +155,18 @@ const AddTour = () => {
           <div className="grid grid-cols-2">
             <div>
               <div className="mb-4">
+                <select
+                  name="AccessTour"
+                  id="AccessTour"
+                  className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                >
+                  <option value="allAge">Dành cho tất cả các độ tuổi</option>
+                  <option value="adultsOnly">
+                    Dành cho khách hàng trên 12 tuổi
+                  </option>
+                </select>
+              </div>
+              <div className="mb-4">
                 <label
                   htmlFor="nameTour"
                   className="mb-2 block text-sm font-bold text-gray-700"
