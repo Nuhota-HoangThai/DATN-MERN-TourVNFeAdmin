@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import upload from "../../assets/images/upload.png";
@@ -16,6 +16,7 @@ const UpdateUser = () => {
     phone: "",
     email: "",
     address: "",
+    cccd: "",
     role: "",
   });
 
@@ -83,109 +84,161 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="update-user-form mx-auto mt-10 max-w-4xl rounded-lg bg-white p-8 shadow-lg">
-      <h1 className="mb-8 text-center text-3xl font-semibold text-blue-900">
-        Cập nhật thông tin người dùng
-      </h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="mb-4 flex justify-center">
-          <label htmlFor="file-input" className="flex cursor-pointer gap-4">
-            <img
-              src={previewImage}
-              alt="Preview"
-              style={{ width: "100px", height: "100px" }}
-            />
-          </label>
-          <input
-            onChange={handleImageChange}
-            type="file"
-            name="image"
-            id="file-input"
-            className="flex"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="name" className="mb-2 font-semibold text-gray-700">
-            Tên
-          </label>
-          <input
-            id="name"
-            name="name"
-            value={userData.name}
-            onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-            placeholder="Tên"
-            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="phone" className="mb-2 font-semibold text-gray-700">
-            Số điện thoại
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            value={userData.phone}
-            onChange={(e) =>
-              setUserData({ ...userData, phone: e.target.value })
-            }
-            placeholder="Số điện thoại"
-            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="email" className="mb-2 font-semibold text-gray-700">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            value={userData.email}
-            onChange={(e) =>
-              setUserData({ ...userData, email: e.target.value })
-            }
-            placeholder="Email"
-            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="address" className="mb-2 font-semibold text-gray-700">
-            Địa chỉ
-          </label>
-          <input
-            id="address"
-            name="address"
-            value={userData.address}
-            onChange={(e) =>
-              setUserData({ ...userData, address: e.target.value })
-            }
-            placeholder="Địa chỉ"
-            className="input input-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="role" className="mb-2 font-semibold text-gray-700">
-            Vai trò
-          </label>
-          <select
-            id="role"
-            name="role"
-            value={userData.role}
-            onChange={(e) => setUserData({ ...userData, role: e.target.value })}
-            className="select select-bordered w-full rounded-md border-gray-300 p-3 focus:border-blue-500 focus:ring-blue-500"
+    <div className="mx-auto max-w-4xl p-5">
+      <div className="mt-10 rounded-lg bg-white p-8 shadow-lg">
+        <h1 className="text-center text-3xl font-semibold text-blue-900">
+          Cập nhật thông tin người dùng
+        </h1>
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div className="flex justify-center">
+            <label
+              htmlFor="file-input"
+              className="flex cursor-pointer items-center gap-4"
+            >
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="h-24 w-24 rounded-full object-cover"
+              />
+              <input
+                onChange={handleImageChange}
+                type="file"
+                name="image"
+                id="file-input"
+                className="hidden"
+              />
+              <svg
+                className="h-6 w-6 text-gray-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 2a1 1 0 011 1v.5l-4 4l-3-3l-4 4V5h10zM4 5a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V5a1 1 0 00-1-1H4z"></path>
+              </svg>
+            </label>
+          </div>
+          <div className=" grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="mt-5">
+              <label
+                htmlFor="name"
+                className="block text-lg font-medium text-gray-700"
+              >
+                Tên
+              </label>
+              <input
+                id="name"
+                name="name"
+                value={userData.name}
+                onChange={(e) =>
+                  setUserData({ ...userData, name: e.target.value })
+                }
+                placeholder="Tên"
+                className="mt-1 block w-full rounded-md border-black px-2 py-1.5 shadow-2xl  "
+              />
+            </div>
+            <div className="mt-5">
+              <label
+                htmlFor="CCCD"
+                className="block text-lg font-medium text-gray-700"
+              >
+                Căn cước công dân
+              </label>
+              <input
+                id="CCCD"
+                name="CCCD"
+                value={userData.CCCD}
+                onChange={(e) =>
+                  setUserData({ ...userData, CCCD: e.target.value })
+                }
+                placeholder="Số căn cước công dân"
+                className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div className="mt-5">
+              <label
+                htmlFor="phone"
+                className="block text-lg font-medium text-gray-700"
+              >
+                Số điện thoại
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                value={userData.phone}
+                onChange={(e) =>
+                  setUserData({ ...userData, phone: e.target.value })
+                }
+                placeholder="Số điện thoại"
+                className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div className="mt-5">
+              <label
+                htmlFor="email"
+                className="block text-lg font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                value={userData.email}
+                onChange={(e) =>
+                  setUserData({ ...userData, email: e.target.value })
+                }
+                placeholder="Email"
+                className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div className="mt-5 md:col-span-2">
+              <label
+                htmlFor="address"
+                className="block text-lg font-medium text-gray-700"
+              >
+                Địa chỉ
+              </label>
+              <input
+                id="address"
+                name="address"
+                value={userData.address}
+                onChange={(e) =>
+                  setUserData({ ...userData, address: e.target.value })
+                }
+                placeholder="Địa chỉ"
+                className="mt-1 block w-full rounded-md border-gray-900 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              />
+            </div>
+            <div className="mt-5 md:col-span-2">
+              <label
+                htmlFor="role"
+                className="block text-lg font-medium text-gray-700"
+              >
+                Vai trò
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={userData.role}
+                onChange={(e) =>
+                  setUserData({ ...userData, role: e.target.value })
+                }
+                className="mt-1 block w-full rounded-md border-gray-900 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                <option value="customer">Khách hàng</option>
+                <option value="staff">Nhân viên</option>
+                <option value="admin">Quản trị viên</option>
+                <option value="guide">Hướng dẫn viên</option>
+              </select>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="mt-5 w-full rounded-lg bg-blue-900 py-3 text-lg font-semibold text-white shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            <option value="customer">Khách hàng</option>
-            <option value="staff">Nhân viên</option>
-            <option value="admin">Quản trị viên</option>
-            <option value="guide">Hướng dẫn viên</option>
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary mt-4 w-full rounded-lg bg-blue-900 py-3 text-center text-base font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2  focus:ring-offset-blue-200"
-        >
-          Cập nhật
-        </button>
-      </form>
+            Cập nhật
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

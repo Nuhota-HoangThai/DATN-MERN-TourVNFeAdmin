@@ -10,6 +10,7 @@ const UserProfile = () => {
     email: "",
     phone: "",
     address: "",
+    cccd: "",
     role: "",
   });
   const [loading, setLoading] = useState(true);
@@ -79,6 +80,9 @@ const UserProfile = () => {
         <div className="space-y-3">
           <p>
             <strong className="font-medium">Tên: </strong> {userProfile.name}
+          </p>
+          <p>
+            <strong className="font-medium">CCCD: </strong> {userProfile.cccd}
           </p>
           <p>
             <strong className="font-medium">Email: </strong> {userProfile.email}

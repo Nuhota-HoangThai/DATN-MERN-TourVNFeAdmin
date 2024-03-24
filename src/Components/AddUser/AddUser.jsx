@@ -14,6 +14,7 @@ const Register = () => {
     phone: "",
     role: "customer",
     address: "",
+    cccd: "",
   });
 
   const changeHandler = (e) => {
@@ -98,6 +99,17 @@ const Register = () => {
               placeholder="Địa chỉ"
               onChange={changeHandler}
               value={formData.address}
+              className="mt-1 w-full rounded-md border p-2"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              id="cccd"
+              name="cccd"
+              placeholder="Căn cước công dân"
+              onChange={changeHandler}
+              value={formData.cccd}
               className="mt-1 w-full rounded-md border p-2"
             />
           </div>

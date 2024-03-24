@@ -5,7 +5,6 @@ import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
 import defaultImage from "../../assets/images/logoicon.png";
-import { MdClear } from "react-icons/md";
 
 const ListUser = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -63,7 +62,7 @@ const ListUser = () => {
 
   // Hàm sắp xếp người dùng theo vai trò
   const sortUsersByRole = (a, b) => {
-    const order = { admin: 1, company: 2, guide: 3, customer: 4 }; // Định nghĩa thứ tự ưu tiên
+    const order = { admin: 1, staff: 2, guide: 3, customer: 4 }; // Định nghĩa thứ tự ưu tiên
     return order[a.role] - order[b.role];
   };
 
@@ -89,6 +88,9 @@ const ListUser = () => {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Tên
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  CCCD
                 </th>
                 <th scope="col" className="px-6 py-3">
                   SĐT
@@ -135,11 +137,12 @@ const ListUser = () => {
                     )}
                   </td>
                   <td className="px-6 py-4">{user.name}</td>
+                  <td className="px-6 py-4">{user.cccd}</td>
                   <td className="px-6 py-4">{user.phone}</td>
                   <td className="px-6 py-4">{user.email}</td>
                   <td className="px-6 py-4">{user.address}</td>
                   <td className="px-6 py-4">{translateRole(user.role)}</td>
-                  <td className="px-6 py-4  ">
+                  <td className="px-6 py-4">
                     <button
                       className="px-6 py-4"
                       onClick={() => navigate(`/update_user/${user._id}`)}
