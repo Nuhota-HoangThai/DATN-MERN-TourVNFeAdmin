@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 
 const Register = () => {
-  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +27,7 @@ const Register = () => {
       if (response.data.success) {
         setSuccessMessage("Thêm người dùng thành công.");
         setTimeout(() => {
-          navigate("/listUser"); // Chuyển hướng người dùng sau khi đăng ký thành công
+          navigate("/listUser");
         }, 3000);
       }
     } catch (error) {

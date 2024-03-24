@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
 const ToursList = ({ tourTypeId }) => {
@@ -34,7 +34,7 @@ const ToursList = ({ tourTypeId }) => {
     <div className="tours-list">
       <h3 className="my-4 text-xl font-semibold">Danh sách Tour</h3>
       {isLoading && <div>Đang tải...</div>}
-      {error && <div className="text-red-500">Lỗi: {error}</div>}
+      {/* {error && <div className="text-red-500">Lỗi: {error}</div>} */}
       {!isLoading && !error && tours.length === 0 && (
         <div>Không tìm thấy tour nào.</div>
       )}
@@ -46,7 +46,7 @@ const ToursList = ({ tourTypeId }) => {
               className="overflow-hidden rounded-md bg-white px-6 py-4 shadow"
             >
               <div className="font-medium text-indigo-600">{tour.nameTour}</div>
-              <div className="text-sm text-gray-500">{tour.description}</div>
+              {/* <div className="text-sm text-gray-500">{tour.description}</div> */}
             </li>
           ))}
         </ul>

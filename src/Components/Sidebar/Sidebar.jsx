@@ -18,14 +18,19 @@ const Sidebar = () => {
       <div className="mx-2 pt-10">
         {[
           {
-            icon: <FaRegListAlt />,
-            text: "Danh sách tour",
-            link: "/listTour",
-          },
-          {
             icon: <GiPalmTree />,
             text: "Danh sách loại tour",
             link: "/listType",
+          },
+          {
+            icon: <IoStatsChartOutline />,
+            text: "Danh mục tour",
+            link: "/listTourDirectory",
+          },
+          {
+            icon: <FaRegListAlt />,
+            text: "Danh sách tour",
+            link: "/listTour",
           },
           {
             icon: <MdOutlineBookOnline />,
@@ -36,11 +41,6 @@ const Sidebar = () => {
             icon: <FaUserFriends />,
             text: "Danh sách người dùng",
             link: "/listUser",
-          },
-          {
-            icon: <IoStatsChartOutline />,
-            text: "Thống kê",
-            link: "/listAccess",
           },
         ].map((item, index) => (
           <Link to={item.link} key={index} className="no-underline">

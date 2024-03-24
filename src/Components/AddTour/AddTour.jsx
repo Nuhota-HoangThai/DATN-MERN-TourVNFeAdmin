@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import upload from "../../assets/images/upload.png";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
@@ -10,22 +10,20 @@ import Slider from "react-slick";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+import TourType from "./TourType";
+import TourDirectory from "./TourDirectory";
+
 const AddTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const [images, setImages] = useState([]);
-
-  const [tourTypes, setTourTypes] = useState([]);
-  const [selectedTourType, setSelectedTourType] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
   const [description, setDescription] = useState("");
 
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
-  };
+  const [selectedTourType, setSelectedTourType] = useState("");
 
   const getDefaultConvergeTime = () => {
     const now = new Date();
@@ -47,6 +45,10 @@ const AddTour = () => {
   };
 
   const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
+
+  const handleDescriptionChange = (value) => {
+    setDescription(value);
+  };
 
   const Add_Tour = async (e) => {
     e.preventDefault();
@@ -83,20 +85,6 @@ const AddTour = () => {
         alert("Đã xãy ra lỗi!");
       });
   };
-
-  useEffect(() => {
-    const fetchTourTypes = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
-        if (!response.ok) throw new Error("Network response was not ok");
-        const data = await response.json();
-        setTourTypes(data.tourTypes);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      }
-    };
-    fetchTourTypes();
-  }, []);
 
   // Cài đặt cho Slider
   const sliderSettings = {
@@ -154,56 +142,48 @@ const AddTour = () => {
           </h1>
           <div className="grid grid-cols-2">
             <div>
-              <div className="mb-4">
-                <select
-                  name="AccessTour"
-                  id="AccessTour"
-                  className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                >
-                  <option value="allAge">Dành cho tất cả các độ tuổi</option>
-                  <option value="adultsOnly">
-                    Dành cho khách hàng trên 12 tuổi
-                  </option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="nameTour"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Chuyến du lịch
-                </label>
-                <input
-                  type="text"
-                  name="nameTour"
-                  id="nameTour"
-                  placeholder="Tiêu đề chuyến du lịch"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              <div className="grid grid-cols-2 gap-4">
+                <TourDirectory />
+                <TourType
+                  selectedTourType={selectedTourType}
+                  setSelectedTourType={setSelectedTourType}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                   <label
-                    htmlFor="tourType"
+                    htmlFor="nameTour"
                     className="mb-2 block text-sm font-bold text-gray-700"
                   >
-                    Loại Tour
+                    Chuyến du lịch
+                  </label>
+                  <input
+                    type="text"
+                    name="nameTour"
+                    id="nameTour"
+                    placeholder="Tiêu đề chuyến du lịch"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="regions"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Khu vực du lịch
                   </label>
                   <select
-                    name="tourType"
-                    id="tourType"
-                    value={selectedTourType}
-                    onChange={(e) => setSelectedTourType(e.target.value)}
+                    name="regions"
+                    id="regions"
                     className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                   >
-                    <option value="">Chọn loại tour</option>
-                    {tourTypes.map((type) => (
-                      <option key={type._id} value={type._id}>
-                        {type.typeName}
-                      </option>
-                    ))}
+                    <option value="mb">Miền Bắc</option>
+                    <option value="mt">Miền Trung</option>
+                    <option value="mn">Miền Nam</option>
                   </select>
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                   <label
                     htmlFor="startingGate"
@@ -216,6 +196,21 @@ const AddTour = () => {
                     name="startingGate"
                     id="startingGate"
                     placeholder="Nơi khởi hành"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="maxParticipants"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Số lượng khách
+                  </label>
+                  <input
+                    type="Number"
+                    name="maxParticipants"
+                    id="maxParticipants"
+                    placeholder="Số lượng khách"
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
@@ -236,57 +231,73 @@ const AddTour = () => {
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
-
-                <div className="mb-4">
-                  <label
-                    htmlFor="maxParticipants"
-                    className="mb-2 block text-sm font-bold text-gray-700"
-                  >
-                    Số lượng khách
-                  </label>
-                  <input
-                    type="Number"
-                    name="maxParticipants"
-                    id="maxParticipants"
-                    placeholder="Số lượng khách"
-                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                   <label
                     htmlFor="priceForChildren"
                     className="mb-2 block text-sm font-bold text-gray-700"
                   >
-                    Giá trẻ em (2-12) tuổi
+                    Giá khách (6-16) tuổi
                   </label>
                   <input
                     type="number"
                     name="priceForChildren"
                     id="priceForChildren"
-                    placeholder="Giá cho trẻ em"
-                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label
-                    htmlFor="priceForInfants"
-                    className="mb-2 block text-sm font-bold text-gray-700"
-                  >
-                    Giá trẻ sơ sinh (dưới 2) tuổi
-                  </label>
-                  <input
-                    type="number"
-                    name="priceForInfants"
-                    id="priceForInfants"
-                    placeholder="Giá cho trẻ sơ sinh"
+                    placeholder="Nhập giá"
+                    disabled={selectedTourType === "65ff9d9909bebca7df0be4e0"}
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="priceForYoungChildren"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Giá khách (3-6) tuổi
+                  </label>
+                  <input
+                    type="number"
+                    name="priceForYoungChildren"
+                    id="priceForYoungChildren"
+                    placeholder="Nhập giá"
+                    disabled={selectedTourType === "65ff9d9909bebca7df0be4e0"}
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="priceForInfants"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Giá khách (dưới 3) tuổi
+                  </label>
+                  <input
+                    type="number"
+                    name="priceForInfants"
+                    id="priceForInfants"
+                    placeholder="Nhập giá"
+                    disabled={selectedTourType === "65ff9d9909bebca7df0be4e0"}
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label
+                    htmlFor="additionalFees"
+                    className="mb-2 block text-sm font-bold text-gray-700"
+                  >
+                    Phí phụ thu (phòng đơn)
+                  </label>
+                  <input
+                    type="number"
+                    name="additionalFees"
+                    id="additionalFees"
+                    placeholder="Phí bổ sung"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
+                </div>
                 <div className="mb-4">
                   <label
                     htmlFor="startDate"
@@ -299,21 +310,6 @@ const AddTour = () => {
                     name="startDate"
                     id="startDate"
                     placeholder="Ngày khởi hành"
-                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="endDate"
-                    className="mb-2 block text-sm font-bold text-gray-700"
-                  >
-                    Ngày kết thúc
-                  </label>
-                  <input
-                    type="Date"
-                    name="endDate"
-                    id="endDate"
-                    placeholder="Ngày kết thúc"
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
@@ -337,39 +333,21 @@ const AddTour = () => {
                 </div>
                 <div className="mb-4">
                   <label
-                    htmlFor="regions"
+                    htmlFor="endDate"
                     className="mb-2 block text-sm font-bold text-gray-700"
                   >
-                    Khu vực du lịch
+                    Ngày kết thúc
                   </label>
-                  <select
-                    name="regions"
-                    id="regions"
-                    className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                  >
-                    <option value="mb">Miền Bắc</option>
-                    <option value="mt">Miền Trung</option>
-                    <option value="mn">Miền Nam</option>
-                  </select>
+                  <input
+                    type="Date"
+                    name="endDate"
+                    id="endDate"
+                    placeholder="Ngày kết thúc"
+                    className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                  />
                 </div>
               </div>
 
-              {/* Additional fees field */}
-              <div className="mb-4">
-                <label
-                  htmlFor="additionalFees"
-                  className="mb-2 block text-sm font-bold text-gray-700"
-                >
-                  Phí phụ thu (phòng đơn)
-                </label>
-                <input
-                  type="number"
-                  name="additionalFees"
-                  id="additionalFees"
-                  placeholder="Phí bổ sung"
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                />
-              </div>
               <div className="mb-4">
                 <label
                   htmlFor="description"
@@ -383,7 +361,7 @@ const AddTour = () => {
                 />
               </div>
             </div>
-            <div className="ml-5 ">
+            <div className="ml-5">
               <div className="mb-4 text-center ">
                 <label htmlFor="file-input" className="my-2 cursor-pointer ">
                   {images.length > 0 ? (

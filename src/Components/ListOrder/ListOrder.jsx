@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
-
-import { MdClear } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ListOrder = () => {
   const [bookings, setBookings] = useState([]);
@@ -9,19 +8,19 @@ const ListOrder = () => {
   const [error, setError] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState({});
 
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
   const formatDateVN = (dateString) => {
     const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   };
 
   const formatOrderId = (id) => {
-    // Kiểm tra nếu id không đủ dài, trả về nguyên vẹn
-    if (id.length <= 8) return id;
-    // Lấy 5 ký tự đầu và 3 ký tự cuối
-    return `${id.substring(0, 5)}...${id.substring(id.length - 3)}`;
+    return id.length <= 8
+      ? id
+      : `${id.substring(0, 5)}...${id.substring(id.length - 3)}`;
   };
 
   const toggleDropdown = (bookingId) => {
@@ -31,9 +30,9 @@ const ListOrder = () => {
   const fetchBookings = async () => {
     try {
       const response = await fetch(`${BASE_URL}/booking/listBookings`);
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+
       const data = await response.json();
       setBookings(data);
     } catch (error) {
@@ -44,23 +43,13 @@ const ListOrder = () => {
     }
   };
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
-
   const remove_booking = async (id) => {
     try {
       const response = await fetch(`${BASE_URL}/booking/removeBooking/${id}`, {
         method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to delete the booking");
-      }
+      if (!response.ok) throw new Error("Failed to delete the booking");
 
       await fetchBookings();
     } catch (error) {
@@ -68,42 +57,30 @@ const ListOrder = () => {
     }
   };
 
-  const translateStatus = (status) => {
-    const statusTranslations = {
+  const translateStatus = (status) =>
+    ({
       pending: "Chờ xử lý",
       confirmed: "Đã xác nhận",
       cancelled: "Đã hủy",
       completed: "Hoàn thành",
-    };
-    return statusTranslations[status] || "N/A";
-  };
+    })[status] || "N/A";
 
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case "pending":
-        return "text-yellow-600";
-      case "confirmed":
-        return "text-green-600";
-      case "cancelled":
-        return "text-red-600";
-      case "completed":
-        return "text-blue-600";
-      default:
-        return "text-gray-800";
-    }
-  };
+  const getStatusStyle = (status) =>
+    ({
+      pending: "text-yellow-600",
+      confirmed: "text-green-600",
+      cancelled: "text-red-600",
+      completed: "text-blue-600",
+    })[status] || "text-gray-800";
 
-  if (loading) {
-    return <div className="mt-5 text-center">Đang tải trang...</div>;
-  }
+  if (loading) return <div className="mt-5 text-center">Đang tải trang...</div>;
 
-  if (error) {
+  if (error)
     return (
       <div className="mt-5 text-center text-red-500">
-        Error fetching booking: {error}
+        Lỗi không lấy được danh sách đặt tour: {error}
       </div>
     );
-  }
 
   const confirmOrderStatus = async (bookingId, newStatus) => {
     try {
@@ -149,6 +126,7 @@ const ListOrder = () => {
                 <th className="px-4 py-2 text-left">Tour</th>
                 <th className="px-4 py-2 text-left">Trạng thái</th>
                 <th className="px-4 py-2 text-left">Hành động</th>
+                <th className="px-4 py-2 text-left">Chi tiết đơn</th>
                 <th className="px-4 py-2 text-left">Xóa đơn</th>
               </tr>
             </thead>
@@ -229,6 +207,11 @@ const ListOrder = () => {
                         )}
                       </>
                     )}
+                  </td>
+                  <td className="border-x px-4 py-2">
+                    <Link to={`/booking-detail/${booking._id}`}>
+                      {formatOrderId(booking._id)}
+                    </Link>
                   </td>
                   <td className="border-x px-4 py-2">
                     <button

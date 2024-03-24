@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
-import { BASE_URL } from "../../../utils/config";
-
-import ToursList from "../../TourType/ToursList/ToursList";
+import { BASE_URL } from "../../utils/config";
 import { Link, useNavigate } from "react-router-dom";
+import TourDirectoriesList from "./TourDirectoryList";
 
-function TourTypesList() {
-  const [tourTypes, setTourTypes] = useState([]);
-  const [selectedTourTypeId, setSelectedTourTypeId] = useState("");
+function ListTourDirectories() {
+  const [tourDirectories, setTourDirectories] = useState([]);
+  const [selectedTourDirectoryId, setSelectedTourDirectoryId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetchTourTypes = async () => {
+  const fetchTourDirectories = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
+      const response = await fetch(
+        `${BASE_URL}/tourDirectory/getAllTourDirectories`,
+      );
       if (!response.ok) throw new Error("Đã xảy ra lỗi!");
 
       const data = await response.json();
-      setTourTypes(data.tourTypes);
+      setTourDirectories(data.tourDirectories);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -28,23 +29,26 @@ function TourTypesList() {
   };
 
   useEffect(() => {
-    fetchTourTypes();
+    fetchTourDirectories();
   }, []);
 
-  const selectTourType = (id) => {
-    setSelectedTourTypeId(id);
+  const selectTourDirectory = (id) => {
+    setSelectedTourDirectoryId(id);
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Bạn có chắc muốn xóa loại tour này?")) {
+    if (window.confirm("Bạn có chắc muốn xóa danh mục tour này?")) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/tourType/deleteType/${id}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `${BASE_URL}/tourDirectory/deleteDirectory/${id}`,
+          {
+            method: "DELETE",
+          },
+        );
         if (!response.ok) throw new Error("Xóa thất bại!");
 
-        fetchTourTypes();
+        fetchTourDirectories();
       } catch (err) {
         setError(err.message);
       } finally {
@@ -54,11 +58,11 @@ function TourTypesList() {
   };
 
   const handleUpdate = (id) => {
-    navigate(`/updateTourType/${id}`); // Corrected usage
+    navigate(`/updateTourDirectory/${id}`);
   };
 
   if (isLoading) {
-    return <div className="mt-5 text-center">Đang tải trang...</div>;
+    return <div className="mt-5 text-center">Đang tải...</div>;
   }
 
   if (error) {
@@ -68,14 +72,14 @@ function TourTypesList() {
   return (
     <div className="max-h-[600px] w-full p-4">
       <div className="flex justify-between">
-        <h2 className="my-2 text-center text-2xl  font-bold">Loại Tour</h2>
-        <Link to={"/addTourType"} className=" no-underline">
+        <h2 className="my-2 text-center text-2xl  font-bold">Danh Mục Tour</h2>
+        <Link to={"/addTourDirectory"} className="no-underline">
           <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-            <p className="pl-2">Thêm loại tour</p>
+            <p className="pl-2">Thêm danh mục tour</p>
           </div>
         </Link>
       </div>
-      {tourTypes.length > 0 ? (
+      {tourDirectories.length > 0 ? (
         <div>
           <table className="  min-w-full overflow-hidden rounded-md  shadow">
             <thead className=" bg-blue-950 font-bold text-white ">
@@ -107,16 +111,16 @@ function TourTypesList() {
               </tr>
             </thead>
             <tbody className=" divide-y divide-gray-200 bg-white">
-              {tourTypes.map((tourType) => (
+              {tourDirectories.map((tourDirectory) => (
                 <tr
-                  key={tourType._id}
+                  key={tourDirectory._id}
                   className="cursor-pointer hover:bg-gray-50 "
                 >
                   <td
-                    onClick={() => selectTourType(tourType._id)}
+                    onClick={() => selectTourDirectory(tourDirectory._id)}
                     className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                   >
-                    {tourType.typeName}
+                    {tourDirectory.directoryName}
                   </td>
                   <td
                     className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
@@ -128,13 +132,16 @@ function TourTypesList() {
                     }}
                   >
                     <div
-                      className="h-auto p-4"
-                      dangerouslySetInnerHTML={{ __html: tourType.description }}
+                      className="h-auto  p-4"
+                      dangerouslySetInnerHTML={{
+                        __html: tourDirectory.directoryDescription,
+                      }}
                     ></div>
+                    {/* {tourDirectory.directoryDescription} */}
                   </td>
                   <td className="py-3 text-center text-sm font-medium ">
                     <button
-                      onClick={() => handleUpdate(tourType._id)}
+                      onClick={() => handleUpdate(tourDirectory._id)}
                       className=""
                     >
                       Sửa
@@ -142,7 +149,7 @@ function TourTypesList() {
                   </td>
                   <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                     <button
-                      onClick={() => handleDelete(tourType._id)}
+                      onClick={() => handleDelete(tourDirectory._id)}
                       className="text-red-600 hover:text-red-900"
                     >
                       Xóa
@@ -152,14 +159,15 @@ function TourTypesList() {
               ))}
             </tbody>
           </table>
-
-          {selectedTourTypeId && <ToursList tourTypeId={selectedTourTypeId} />}
+          {selectedTourDirectoryId && (
+            <TourDirectoriesList tourDirectoryId={selectedTourDirectoryId} />
+          )}
         </div>
       ) : (
-        <p className="mt-5 text-center">Không có loại tour nào!!!</p>
+        <p className="mt-5 text-center">Không có danh mục tour nào!</p>
       )}
     </div>
   );
 }
 
-export default TourTypesList;
+export default ListTourDirectories;

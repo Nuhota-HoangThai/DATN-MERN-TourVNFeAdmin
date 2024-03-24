@@ -1,28 +1,30 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../../utils/config";
+import { BASE_URL } from "../../utils/config";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-function UpdateTourType() {
-  const [typeName, setTypeName] = useState("");
-  const [description, setDescription] = useState("");
+function UpdateTourDirectory() {
+  const [directoryName, setDirectoryName] = useState("");
+  const [directoryDescription, setDirectoryDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTourType = async () => {
+    const fetchTourDirectory = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/tourType/getTourType/${id}`);
-        if (!response.ok) throw new Error("Could not fetch tour type");
+        const response = await fetch(
+          `${BASE_URL}/tourDirectory/getDirectory/${id}`,
+        );
+        if (!response.ok) throw new Error("Could not fetch tour directory");
 
         const data = await response.json();
-        setTypeName(data.tourType.typeName);
-        setDescription(data.tourType.description);
+        setDirectoryName(data.directoryName);
+        setDirectoryDescription(data.directoryDescription);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -30,7 +32,7 @@ function UpdateTourType() {
       }
     };
 
-    fetchTourType();
+    fetchTourDirectory();
   }, [id]);
 
   const handleSubmit = async (event) => {
@@ -38,17 +40,20 @@ function UpdateTourType() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/tourType/updateType/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${BASE_URL}/tourDirectory/updateDirectory/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ directoryName, directoryDescription }),
         },
-        body: JSON.stringify({ typeName, description }),
-      });
+      );
 
-      if (!response.ok) throw new Error("Could not update tour type");
+      if (!response.ok) throw new Error("Could not update tour directory");
 
-      navigate("/listType"); // Use navigate correctly
+      navigate("/listTourDirectory");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -58,36 +63,35 @@ function UpdateTourType() {
 
   return (
     <div className="mx-auto mt-10 max-h-[600px] max-w-xl rounded-2xl bg-white p-8 shadow-2xl">
-      <h2 className="mb-5 text-2xl font-semibold">Cập nhật loại tour</h2>
+      <h2 className="mb-5 text-2xl font-semibold">Cập nhật danh mục tour</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
-            htmlFor="typeName"
+            htmlFor="directoryName"
             className="block text-sm font-medium text-gray-700"
           >
-            Tên loại tour
+            Tên danh mục tour
           </label>
           <input
             type="text"
-            id="typeName"
-            value={typeName}
-            onChange={(e) => setTypeName(e.target.value)}
+            id="directoryName"
+            value={directoryName}
+            onChange={(e) => setDirectoryName(e.target.value)}
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           />
         </div>
         <div>
           <label
-            htmlFor="description"
+            htmlFor="directoryDescription"
             className="block text-sm font-medium text-gray-700"
           >
-            Thông tin về loại tour
+            Mô tả danh mục
           </label>
-
           <ReactQuill
             theme="snow"
-            value={description}
-            onChange={setDescription}
+            value={directoryDescription}
+            onChange={setDirectoryDescription}
             className="mt-1"
           />
         </div>
@@ -103,4 +107,4 @@ function UpdateTourType() {
   );
 }
 
-export default UpdateTourType;
+export default UpdateTourDirectory;

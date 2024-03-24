@@ -6,10 +6,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import upload from "../../assets/images/upload.png";
+import TourDirectory from "../AddTour/TourDirectory";
+import TourType from "../AddTour/TourType";
 const UpdateTour = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  // const [image, setImage] = useState();
 
   const [tourData, setTourData] = useState({
     image: "",
@@ -22,29 +23,15 @@ const UpdateTour = () => {
     endDate: "",
     convergeTime: "",
     tourType: "",
+    tourDirectory: "",
     priceForChildren: "",
+    priceForYoungChildren: "",
     priceForInfants: "",
     additionalFees: "",
   });
 
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState([upload]);
-  const [tourTypes, setTourTypes] = useState([]);
-
-  // Fetch tour types
-  useEffect(() => {
-    const fetchTourTypes = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
-        const data = await response.json();
-        setTourTypes(data.tourTypes);
-      } catch (error) {
-        console.error("Error fetching tour types:", error);
-      }
-    };
-
-    fetchTourTypes();
-  }, []);
 
   useEffect(() => {
     const fetchTour = async () => {
@@ -168,115 +155,24 @@ const UpdateTour = () => {
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Loại tour
-              </label>
-              <select
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
-                value={tourData.tourType}
-                onChange={(e) =>
-                  setTourData({ ...tourData, tourType: e.target.value })
-                }
-              >
-                <option value="">Chọn loại tour</option>
-                {tourTypes.map((type) => (
-                  <option key={type._id} value={type._id}>
-                    {type.typeName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Nơi khởi hành
-              </label>
-              <input
-                placeholder="Nhập nơi khởi hành"
-                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                type="text"
-                value={tourData.startingGate}
-                onChange={(e) =>
-                  setTourData({ ...tourData, startingGate: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Tên tour
-            </label>
-            <input
-              placeholder="Nhập tên tour"
-              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              type="text"
-              value={tourData.nameTour}
-              onChange={(e) =>
-                setTourData({ ...tourData, nameTour: e.target.value })
-              }
-            />
+            <TourDirectory />
+            <TourType />
           </div>
           <div className="grid grid-cols-2  gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Số chỗ trống
+                Tên tour
               </label>
               <input
-                placeholder="Số chỗ trống"
-                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                type="number"
-                value={tourData.maxParticipants}
+                placeholder="Nhập tên tour"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                type="text"
+                value={tourData.nameTour}
                 onChange={(e) =>
-                  setTourData({ ...tourData, maxParticipants: e.target.value })
+                  setTourData({ ...tourData, nameTour: e.target.value })
                 }
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Giá
-              </label>
-              <input
-                placeholder="Nhập giá tour"
-                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                type="number"
-                value={tourData.price}
-                onChange={(e) =>
-                  setTourData({ ...tourData, price: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Giá trẻ em (2-12) tuổi
-              </label>
-              <input
-                placeholder="Nhập giá tour"
-                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                type="number"
-                value={tourData.priceForChildren}
-                onChange={(e) =>
-                  setTourData({ ...tourData, priceForChildren: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Giá trẻ sơ sinh (dưới 2) tuổi
-              </label>
-              <input
-                placeholder="Nhập giá tour"
-                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                type="number"
-                value={tourData.priceForInfants}
-                onChange={(e) =>
-                  setTourData({ ...tourData, priceForInfants: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Khu vực du lịch
@@ -293,6 +189,116 @@ const UpdateTour = () => {
                 <option value="mt">Miền Trung</option>
                 <option value="mn">Miền Nam</option>
               </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-2  gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Nơi khởi hành
+              </label>
+              <input
+                placeholder="Nhập nơi khởi hành"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                type="text"
+                value={tourData.startingGate}
+                onChange={(e) =>
+                  setTourData({ ...tourData, startingGate: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Số chỗ trống
+              </label>
+              <input
+                placeholder="Số chỗ trống"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                type="number"
+                value={tourData.maxParticipants}
+                onChange={(e) =>
+                  setTourData({ ...tourData, maxParticipants: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Giá
+              </label>
+              <input
+                placeholder="Nhập giá tour"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                type="number"
+                value={tourData.price}
+                onChange={(e) =>
+                  setTourData({ ...tourData, price: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Giá trẻ em (6-16) tuổi
+              </label>
+              <input
+                placeholder="Nhập giá tour"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                type="number"
+                value={tourData.priceForChildren}
+                onChange={(e) =>
+                  setTourData({ ...tourData, priceForChildren: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Giá trẻ em (3-6) tuổi
+              </label>
+              <input
+                placeholder="Nhập giá"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                type="number"
+                value={tourData.priceForYoungChildren}
+                onChange={(e) =>
+                  setTourData({
+                    ...tourData,
+                    priceForYoungChildren: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Giá trẻ sơ sinh (dưới 3) tuổi
+              </label>
+              <input
+                placeholder="Nhập giá tour"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                type="number"
+                value={tourData.priceForInfants}
+                onChange={(e) =>
+                  setTourData({ ...tourData, priceForInfants: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Phí phụ thu (phòng đơn)
+              </label>
+              <input
+                placeholder=" Phí bổ sung"
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                type="number"
+                value={tourData.additionalFees}
+                onChange={(e) =>
+                  setTourData({ ...tourData, additionalFees: e.target.value })
+                }
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -343,20 +349,7 @@ const UpdateTour = () => {
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Phí phụ thu (phòng đơn)
-            </label>
-            <input
-              placeholder=" Phí bổ sung"
-              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              type="number"
-              value={tourData.additionalFees}
-              onChange={(e) =>
-                setTourData({ ...tourData, additionalFees: e.target.value })
-              }
-            />
-          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Thông tin chi tiết

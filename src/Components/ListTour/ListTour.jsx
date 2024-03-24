@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
-
-import { MdClear } from "react-icons/md";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ListTour = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const navigate = useNavigate();
 
   const [allTours, setAllTours] = useState([]);
@@ -29,8 +31,7 @@ const ListTour = () => {
 
   const fetchInfo = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/tour/getAllTours`);
-      const data = await res.json();
+      const { data } = await axios.get(`${BASE_URL}/tour/getAllTours`);
       setAllTours(data);
       //console.log(data);
     } catch (error) {
@@ -48,11 +49,9 @@ const ListTour = () => {
 
   const remove_tour = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/tour/removeTour/${id}`, {
-        method: "DELETE",
+      const response = await axios.delete(`${BASE_URL}/tour/removeTour/${id}`, {
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
       });
 
@@ -98,6 +97,9 @@ const ListTour = () => {
                   Loại tour
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Danh mục tour
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Tên tour
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -134,6 +136,9 @@ const ListTour = () => {
                 <tr key={tour._id} className="bg-white hover:bg-gray-100">
                   <td className="border-b px-6 py-4">
                     {tour.tourType.typeName || "N/A"}
+                  </td>
+                  <td className="border-b px-6 py-4">
+                    {tour.tourDirectory.directoryName || "N/A"}
                   </td>
                   <td className="border-b px-6 py-4">{tour.nameTour}</td>
                   <td className="border-b px-6 py-4">{tour.maxParticipants}</td>
