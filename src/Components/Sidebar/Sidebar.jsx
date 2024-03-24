@@ -4,6 +4,7 @@ import { FaRegListAlt, FaUserFriends } from "react-icons/fa";
 import { GiPalmTree } from "react-icons/gi";
 import { MdOutlineBookOnline } from "react-icons/md";
 import { IoStatsChartOutline } from "react-icons/io5";
+import { TbTournament } from "react-icons/tb";
 
 import { useSelector } from "react-redux";
 
@@ -18,17 +19,17 @@ const Sidebar = () => {
       <div className="mx-2 pt-10">
         {[
           {
-            icon: <GiPalmTree />,
+            icon: <FaRegListAlt />,
             text: "Danh sách loại tour",
             link: "/listType",
           },
           {
-            icon: <IoStatsChartOutline />,
+            icon: <TbTournament />,
             text: "Danh mục tour",
             link: "/listTourDirectory",
           },
           {
-            icon: <FaRegListAlt />,
+            icon: <GiPalmTree />,
             text: "Danh sách tour",
             link: "/listTour",
           },
@@ -41,6 +42,11 @@ const Sidebar = () => {
             icon: <FaUserFriends />,
             text: "Danh sách người dùng",
             link: "/listUser",
+          },
+          {
+            icon: <IoStatsChartOutline />,
+            text: "Thống kê",
+            link: "/statistical",
           },
         ].map((item, index) => (
           <Link to={item.link} key={index} className="no-underline">

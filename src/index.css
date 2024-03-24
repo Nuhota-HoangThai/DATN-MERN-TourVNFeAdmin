@@ -4,8 +4,9 @@
 
 body {
   margin: 0;
-  font-family: "Poppins";
+  /* font-family: "Poppins"; */
   color: rgba(2, 2, 67, 0.826);
+  font-size: 18px;
   background-color: rgb(223, 223, 244);
   height: 100vh;
 }
