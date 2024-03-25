@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/config";
+import axios from "axios";
 
 const TourDirectoriesList = ({ tourDirectoryId }) => {
   const [directories, setDirectories] = useState([]);
@@ -11,12 +12,10 @@ const TourDirectoriesList = ({ tourDirectoryId }) => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(
+        const { data } = await axios.get(
           `${BASE_URL}/tourDirectory/getTourDirectory/${tourDirectoryId}`,
         );
-        if (!response.ok) throw new Error("Failed to fetch tour directories");
 
-        const data = await response.json();
         setDirectories(data.directories);
       } catch (err) {
         setError(err.message);

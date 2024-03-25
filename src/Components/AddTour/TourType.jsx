@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const TourType = ({ selectedTourType, setSelectedTourType }) => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [tourTypes, setTourTypes] = useState([]);
 
   useEffect(() => {
     const fetchTourTypes = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
-        if (!response.ok) throw new Error("Network response was not ok");
-        const data = await response.json();
+        const { data } = await axios.get(
+          `${BASE_URL}/tourType/getAllTourType`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
+        );
         setTourTypes(data.tourTypes);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);

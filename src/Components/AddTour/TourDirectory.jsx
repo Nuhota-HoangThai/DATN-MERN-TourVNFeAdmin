@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const TourDirectory = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [tourDirectory, setTourDirectory] = useState([]);
   const [selectedTourDirectory, setSelectedTourDirectory] = useState("");
 
   useEffect(() => {
     const fetchTourCategories = async () => {
       try {
-        const response = await fetch(
+        const { data } = await axios.get(
           `${BASE_URL}/tourDirectory/getAllTourDirectories`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
         );
-        if (!response.ok) throw new Error("Network response was not ok");
-        const data = await response.json();
 
         setTourDirectory(data.tourDirectories);
       } catch (error) {

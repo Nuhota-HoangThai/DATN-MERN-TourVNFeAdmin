@@ -4,7 +4,12 @@ import { BASE_URL } from "../../../utils/config";
 import ToursList from "../../TourType/ToursList/ToursList";
 import { Link, useNavigate } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+import axios from "axios";
+
 function TourTypesList() {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [tourTypes, setTourTypes] = useState([]);
   const [selectedTourTypeId, setSelectedTourTypeId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +20,12 @@ function TourTypesList() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${BASE_URL}/tourType/getAllTourType`);
-      if (!response.ok) throw new Error("Đã xảy ra lỗi!");
+      const { data } = await axios.get(`${BASE_URL}/tourType/getAllTourType`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
-      const data = await response.json();
       setTourTypes(data.tourTypes);
     } catch (err) {
       setError(err.message);
@@ -39,10 +46,11 @@ function TourTypesList() {
     if (window.confirm("Bạn có chắc muốn xóa loại tour này?")) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/tourType/deleteType/${id}`, {
-          method: "DELETE",
+        await axios.delete(`${BASE_URL}/tourType/deleteType/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         });
-        if (!response.ok) throw new Error("Xóa thất bại!");
 
         fetchTourTypes();
       } catch (err) {

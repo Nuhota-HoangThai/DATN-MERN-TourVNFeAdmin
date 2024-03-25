@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
 
-const Register = () => {
+const AddUser = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -24,7 +27,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BASE_URL}/user/addUser`, formData);
+      const response = await axios.post(`${BASE_URL}/user/addUser`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (response.data.success) {
         setSuccessMessage("Thêm người dùng thành công.");
         setTimeout(() => {
@@ -137,4 +142,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AddUser;

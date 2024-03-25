@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -8,7 +10,10 @@ import "react-quill/dist/quill.snow.css";
 import upload from "../../assets/images/upload.png";
 import TourDirectory from "../AddTour/TourDirectory";
 import TourType from "../AddTour/TourType";
+
 const UpdateTour = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -36,10 +41,12 @@ const UpdateTour = () => {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/tour/getTourById/${id}`);
-        const data = await res.json();
+        const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`, {
+          // headers: {
+          //   Authorization: "Bearer " + token,
+          // },
+        });
         setTourData(data.tour);
-        //console.log(data.tour);
         if (Array.isArray(data.tour.image)) {
           const imagesUrls = data.tour.image.map(
             (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
@@ -69,15 +76,17 @@ const UpdateTour = () => {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/tour/update_tour/${id}`, {
-        method: "PUT",
-        body: formData,
-      });
-      const data = await response.json();
+      const { data } = await axios.put(
+        `${BASE_URL}/tour/update_tour/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
       setTourData(data.tour);
-      if (!response.ok) {
-        throw new Error("Failed to update tour");
-      }
+
       alert("Cập nhật tour thành công!");
       navigate("/listTour");
     } catch (error) {

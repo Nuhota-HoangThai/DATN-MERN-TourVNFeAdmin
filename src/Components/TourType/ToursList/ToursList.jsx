@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const ToursList = ({ tourTypeId }) => {
+  //const { token } = useSelector((state) => state.user.currentUser);
+
   const [tours, setTours] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,12 +15,15 @@ const ToursList = ({ tourTypeId }) => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(
+        const { data } = await axios.get(
           `${BASE_URL}/tour/getTourType/${tourTypeId}`,
+          {
+            // headers: {
+            //   Authorization: "Bearer " + token,
+            // },
+          },
         );
-        if (!response.ok) throw new Error("Failed to fetch tours");
 
-        const data = await response.json();
         setTours(data.tours);
       } catch (err) {
         setError(err.message);

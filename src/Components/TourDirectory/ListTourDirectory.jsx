@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/config";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import TourDirectoriesList from "./TourDirectoryList";
+import axios from "axios";
 
 function ListTourDirectories() {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [tourDirectories, setTourDirectories] = useState([]);
   const [selectedTourDirectoryId, setSelectedTourDirectoryId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,12 +19,15 @@ function ListTourDirectories() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(
+      const { data } = await axios.get(
         `${BASE_URL}/tourDirectory/getAllTourDirectories`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
       );
-      if (!response.ok) throw new Error("Đã xảy ra lỗi!");
 
-      const data = await response.json();
       setTourDirectories(data.tourDirectories);
     } catch (err) {
       setError(err.message);
@@ -40,13 +48,11 @@ function ListTourDirectories() {
     if (window.confirm("Bạn có chắc muốn xóa danh mục tour này?")) {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          `${BASE_URL}/tourDirectory/deleteDirectory/${id}`,
-          {
-            method: "DELETE",
-          },
-        );
-        if (!response.ok) throw new Error("Xóa thất bại!");
+        await axios.delete(`${BASE_URL}/tourDirectory/deleteDirectory/${id}`, {
+          // headers: {
+          //   Authorization: "Bearer " + token,
+          // },
+        });
 
         fetchTourDirectories();
       } catch (err) {

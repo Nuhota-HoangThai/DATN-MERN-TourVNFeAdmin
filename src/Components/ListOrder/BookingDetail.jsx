@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const BookingDetail = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const { bookingId } = useParams();
   const [bookingDetail, setBookingDetail] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,6 +19,11 @@ const BookingDetail = () => {
         setLoading(true);
         const { data } = await axios.get(
           `${BASE_URL}/booking/bookings/${bookingId}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
         );
         setBookingDetail(data);
         setLoading(false);

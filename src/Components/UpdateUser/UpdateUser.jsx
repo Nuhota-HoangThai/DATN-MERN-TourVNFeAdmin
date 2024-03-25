@@ -26,12 +26,12 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/user/getUserById/${id}`, {
+        const { data } = await axios.get(`${BASE_URL}/user/getUserById/${id}`, {
           headers: {
             Authorization: "Bearer " + token,
           },
         });
-        const data = res.data;
+        //const data = res.data;
 
         setUserData(data.user);
 
@@ -67,18 +67,22 @@ const UpdateUser = () => {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/user/update_user/${id}`, {
-        method: "PUT",
-        body: formData,
-      });
+      await axios.put(
+        `${BASE_URL}/user/update_user/${id}`,
+        {
+          formData,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to update user");
-      }
-
-      alert("User updated successfully");
+      alert("Cập nhật thông tin người dùng thành công.");
       navigate("/listUser");
     } catch (error) {
+      alert("Cập nhật thông tin người dùng thất bại!!!.");
       console.error("Error updating user:", error);
     }
   };

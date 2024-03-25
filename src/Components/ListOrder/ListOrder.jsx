@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import { useSelector } from "react-redux";
 
 const ListOrder = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,11 +34,12 @@ const ListOrder = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/booking/listBookings`);
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      const { data } = await axios.get(`${BASE_URL}/booking/listBookings`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
-      const data = await response.json();
       setBookings(data);
     } catch (error) {
       console.error("There was a problem with fetching bookings:", error);
@@ -45,11 +51,7 @@ const ListOrder = () => {
 
   const remove_booking = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/booking/removeBooking/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete the booking");
+      await axios.delete(`${BASE_URL}/booking/removeBooking/${id}`);
 
       await fetchBookings();
     } catch (error) {
@@ -84,20 +86,15 @@ const ListOrder = () => {
 
   const confirmOrderStatus = async (bookingId, newStatus) => {
     try {
-      const response = await fetch(
+      await axios.patch(
         `${BASE_URL}/booking/${bookingId}/confirmStatus`,
+        { status: newStatus },
         {
-          method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
           },
-          body: JSON.stringify({ status: newStatus }),
         },
       );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
 
       // Cập nhật danh sách đơn hàng sau khi thay đổi trạng thái thành công
       const updatedBookings = bookings.map((booking) =>

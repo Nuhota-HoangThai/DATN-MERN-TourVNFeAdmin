@@ -12,6 +12,7 @@ import "react-quill/dist/quill.snow.css";
 
 import TourType from "./TourType";
 import TourDirectory from "./TourDirectory";
+import axios from "axios";
 
 const AddTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -57,32 +58,18 @@ const AddTour = () => {
 
     let formData = new FormData(e.target);
 
-    await fetch(`${BASE_URL}/tour/addTour`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      body: formData,
-    })
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error(
-            `HTTP error! status: ${resp.status}, statusText: ${resp.statusText}`,
-          );
-        }
-        return resp.json();
+    await axios
+      .post(`${BASE_URL}/tour/addTour`, formData, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       })
-      .then((data) => {
-        if (data.success) {
-          setIsSuccess(true);
-        } else {
-          setError("Không thêm được tour. Vui lòng điền lại!!!");
-        }
+      .then(() => {
+        setIsSuccess(true);
       })
-
       .catch((error) => {
-        console.error("Error:", error);
-        alert("Đã xãy ra lỗi!");
+        setError("Thêm tour thất bại.");
+        console.error(error);
       });
   };
 

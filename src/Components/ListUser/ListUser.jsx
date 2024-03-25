@@ -32,16 +32,11 @@ const ListUser = () => {
 
   const remove_user = async (id) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/user/removeUser/${id}`, {
+      await axios.delete(`${BASE_URL}/user/removeUser/${id}`, {
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         },
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete the user");
-      }
 
       await fetchInfo();
     } catch (error) {

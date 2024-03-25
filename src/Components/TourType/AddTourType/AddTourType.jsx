@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/config";
+import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const AddTourType = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [typeName, setTypeName] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
@@ -16,10 +19,18 @@ const AddTourType = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${BASE_URL}/tourType/createTourType`, {
-        typeName,
-        description,
-      });
+      const response = await axios.post(
+        `${BASE_URL}/tourType/createTourType`,
+        {
+          typeName,
+          description,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
       setMessage(response.data.message);
       setTypeName("");
       setDescription("");

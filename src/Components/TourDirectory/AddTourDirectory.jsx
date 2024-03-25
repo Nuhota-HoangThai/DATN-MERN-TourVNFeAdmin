@@ -2,11 +2,14 @@ import { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const AddTourDirectory = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [directoryName, setDirectoryName] = useState("");
   const [directoryDescription, setDirectoryDescription] = useState("");
   const [message, setMessage] = useState("");
@@ -21,6 +24,11 @@ const AddTourDirectory = () => {
         {
           directoryName,
           directoryDescription,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         },
       );
       setMessage(response.data.message);

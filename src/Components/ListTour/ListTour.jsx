@@ -31,9 +31,12 @@ const ListTour = () => {
 
   const fetchInfo = async () => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/tour/getAllTours`);
+      const { data } = await axios.get(`${BASE_URL}/tour/getAllTours`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       setAllTours(data);
-      //console.log(data);
     } catch (error) {
       console.error("Error fetching tours:", error);
     }
@@ -49,15 +52,11 @@ const ListTour = () => {
 
   const remove_tour = async (id) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/tour/removeTour/${id}`, {
+      await axios.delete(`${BASE_URL}/tour/removeTour/${id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete the tour");
-      }
 
       await fetchInfo();
     } catch (error) {

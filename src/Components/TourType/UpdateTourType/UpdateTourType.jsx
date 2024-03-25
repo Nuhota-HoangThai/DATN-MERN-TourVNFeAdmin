@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { BASE_URL } from "../../../utils/config";
+import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 function UpdateTourType() {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [typeName, setTypeName] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,10 +21,15 @@ function UpdateTourType() {
     const fetchTourType = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/tourType/getTourType/${id}`);
-        if (!response.ok) throw new Error("Could not fetch tour type");
+        const { data } = await axios.get(
+          `${BASE_URL}/tourType/getTourType/${id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
+        );
 
-        const data = await response.json();
         setTypeName(data.tourType.typeName);
         setDescription(data.tourType.description);
       } catch (err) {
@@ -37,16 +46,17 @@ function UpdateTourType() {
     event.preventDefault();
 
     setIsLoading(true);
-    try {
-      const response = await fetch(`${BASE_URL}/tourType/updateType/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ typeName, description }),
-      });
 
-      if (!response.ok) throw new Error("Could not update tour type");
+    try {
+      await axios.put(
+        `${BASE_URL}/tourType/updateType/${id}`,
+        { typeName, description },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
 
       navigate("/listType"); // Use navigate correctly
     } catch (err) {

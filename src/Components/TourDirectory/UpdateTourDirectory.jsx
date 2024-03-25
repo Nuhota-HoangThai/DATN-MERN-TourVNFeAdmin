@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 function UpdateTourDirectory() {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [directoryName, setDirectoryName] = useState("");
   const [directoryDescription, setDirectoryDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,12 +21,15 @@ function UpdateTourDirectory() {
     const fetchTourDirectory = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
+        const { data } = await axios.get(
           `${BASE_URL}/tourDirectory/getDirectory/${id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
         );
-        if (!response.ok) throw new Error("Could not fetch tour directory");
 
-        const data = await response.json();
         setDirectoryName(data.directoryName);
         setDirectoryDescription(data.directoryDescription);
       } catch (err) {
@@ -40,18 +47,15 @@ function UpdateTourDirectory() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(
+      await axios.put(
         `${BASE_URL}/tourDirectory/updateDirectory/${id}`,
+        { directoryName, directoryDescription },
         {
-          method: "PUT",
           headers: {
-            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
           },
-          body: JSON.stringify({ directoryName, directoryDescription }),
         },
       );
-
-      if (!response.ok) throw new Error("Could not update tour directory");
 
       navigate("/listTourDirectory");
     } catch (err) {
