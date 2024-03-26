@@ -27,6 +27,10 @@ import ListTourDirectory from "../../Components/TourDirectory/ListTourDirectory"
 import UpdateTourDirectory from "../../Components/TourDirectory/UpdateTourDirectory";
 import BookingDetails from "../../Components/ListOrder/BookingDetail";
 
+import AddPromotion from "../../Components/Promotion/AddPromotion";
+import ListPromotion from "../../Components/Promotion/ListPromotion";
+import UpdatePromotionForm from "../../Components/Promotion/UpdatePromotion";
+
 const Admin = () => {
   const location = useLocation();
 
@@ -73,6 +77,10 @@ const Admin = () => {
             path="/updateTourDirectory/:id"
             element={<UpdateTourDirectory />}
           />
+
+          <Route path="/addPromotion" element={<AddPromotion />} />
+          <Route path="/listPromotion" element={<ListPromotion />} />
+          <Route path="/editPromotion/:id" element={<UpdatePromotionForm />} />
         </Routes>
       </div>
     </div>

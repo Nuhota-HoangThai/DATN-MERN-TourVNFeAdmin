@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { FaRegListAlt, FaUserFriends } from "react-icons/fa";
 import { GiPalmTree } from "react-icons/gi";
 import { MdOutlineBookOnline } from "react-icons/md";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { TbTournament } from "react-icons/tb";
-
-import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -32,6 +31,11 @@ const Sidebar = () => {
             icon: <GiPalmTree />,
             text: "Danh sách tour",
             link: "/listTour",
+          },
+          {
+            icon: <GiPalmTree />,
+            text: "Danh sách khuyến mãi",
+            link: "/listPromotion",
           },
           {
             icon: <MdOutlineBookOnline />,

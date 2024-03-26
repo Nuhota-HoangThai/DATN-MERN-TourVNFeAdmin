@@ -49,9 +49,9 @@ function ListTourDirectories() {
       setIsLoading(true);
       try {
         await axios.delete(`${BASE_URL}/tourDirectory/deleteDirectory/${id}`, {
-          // headers: {
-          //   Authorization: "Bearer " + token,
-          // },
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         });
 
         fetchTourDirectories();

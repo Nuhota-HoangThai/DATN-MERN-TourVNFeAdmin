@@ -67,17 +67,12 @@ const UpdateUser = () => {
     }
 
     try {
-      await axios.put(
-        `${BASE_URL}/user/update_user/${id}`,
-        {
-          formData,
+      await axios.put(`${BASE_URL}/user/update_user/${id}`, formData, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        },
-      );
+      });
 
       alert("Cập nhật thông tin người dùng thành công.");
       navigate("/listUser");
@@ -142,17 +137,17 @@ const UpdateUser = () => {
             </div>
             <div className="mt-5">
               <label
-                htmlFor="CCCD"
+                htmlFor="cccd"
                 className="block text-lg font-medium text-gray-700"
               >
                 Căn cước công dân
               </label>
               <input
-                id="CCCD"
-                name="CCCD"
-                value={userData.CCCD}
+                id="cccd"
+                name="cccd"
+                value={userData.cccd}
                 onChange={(e) =>
-                  setUserData({ ...userData, CCCD: e.target.value })
+                  setUserData({ ...userData, cccd: e.target.value })
                 }
                 placeholder="Số căn cước công dân"
                 className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"

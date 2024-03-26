@@ -2,6 +2,7 @@ import { useState } from "react";
 import upload from "../../assets/images/upload.png";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,7 +13,6 @@ import "react-quill/dist/quill.snow.css";
 
 import TourType from "./TourType";
 import TourDirectory from "./TourDirectory";
-import axios from "axios";
 
 const AddTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
