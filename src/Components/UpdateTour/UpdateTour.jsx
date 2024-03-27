@@ -8,12 +8,10 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import upload from "../../assets/images/upload.png";
-import TourDirectory from "../AddTour/TourDirectory";
-import TourType from "../AddTour/TourType";
 
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
-
+  // const [selectedTourType, setSelectedTourType] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -33,8 +31,74 @@ const UpdateTour = () => {
     priceForYoungChildren: "",
     priceForInfants: "",
     additionalFees: "",
+
+    promotion: "",
   });
 
+  //////////////////
+  const [tourTypes, setTourTypes] = useState([]);
+  const [tourDirectory, setTourDirectory] = useState([]);
+  const [tourPromotion, setTourPromotion] = useState([]);
+
+  useEffect(() => {
+    const fetchTourTypes = async () => {
+      try {
+        const { data } = await axios.get(
+          `${BASE_URL}/tourType/getAllTourType`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
+        );
+
+        setTourTypes(data.tourTypes);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
+    fetchTourTypes();
+  }, []);
+
+  useEffect(() => {
+    const fetchTourCategories = async () => {
+      try {
+        const { data } = await axios.get(
+          `${BASE_URL}/tourDirectory/getAllTourDirectories`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
+        );
+
+        setTourDirectory(data.tourDirectories);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
+    fetchTourCategories();
+  }, []);
+  useEffect(() => {
+    const fetchTourPromotion = async () => {
+      try {
+        const { data } = await axios.get(
+          `${BASE_URL}/tourPromotion/getAllPromotion`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
+        );
+        console.log(data); // Verify the structure of the received data
+        setTourPromotion(data);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    };
+    fetchTourPromotion();
+  }, []);
+  ////////////////////
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState([upload]);
 
@@ -163,9 +227,65 @@ const UpdateTour = () => {
               multiple // Cho phép chọn nhiều hình ảnh
             />
           </div>
+
           <div className="grid grid-cols-2 gap-4">
-            <TourDirectory />
-            <TourType />
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Danh mục tour
+              </label>
+              <select
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                value={tourData.tourDirectory}
+                onChange={(e) =>
+                  setTourData({ ...tourData, tourDirectory: e.target.value })
+                }
+              >
+                <option value="">Chọn danh mục tour</option>
+                {tourDirectory?.map((directory) => (
+                  <option key={directory._id} value={directory._id}>
+                    {directory.directoryName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Loại tour
+              </label>
+              <select
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                value={tourData.tourType}
+                onChange={(e) =>
+                  setTourData({ ...tourData, tourType: e.target.value })
+                }
+              >
+                <option value="">Chọn loại tour</option>
+                {tourTypes?.map((type) => (
+                  <option key={type._id} value={type._id}>
+                    {type?.typeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Khuyến mãi
+            </label>
+            <select
+              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              value={tourData.promotion}
+              onChange={(e) =>
+                setTourData({ ...tourData, promotion: e.target.value })
+              }
+            >
+              <option value="">Chọn loại khuyến mãi</option>
+              {tourPromotion?.map((promotion) => (
+                <option key={promotion._id} value={promotion._id}>
+                  {promotion.namePromotion}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="grid grid-cols-2  gap-6">
             <div>
@@ -371,6 +491,7 @@ const UpdateTour = () => {
               }
             />
           </div>
+
           <button
             type="submit"
             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

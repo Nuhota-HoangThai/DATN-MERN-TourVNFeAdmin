@@ -95,7 +95,7 @@ const ListPromotion = () => {
                   >
                     Chỉnh sửa
                   </Link>
-                  {/* Thêm nút xóa hoặc các hành động khác nếu cần */}
+                  {/* Thêm nút xóa hoặc các hành động */}
                 </td>
               </tr>
             ))}

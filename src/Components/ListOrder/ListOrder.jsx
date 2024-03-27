@@ -51,7 +51,11 @@ const ListOrder = () => {
 
   const remove_booking = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/booking/removeBooking/${id}`);
+      await axios.delete(`${BASE_URL}/booking/removeBooking/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
       await fetchBookings();
     } catch (error) {

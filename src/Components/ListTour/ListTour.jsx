@@ -93,10 +93,20 @@ const ListTour = () => {
             <thead className=" bg-blue-950 text-xs uppercase text-white">
               <tr>
                 <th scope="col" className="px-6 py-3">
+                  Giá gốc <span className="lowercase">(đ)</span>
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Giá sau KM <span className="lowercase">(đ/khách)</span>
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Loại tour
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Danh mục tour
+                </th>
+
+                <th scope="col" className="px-6 py-3">
+                  Khuyến mãi
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Tên tour
@@ -133,12 +143,30 @@ const ListTour = () => {
             <tbody>
               {allTours.map((tour) => (
                 <tr key={tour._id} className="bg-white hover:bg-gray-100">
+                  <td className="border-b px-6 py-4">{tour.originalPrice}</td>
                   <td className="border-b px-6 py-4">
-                    {tour.tourType.typeName || "N/A"}
+                    {tour.price !== tour.originalPrice ? (
+                      <span>
+                        {tour.price}{" "}
+                        <span className="text-gray-500 line-through">
+                          {tour.originalPrice}
+                        </span>
+                      </span>
+                    ) : (
+                      tour.price
+                    )}
                   </td>
                   <td className="border-b px-6 py-4">
-                    {tour.tourDirectory.directoryName || "N/A"}
+                    {tour.tourType.typeName || "Không thuộc loại tour nào"}
                   </td>
+                  <td className="border-b px-6 py-4">
+                    {tour.tourDirectory.directoryName ||
+                      "Không thuộc danh mục nào"}
+                  </td>
+                  <td className="border-b px-6 py-4">
+                    {tour.promotion?.namePromotion || "Không có khuyến mãi"}
+                  </td>
+
                   <td className="border-b px-6 py-4">{tour.nameTour}</td>
                   <td className="border-b px-6 py-4">{tour.maxParticipants}</td>
                   <td className="border-b px-6 py-4">{tour.price}</td>

@@ -13,6 +13,7 @@ import "react-quill/dist/quill.snow.css";
 
 import TourType from "./TourType";
 import TourDirectory from "./TourDirectory";
+//import Promotion from "./Promotion";
 
 const AddTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -136,6 +137,9 @@ const AddTour = () => {
                   setSelectedTourType={setSelectedTourType}
                 />
               </div>
+              {/* <div>
+                <Promotion />
+              </div> */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                   <label

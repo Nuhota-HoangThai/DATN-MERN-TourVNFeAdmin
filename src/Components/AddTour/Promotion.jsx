@@ -1,54 +1,54 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
-import { useSelector } from "react-redux";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const TourType = ({ selectedTourType, setSelectedTourType }) => {
+const TourDirectory = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
-  const [tourTypes, setTourTypes] = useState([]);
+  const [tourPromotion, setTourPromotion] = useState([]);
+  const [selectedTourPromotion, setSelectedPromotion] = useState("");
 
   useEffect(() => {
-    const fetchTourTypes = async () => {
+    const fetchTourPromotion = async () => {
       try {
         const { data } = await axios.get(
-          `${BASE_URL}/tourType/getAllTourType`,
+          `${BASE_URL}/tourPromotion/getAllPromotion`,
           {
             headers: {
               Authorization: "Bearer " + token,
             },
           },
         );
-
-        setTourTypes(data.tourTypes);
+        console.log(data); // Verify the structure of the received data
+        setTourPromotion(data);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
     };
-    fetchTourTypes();
+    fetchTourPromotion();
   }, []);
 
   return (
     <div>
-      {" "}
       <div className="mb-4">
         <label
-          htmlFor="tourType"
+          htmlFor="promotion"
           className="mb-2 block text-sm font-bold text-gray-700"
         >
-          Loại Tour
+          Khuyến mãi
         </label>
         <select
-          name="tourType"
-          id="tourType"
-          value={selectedTourType}
-          onChange={(e) => setSelectedTourType(e.target.value)}
+          name="promotion"
+          id="promotion"
+          value={selectedTourPromotion}
+          onChange={(e) => setSelectedPromotion(e.target.value)}
           className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
         >
-          <option value="">Chọn loại tour</option>
-          {tourTypes.map((type) => (
-            <option key={type._id} value={type._id}>
-              {type.typeName}
+          <option value="">Chọn loại khuyến mãi</option>
+          {tourPromotion?.map((promotion) => (
+            <option key={promotion._id} value={promotion._id}>
+              {promotion.namePromotion ?? "Khuyến mãi không tên"}
             </option>
           ))}
         </select>
@@ -57,4 +57,4 @@ const TourType = ({ selectedTourType, setSelectedTourType }) => {
   );
 };
 
-export default TourType;
+export default TourDirectory;
