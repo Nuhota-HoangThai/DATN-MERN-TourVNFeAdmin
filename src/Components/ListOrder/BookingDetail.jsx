@@ -75,7 +75,7 @@ const BookingDetail = () => {
             <div className="font-semibold">
               Số căn cước công dân:{" "}
               <span className="font-normal">
-                {bookingDetail?.user?._CCCD || "N/A"}
+                {bookingDetail?.user?.cccd || "N/A"}
               </span>
             </div>
             <div className="mt-1.5 font-semibold">

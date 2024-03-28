@@ -99,6 +99,9 @@ const ListTour = () => {
                   Giá sau KM <span className="lowercase">(đ/khách)</span>
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Mã tour
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Loại tour
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -147,14 +150,17 @@ const ListTour = () => {
                   <td className="border-b px-6 py-4">
                     {tour.price !== tour.originalPrice ? (
                       <span>
-                        {tour.price}{" "}
+                        {tour.price?.toLocaleString()} <br />
                         <span className="text-gray-500 line-through">
-                          {tour.originalPrice}
+                          {tour.originalPrice?.toLocaleString()}
                         </span>
                       </span>
                     ) : (
-                      tour.price
+                      tour.price?.toLocaleString()
                     )}
+                  </td>
+                  <td className="border-b px-6 py-4">
+                    <Link to={`/tour-detail/${tour._id}`}>{tour._id}</Link>
                   </td>
                   <td className="border-b px-6 py-4">
                     {tour.tourType.typeName || "Không thuộc loại tour nào"}

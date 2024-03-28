@@ -4,9 +4,12 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import AddTour from "../../Components/AddTour/AddTour";
 import ListTour from "../../Components/ListTour/ListTour";
+import TourDetail from "../../Components/ListTour/TourDetail";
+
 import ListUser from "../../Components/ListUser/ListUser";
 
 import ListOrder from "../../Components/ListOrder/ListOrder";
+import BookingDetails from "../../Components/ListOrder/BookingDetail";
 
 import AddUser from "../../Components/AddUser/AddUser";
 import Statistical from "../../Components/Statistical/Statistical";
@@ -25,7 +28,6 @@ import Register from "./Register";
 import AddTourDirectory from "../../Components/TourDirectory/AddTourDirectory";
 import ListTourDirectory from "../../Components/TourDirectory/ListTourDirectory";
 import UpdateTourDirectory from "../../Components/TourDirectory/UpdateTourDirectory";
-import BookingDetails from "../../Components/ListOrder/BookingDetail";
 
 import AddPromotion from "../../Components/Promotion/AddPromotion";
 import ListPromotion from "../../Components/Promotion/ListPromotion";
@@ -47,9 +49,9 @@ const Admin = () => {
       <div className={`content ${isLoginPage ? "col-span-5" : "col-span-4"}`}>
         <Routes>
           <Route path="/" element={<HomeAdmin />} />
-          <Route path="/lisTour" element={<ListTour />} />
-          <Route path="/addTour" element={<AddTour />} />
           <Route path="/listTour" element={<ListTour />} />
+          <Route path="/addTour" element={<AddTour />} />
+          <Route path="/tour-detail/:tourId" element={<TourDetail />} />
 
           <Route path="/listOrder" element={<ListOrder />} />
           <Route
