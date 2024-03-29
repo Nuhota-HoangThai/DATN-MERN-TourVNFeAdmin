@@ -53,49 +53,43 @@ const ListPromotion = () => {
       <div className="mb-4 text-right">
         <Link
           to="/addPromotion"
-          className="rounded bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-700"
+          className="inline-block rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         >
           Tạo khuyến mãi mới
         </Link>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full">
+      <div className="overflow-x-auto rounded-lg shadow">
+        <table className="whitespace-no-wrap w-full">
           <thead>
-            <tr className="text-left font-bold">
-              <th className="px-6 pb-4 pt-6">Tên Khuyến Mãi</th>
-              <th className="px-6 pb-4 pt-6">Mô Tả</th>
-              <th className="px-6 pb-4 pt-6">Phần Trăm Giảm Giá</th>
-              <th className="px-6 pb-4 pt-6">Ngày Bắt Đầu</th>
-              <th className="px-6 pb-4 pt-6">Ngày Kết Thúc</th>
-              <th className="px-6 pb-4 pt-6">Hành Động</th>
+            <tr className="bg-blue-900 text-left font-bold text-white">
+              <th className="px-6 py-3">Tên Khuyến Mãi</th>
+              <th className="px-6 py-3">Mô Tả</th>
+              <th className="px-6 py-3">Phần Trăm Giảm Giá</th>
+              <th className="px-6 py-3">Ngày Bắt Đầu</th>
+              <th className="px-6 py-3">Ngày Kết Thúc</th>
+              <th className="px-6 py-3">Hành Động</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {promotions.map((promotion) => (
-              <tr key={promotion._id} className="hover:bg-gray-100">
-                <td className="border-t px-6 py-4">
-                  {promotion.namePromotion}
-                </td>
-                <td className="border-t px-6 py-4">
-                  {promotion.descriptionPromotion}
-                </td>
-                <td className="border-t px-6 py-4">
-                  {promotion.discountPercentage}%
-                </td>
-                <td className="border-t px-6 py-4">
+              <tr key={promotion._id} className="hover:bg-gray-50">
+                <td className="px-6 py-4">{promotion.namePromotion}</td>
+                <td className="px-6 py-4">{promotion.descriptionPromotion}</td>
+                <td className="px-6 py-4">{promotion.discountPercentage}%</td>
+                <td className="px-6 py-4">
                   {new Date(promotion.startDatePromotion).toLocaleDateString()}
                 </td>
-                <td className="border-t px-6 py-4">
+                <td className="px-6 py-4">
                   {new Date(promotion.endDatePromotion).toLocaleDateString()}
                 </td>
-                <td className="border-t px-6 py-4">
+                <td className="px-6 py-4">
                   <Link
                     to={`/editPromotion/${promotion._id}`}
-                    className="mr-4 text-blue-600 hover:underline"
+                    className="mr-4 text-blue-600 hover:text-blue-800"
                   >
                     Chỉnh sửa
                   </Link>
-                  {/* Thêm nút xóa hoặc các hành động */}
+                  {/* Thêm nút xóa hoặc các hành động khác tại đây */}
                 </td>
               </tr>
             ))}
