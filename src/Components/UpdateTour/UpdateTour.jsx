@@ -11,7 +11,13 @@ import upload from "../../assets/images/upload.png";
 
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
-  // const [selectedTourType, setSelectedTourType] = useState("");
+
+  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState([upload]);
+  const [tourTypes, setTourTypes] = useState([]);
+  const [tourDirectory, setTourDirectory] = useState([]);
+  const [tourPromotion, setTourPromotion] = useState([]);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -35,96 +41,79 @@ const UpdateTour = () => {
     promotion: "",
   });
 
-  //////////////////
-  const [tourTypes, setTourTypes] = useState([]);
-  const [tourDirectory, setTourDirectory] = useState([]);
-  const [tourPromotion, setTourPromotion] = useState([]);
+  const fetchTourTypes = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/tourType/getAllTourType`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      setTourTypes(data.tourTypes);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+
+  const fetchTourCategories = async () => {
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}/tourDirectory/getAllTourDirectories`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
+
+      setTourDirectory(data.tourDirectories);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+
+  const fetchTourPromotion = async () => {
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}/tourPromotion/getAllPromotion`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
+      // console.log(data); // Verify the structure of the received data
+      setTourPromotion(data);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+
+  const fetchTour = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`, {
+        // headers: {
+        //   Authorization: "Bearer " + token,
+        // },
+      });
+      setTourData(data.tour);
+      if (Array.isArray(data.tour.image)) {
+        const imagesUrls = data.tour.image.map(
+          (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
+        );
+        setPreviewImage(imagesUrls);
+      }
+    } catch (error) {
+      console.error("Error fetching tour:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchTourTypes = async () => {
-      try {
-        const { data } = await axios.get(
-          `${BASE_URL}/tourType/getAllTourType`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          },
-        );
-
-        setTourTypes(data.tourTypes);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      }
-    };
-    fetchTourTypes();
-  }, []);
-
-  useEffect(() => {
-    const fetchTourCategories = async () => {
-      try {
-        const { data } = await axios.get(
-          `${BASE_URL}/tourDirectory/getAllTourDirectories`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          },
-        );
-
-        setTourDirectory(data.tourDirectories);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      }
-    };
     fetchTourCategories();
-  }, []);
-  useEffect(() => {
-    const fetchTourPromotion = async () => {
-      try {
-        const { data } = await axios.get(
-          `${BASE_URL}/tourPromotion/getAllPromotion`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          },
-        );
-        console.log(data); // Verify the structure of the received data
-        setTourPromotion(data);
-      } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
-      }
-    };
+    fetchTourTypes();
     fetchTourPromotion();
-  }, []);
-  ////////////////////
-  const [image, setImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState([upload]);
-
-  useEffect(() => {
-    const fetchTour = async () => {
-      try {
-        const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`, {
-          // headers: {
-          //   Authorization: "Bearer " + token,
-          // },
-        });
-        setTourData(data.tour);
-        if (Array.isArray(data.tour.image)) {
-          const imagesUrls = data.tour.image.map(
-            (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
-          );
-          setPreviewImage(imagesUrls);
-        }
-      } catch (error) {
-        console.error("Error fetching tour:", error);
-      }
-    };
-
     fetchTour();
   }, [id]);
-  //console.log(previewImage);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

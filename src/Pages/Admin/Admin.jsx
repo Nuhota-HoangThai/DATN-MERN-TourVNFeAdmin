@@ -12,7 +12,7 @@ import ListOrder from "../../Components/ListOrder/ListOrder";
 import BookingDetails from "../../Components/ListOrder/BookingDetail";
 
 import AddUser from "../../Components/AddUser/AddUser";
-import Statistical from "../../Components/Statistical/Statistical";
+import Statistical from "../../Pages/Admin/Statistical";
 import HomeAdmin from "./HomeAdmin";
 
 import UpdateTour from "../../Components/UpdateTour/UpdateTour";
@@ -62,7 +62,7 @@ const Admin = () => {
           <Route path="/listUser" element={<ListUser />} />
           <Route path="/profileUser" element={<ProfileUser />} />
           <Route path="/addUser" element={<AddUser />} />
-          <Route path="/statistical" element={<Statistical />} />
+
           <Route path="/update_tour/:id" element={<UpdateTour />} />
           <Route path="/update_user/:id" element={<UpdateUser />} />
 
@@ -83,6 +83,8 @@ const Admin = () => {
           <Route path="/addPromotion" element={<AddPromotion />} />
           <Route path="/listPromotion" element={<ListPromotion />} />
           <Route path="/editPromotion/:id" element={<UpdatePromotionForm />} />
+
+          <Route path="/statistical" element={<Statistical />} />
         </Routes>
       </div>
     </div>

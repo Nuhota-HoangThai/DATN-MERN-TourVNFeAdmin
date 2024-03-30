@@ -11,24 +11,6 @@ const ListTour = () => {
 
   const [allTours, setAllTours] = useState([]);
 
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-
-  const formatDateVNWithTime = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${day}-${month}-${year} ${hours}:${minutes}`;
-  };
-
   const fetchInfo = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/tour/getAllTours`, {
@@ -89,15 +71,9 @@ const ListTour = () => {
       </div>
       <div className="max-h-[600px] overflow-auto">
         {allTours.length > 0 ? (
-          <table className="min-w-full table-auto overflow-hidden rounded-2xl text-left text-sm">
+          <table className="min-w-full table-fixed overflow-hidden rounded-2xl text-left text-sm">
             <thead className=" bg-blue-950 text-xs uppercase text-white">
               <tr>
-                <th scope="col" className="px-6 py-3">
-                  Giá gốc <span className="lowercase">(đ)</span>
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Giá sau KM <span className="lowercase">(đ/khách)</span>
-                </th>
                 <th scope="col" className="px-6 py-3">
                   Mã tour
                 </th>
@@ -123,21 +99,11 @@ const ListTour = () => {
                 <th scope="col" className="px-6 py-3">
                   Miền
                 </th>
+
                 <th scope="col" className="px-6 py-3">
-                  Ngày khởi hành
+                  Xem tour
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Ngày kết thúc
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Thời gian tập trung
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nơi khởi hành
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Cập nhật
-                </th>
+
                 <th scope="col" className="px-6 py-3">
                   Xóa
                 </th>
@@ -146,19 +112,6 @@ const ListTour = () => {
             <tbody>
               {allTours.map((tour) => (
                 <tr key={tour._id} className="bg-white hover:bg-gray-100">
-                  <td className="border-b px-6 py-4">{tour.originalPrice}</td>
-                  <td className="border-b px-6 py-4">
-                    {tour.price !== tour.originalPrice ? (
-                      <span>
-                        {tour.price?.toLocaleString()} <br />
-                        <span className="text-gray-500 line-through">
-                          {tour.originalPrice?.toLocaleString()}
-                        </span>
-                      </span>
-                    ) : (
-                      tour.price?.toLocaleString()
-                    )}
-                  </td>
                   <td className="border-b px-6 py-4">
                     <Link to={`/tour-detail/${tour._id}`}>{tour._id}</Link>
                   </td>
@@ -175,27 +128,25 @@ const ListTour = () => {
 
                   <td className="border-b px-6 py-4">{tour.nameTour}</td>
                   <td className="border-b px-6 py-4">{tour.maxParticipants}</td>
-                  <td className="border-b px-6 py-4">{tour.price}</td>
+                  <td className="border-b px-6 py-4">
+                    {" "}
+                    {tour.price !== tour.originalPrice && tour.promotion ? (
+                      <span>
+                        {tour.price?.toLocaleString()} <br />
+                        <span className="text-gray-500 line-through">
+                          {tour.originalPrice?.toLocaleString()}
+                        </span>
+                      </span>
+                    ) : (
+                      tour.price?.toLocaleString()
+                    )}
+                  </td>
                   <td className="border-b px-6 py-4">
                     {formatRegion(tour.regions)}
                   </td>
+
                   <td className="border-b px-6 py-4">
-                    {formatDateVN(tour.startDate)}
-                  </td>
-                  <td className="border-b px-6 py-4">
-                    {formatDateVN(tour.endDate)}
-                  </td>
-                  <td className="border-b px-6 py-4">
-                    {formatDateVNWithTime(tour.convergeTime)}
-                  </td>
-                  <td className="border-b px-6 py-4">{tour.startingGate}</td>
-                  <td className="border-b px-6 py-4">
-                    <button
-                      className=" text-sm "
-                      onClick={() => navigateToUpdateTour(tour._id)}
-                    >
-                      Sửa
-                    </button>
+                    <Link to={`/tour-detail/${tour._id}`}>Xem chi tiết</Link>
                   </td>
 
                   <td className="border-b px-6 py-4">
