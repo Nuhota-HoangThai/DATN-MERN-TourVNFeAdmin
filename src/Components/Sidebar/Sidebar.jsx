@@ -49,6 +49,11 @@ const Sidebar = () => {
             link: "/listOrder",
           },
           {
+            icon: <RiBookReadLine />,
+            text: "Hóa đơn",
+            link: "/bill",
+          },
+          {
             icon: <AiOutlineOrderedList />,
             text: "Loại Tour",
             link: "/listType",

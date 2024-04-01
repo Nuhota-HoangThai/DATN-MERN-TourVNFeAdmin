@@ -22,11 +22,11 @@ const ListOrder = () => {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   };
 
-  const formatOrderId = (id) => {
-    return id.length <= 8
-      ? id
-      : `${id.substring(0, 5)}...${id.substring(id.length - 3)}`;
-  };
+  // const formatOrderId = (id) => {
+  //   return id.length <= 8
+  //     ? id
+  //     : `${id.substring(0, 5)}...${id.substring(id.length - 3)}`;
+  // };
 
   const toggleDropdown = (bookingId) => {
     setDropdownOpen((prev) => ({ ...prev, [bookingId]: !prev[bookingId] }));
@@ -111,20 +111,27 @@ const ListOrder = () => {
     }
   };
 
+  const paymentStatusMapping = (status) =>
+    ({
+      paid: "Đã thanh toán",
+      unpaid: "Chưa thanh toán",
+    })[status] || "N/A";
+
   return (
-    <div className="mx-auto my-8 max-h-[600px] max-w-6xl ">
+    <div className="mx-2 my-8 max-h-[600px]  ">
       <h2 className="mb-6 text-center text-2xl font-bold">
         Danh sách đặt tour
       </h2>
       {bookings.length > 0 ? (
-        <div className="max-h-[550px] overflow-x-auto  overflow-y-auto rounded-xl">
+        <div className="max-h-[600px] overflow-x-auto  overflow-y-auto rounded-xl">
           <table className="min-w-full table-auto">
             <thead className="bg-blue-950 text-white ">
               <tr>
-                <th className="px-4 py-2 text-left ">Mã đặt</th>
+                <th className="px-4 py-2 text-left text-lg">Mã đặt</th>
                 <th className="px-4 py-2 text-left">Ngày đặt</th>
                 <th className="px-4 py-2 text-left">Khách đặt</th>
                 <th className="px-4 py-2 text-left">Tour</th>
+                <th className="px-4 py-2 text-left">Thanh toán</th>
                 <th className="px-4 py-2 text-left">Trạng thái</th>
                 <th className="px-4 py-2 text-left">Hành động</th>
                 <th className="px-4 py-2 text-left">Chi tiết đơn</th>
@@ -134,9 +141,7 @@ const ListOrder = () => {
             <tbody className="bg-white ">
               {bookings.map((booking) => (
                 <tr key={booking._id} className="border-x border-b ">
-                  <td className="border-x px-4 py-2">
-                    {formatOrderId(booking._id)}
-                  </td>
+                  <td className="border-x px-4 py-2">{booking._id}</td>
                   <td className="border-x px-4 py-2">
                     {formatDateVN(booking.bookingDate)}
                   </td>
@@ -146,6 +151,9 @@ const ListOrder = () => {
                   <td className="border-x px-4 py-2">
                     {booking.tour?.nameTour || "N/A"}
                   </td>
+                  <td className={`border-x px-4 py-2 `}>
+                    {paymentStatusMapping(booking?.paymentStatus)}
+                  </td>
                   <td
                     className={`border-x px-4 py-2 ${getStatusStyle(
                       booking.status,
@@ -153,6 +161,7 @@ const ListOrder = () => {
                   >
                     {translateStatus(booking.status)}
                   </td>
+
                   <td className="relative flex items-center justify-center border-x px-4 py-2 ">
                     {booking.status !== "completed" && (
                       <>
@@ -209,9 +218,12 @@ const ListOrder = () => {
                       </>
                     )}
                   </td>
-                  <td className="border-x px-4 py-2">
-                    <Link to={`/booking-detail/${booking._id}`}>
-                      {formatOrderId(booking._id)}
+                  <td className="border-x px-4 py-2 text-center">
+                    <Link
+                      to={`/booking-detail/${booking._id}`}
+                      className="italic underline"
+                    >
+                      Chi tiết
                     </Link>
                   </td>
                   <td className="border-x px-4 py-2">

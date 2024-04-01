@@ -33,6 +33,9 @@ import AddPromotion from "../../Components/Promotion/AddPromotion";
 import ListPromotion from "../../Components/Promotion/ListPromotion";
 import UpdatePromotionForm from "../../Components/Promotion/UpdatePromotion";
 
+import Bill from "./Bill";
+import BillDetails from "../../Components/Bill.component/BillDetails";
+
 const Admin = () => {
   const location = useLocation();
 
@@ -85,6 +88,9 @@ const Admin = () => {
           <Route path="/editPromotion/:id" element={<UpdatePromotionForm />} />
 
           <Route path="/statistical" element={<Statistical />} />
+
+          <Route path="/bill" element={<Bill />} />
+          <Route path="/bill/:id" element={<BillDetails />} />
         </Routes>
       </div>
     </div>
