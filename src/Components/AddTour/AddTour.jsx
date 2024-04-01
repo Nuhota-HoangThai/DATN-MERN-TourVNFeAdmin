@@ -1,5 +1,4 @@
 import { useState } from "react";
-import upload from "../../assets/images/upload.png";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -13,19 +12,17 @@ import "react-quill/dist/quill.snow.css";
 
 import TourType from "./TourType";
 import TourDirectory from "./TourDirectory";
-//import Promotion from "./Promotion";
 
 const AddTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const [images, setImages] = useState([]);
+  const [video, setVideo] = useState([]);
+  const [description, setDescription] = useState("");
+  const [selectedTourType, setSelectedTourType] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
-
-  const [description, setDescription] = useState("");
-
-  const [selectedTourType, setSelectedTourType] = useState("");
 
   const getDefaultConvergeTime = () => {
     const now = new Date();
@@ -47,7 +44,6 @@ const AddTour = () => {
   };
 
   const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
-
   const handleDescriptionChange = (value) => {
     setDescription(value);
   };
@@ -58,7 +54,9 @@ const AddTour = () => {
     setError("");
 
     let formData = new FormData(e.target);
-
+    if (video.length > 0) {
+      formData.append("video", video[0]);
+    }
     await axios
       .post(`${BASE_URL}/tour/addTour`, formData, {
         headers: {
@@ -75,14 +73,16 @@ const AddTour = () => {
   };
 
   // Cài đặt cho Slider
+
   const sliderSettings = {
     dots: true,
-    infinite: true,
+    // infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
-    autoplay: true,
+    infinite: images.length > 1,
+    autoplay: images.length > 1,
     autoplaySpeed: 1500,
     arrows: false,
     responsive: [
@@ -91,7 +91,8 @@ const AddTour = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          infinite: true,
+          infinite: images.length > 1,
+          autoplay: images.length > 1,
           dots: true,
           arrows: false,
         },
@@ -124,11 +125,12 @@ const AddTour = () => {
           Add_Tour(e);
         }}
       >
-        <div className="mx-auto my-4  max-w-screen-lg rounded-2xl bg-gray-100 p-6 shadow-md ">
+        <div className="mx-4 my-4   rounded-2xl bg-gray-100 p-6 shadow-md ">
           <h1 className="mb-5 text-center text-2xl font-bold">
             Thêm chuyến du lịch
           </h1>
           <div className="grid grid-cols-2">
+            {/**/}
             <div>
               <div className="grid grid-cols-2 gap-4">
                 <TourDirectory />
@@ -137,9 +139,6 @@ const AddTour = () => {
                   setSelectedTourType={setSelectedTourType}
                 />
               </div>
-              {/* <div>
-                <Promotion />
-              </div> */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
                   <label
@@ -352,25 +351,26 @@ const AddTour = () => {
                 />
               </div>
             </div>
+
             <div className="ml-5">
               <div className="mb-4 text-center ">
                 <label htmlFor="file-input" className="my-2 cursor-pointer ">
                   {images.length > 0 ? (
-                    <Slider {...sliderSettings} className="mx-5 ">
+                    <Slider {...sliderSettings} className="mx-5 mb-5">
                       {images.map((image, index) => {
-                        if (image instanceof Blob) {
+                        if (image instanceof Blob || image instanceof File) {
                           const imageUrl = URL.createObjectURL(image);
                           return (
-                            <div key={index} className="">
+                            <div key={index}>
                               <img
-                                className="rounded-full"
+                                className="border border-black"
                                 src={imageUrl}
-                                alt="Hình ảnh địa điểm "
+                                alt="Hình ảnh địa điểm"
                                 onLoad={() => URL.revokeObjectURL(imageUrl)}
                                 style={{
-                                  width: "100%",
-                                  height: "400px",
-                                  marginTop: "100px",
+                                  width: "600px",
+                                  height: "250px",
+                                  marginTop: "30px",
                                 }}
                               />
                             </div>
@@ -380,13 +380,8 @@ const AddTour = () => {
                       })}
                     </Slider>
                   ) : (
-                    <div className="my-[50%]">
-                      <img
-                        src={upload}
-                        className="mx-auto w-20  rounded-full border-4"
-                        alt="Upload"
-                      />
-                      <h1 className="mt-3">Thêm hình ảnh</h1>
+                    <div className="mt-8 border border-black">
+                      <h1 className="py-36">Thêm hình ảnh</h1>
                     </div>
                   )}
                 </label>
@@ -399,6 +394,36 @@ const AddTour = () => {
                   id="file-input"
                   className="hidden "
                   multiple
+                />
+              </div>
+              {/**/}
+              <div className="mb-4 text-center">
+                <label htmlFor="video-input" className="cursor-pointer">
+                  {video.length > 0 ? (
+                    <video
+                      className="mx-5 border border-black"
+                      controls
+                      src={URL.createObjectURL(video[0])}
+                      alt="Video preview"
+                      style={{
+                        width: "525px",
+                        height: "250px",
+                        marginTop: "30px",
+                      }}
+                    />
+                  ) : (
+                    <div className="mt-10 border border-black">
+                      <h1 className="py-36 text-center">Thêm video</h1>
+                    </div>
+                  )}
+                </label>
+                <input
+                  onChange={(e) => setVideo([...e.target.files])}
+                  type="file"
+                  name="video"
+                  id="video-input"
+                  className="hidden"
+                  accept="video/*"
                 />
               </div>
             </div>

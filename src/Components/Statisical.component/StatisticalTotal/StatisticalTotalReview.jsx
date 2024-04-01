@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../utils/config";
+import { BASE_URL } from "../../../utils/config";
 import { IoReload } from "react-icons/io5";
 
 const TotalReviews = () => {
@@ -11,25 +11,26 @@ const TotalReviews = () => {
   const [error, setError] = useState(null);
 
   const fetchTotalReviews = async () => {
-    if (!startDate || !endDate) {
-      setError("Vui lòng chọn ngày bắt đầu và ngày kết thúc.");
-      return;
-    }
     setIsLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(
-        `${BASE_URL}/statistical/total-reviews?startDate=${startDate}&endDate=${endDate}`,
-      );
-      //console.log("Received data:", data);
-      //console.log(new Date(startDate), new Date(endDate));
-      setTotalReviews(data.totalReviews);
+      let url = `${BASE_URL}/statistical/total-reviews`;
+      if (startDate && endDate) {
+        url += `?startDate=${startDate}&endDate=${endDate}`;
+      }
+      const response = await axios.get(url);
+
+      setTotalReviews(response.data.totalReviews);
     } catch (error) {
       setError(error.message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchTotalReviews();
+  }, []);
 
   useEffect(() => {
     fetchTotalReviews();

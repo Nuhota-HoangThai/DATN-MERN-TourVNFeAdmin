@@ -4,6 +4,10 @@ import { BASE_URL } from "../../utils/config";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
 const TourDetail = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -117,9 +121,124 @@ const TourDetail = () => {
     return <div>Không phải tour bạn chọn</div>;
   }
 
+  const displayImages = Array.isArray(tour.image) ? tour.image.slice(0, 6) : [];
+  const displayVideos = Array.isArray(tour.video) ? tour.video.slice(0, 2) : [];
+
+  const sliderSettings = {
+    dots: true,
+    // infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    infinite: displayImages.length > 1,
+    autoplay: displayImages.length > 1,
+    autoplaySpeed: 1500,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+        },
+      },
+    ],
+  };
+
+  const sliderSettingsVideo = {
+    dots: true,
+    // infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    infinite: displayVideos.length > 1,
+    autoplay: displayVideos.length > 1,
+    autoplaySpeed: 1500,
+    arrows: false,
+  };
+
   return (
     <div className="mx-auto  h-[600px] max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="overflow-hidden border border-gray-200 shadow sm:rounded-lg">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="">
+            {displayImages.length === 1 ? (
+              <div className="image-grid-item">
+                <img
+                  className="mx-auto h-[400px]"
+                  src={`${BASE_URL}/${displayImages[0].replace(/\\/g, "/")}`}
+                  alt="Tour Image"
+                />
+              </div>
+            ) : displayImages.length > 1 ? (
+              <Slider {...sliderSettings} className=" mb-5">
+                {displayImages.map((image, index) => (
+                  <div key={index} className="image-grid-item">
+                    <img
+                      className="mx-auto h-[400px]"
+                      src={`${BASE_URL}/${image.replace(/\\/g, "/")}`}
+                      alt={`Tour Image ${index + 1}`}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <div className="col-span-2 flex h-full items-center justify-center">
+                Không có hình ảnh
+              </div>
+            )}
+          </div>
+          <div className="">
+            {displayVideos.length === 1 ? (
+              <div className="image-grid-item">
+                <video
+                  className="mx-auto h-[400px]"
+                  src={`${BASE_URL}/${displayVideos[0].replace(/\\/g, "/")}`}
+                  controls
+                />
+              </div>
+            ) : displayVideos.length > 1 ? (
+              <Slider {...sliderSettingsVideo} className=" mb-5">
+                {displayVideos.map((video, index) => (
+                  <div key={index} className="image-grid-item">
+                    <video
+                      className="mx-auto h-[400px]"
+                      src={`${BASE_URL}/${video.replace(/\\/g, "/")}`}
+                      alt={`Tour video ${index + 1}`}
+                      controls
+                    />
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <div className="col-span-2 flex h-full items-center justify-center">
+                Không có video
+              </div>
+            )}
+          </div>
+        </div>
         <table className="min-w-full divide-y divide-gray-200">
           <tbody className="divide-y divide-gray-200 bg-white">
             {[

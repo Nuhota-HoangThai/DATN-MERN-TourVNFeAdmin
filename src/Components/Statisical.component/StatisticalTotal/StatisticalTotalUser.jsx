@@ -1,41 +1,45 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../utils/config";
+import { BASE_URL } from "../../../utils/config";
 import { IoReload } from "react-icons/io5";
 
-const TotalBookings = () => {
-  const [toursSold, setToursSold] = useState(0);
+const TotalNewCustomers = () => {
+  const [totalNewCustomers, setTotalNewCustomers] = useState(0);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchBookedTours = async () => {
-    if (!startDate || !endDate) {
-      setError("Vui lòng chọn ngày bắt đầu và ngày kết thúc.");
-      return;
-    }
+  const fetchTotalNewCustomers = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(
-        `${BASE_URL}/statistical/tours-sold?startDate=${startDate}&endDate=${endDate}`,
-      );
-      //console.log(data);
-      setToursSold(data.toursSold);
+      let url = `${BASE_URL}/statistical/new-customers`;
+      if (startDate && endDate) {
+        url += `?startDate=${startDate}&endDate=${endDate}`;
+      }
+      const response = await axios.get(url);
+
+      setTotalNewCustomers(response.data.newCustomers);
     } catch (error) {
       setError(error.message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Gọi lại API mỗi khi ngày được cập nhật
   useEffect(() => {
-    fetchBookedTours();
-  }, [startDate, endDate]);
+    fetchTotalNewCustomers();
+  }, []);
+
+  useEffect(() => {
+    fetchTotalNewCustomers();
+  }, [startDate, endDate]); // Thêm startDate và endDate vào dependencies array của useEffect
 
   return (
     <div className="mx-auto mt-12 max-w-xl rounded bg-white p-4 shadow">
-      <h2 className="mb-4 text-center text-2xl font-bold">Đặt Tour</h2>
+      <h2 className="mb-4 text-center text-2xl font-bold">Người dùng</h2>
       <div className="mb-4 grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -65,7 +69,7 @@ const TotalBookings = () => {
           <IoReload className="mr-3 h-5 w-5 animate-spin" />
         ) : (
           <p className="text-lg">
-            Số lượng: <span className="font-semibold">{toursSold}</span>
+            Số lượng: <span className="font-semibold">{totalNewCustomers}</span>
           </p>
         )}
       </div>
@@ -76,4 +80,4 @@ const TotalBookings = () => {
   );
 };
 
-export default TotalBookings;
+export default TotalNewCustomers;

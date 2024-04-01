@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
+import YearChart from "../RevenueChart/YearChart";
+
 const RevenueByYear = () => {
   const [revenueData, setRevenueData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,31 +33,36 @@ const RevenueByYear = () => {
       {loading ? (
         <p className="text-center text-gray-500">Đang tải...</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Năm
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Doanh Thu
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {revenueData.map((item) => (
-                <tr key={item._id}>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                    {item._id}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                    ${item.totalRevenue.toFixed(2)}
-                  </td>
+        <div className="grid grid-cols-4">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                    Năm
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                    Doanh Thu
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {revenueData.map((item) => (
+                  <tr key={item._id}>
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                      {item._id}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                      {item.totalRevenue.toLocaleString()} đ
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="col-span-3 ml-16">
+            <YearChart revenueData={revenueData} />
+          </div>
         </div>
       )}
     </div>

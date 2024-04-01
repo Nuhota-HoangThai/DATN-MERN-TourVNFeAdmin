@@ -1,42 +1,46 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../utils/config";
+import { BASE_URL } from "../../../utils/config";
 import { IoReload } from "react-icons/io5";
 
-const TotalNewCustomers = () => {
-  const [totalNewCustomers, setTotalNewCustomers] = useState(0);
+const TotalTours = () => {
+  const [totalTours, setTotalTours] = useState(0);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchTotalNewCustomers = async () => {
-    if (!startDate || !endDate) {
-      setError("Vui lòng chọn ngày bắt đầu và ngày kết thúc.");
-      return;
-    }
+  const fetchTotalTours = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(
-        `${BASE_URL}/statistical/new-customers?startDate=${startDate}&endDate=${endDate}`,
-      );
-      setTotalNewCustomers(data.newCustomers);
-    } catch (error) {
-      setError(error.message);
+      let url = `${BASE_URL}/statistical/total-tours`;
+      if (startDate && endDate) {
+        url += `?startDate=${startDate}&endDate=${endDate}`;
+      }
+      const response = await axios.get(url);
+      setTotalTours(response.data.totalTours);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Gọi lại API mỗi khi ngày được cập nhật
   useEffect(() => {
-    fetchTotalNewCustomers();
-  }, [startDate, endDate]); // Thêm startDate và endDate vào dependencies array của useEffect
+    fetchTotalTours();
+  }, []);
+
+  // useEffect này sẽ chạy mỗi khi startDate hoặc endDate thay đổi
+  useEffect(() => {
+    if (startDate && endDate) {
+      fetchTotalTours();
+    }
+  }, [startDate, endDate]);
 
   return (
     <div className="mx-auto mt-12 max-w-xl rounded bg-white p-4 shadow">
-      <h2 className="mb-4 text-center text-2xl font-bold">Người dùng</h2>
+      <h2 className="mb-4 text-center text-2xl font-bold">Tour</h2>
       <div className="mb-4 grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -63,10 +67,10 @@ const TotalNewCustomers = () => {
       </div>
       <div className="flex items-center justify-center">
         {isLoading ? (
-          <IoReload className="mr-3 h-5 w-5 animate-spin" />
+          <IoReload className="animate-spin" />
         ) : (
           <p className="text-lg">
-            Số lượng: <span className="font-semibold">{totalNewCustomers}</span>
+            Số lượng: <span className="font-semibold">{totalTours}</span>
           </p>
         )}
       </div>
@@ -77,4 +81,4 @@ const TotalNewCustomers = () => {
   );
 };
 
-export default TotalNewCustomers;
+export default TotalTours;
