@@ -55,6 +55,12 @@ const BookingDetail = () => {
       unpaid: "Chưa thanh toán",
     })[status] || "N/A";
 
+  const paymentStatusMethod = (status) =>
+    ({
+      VNPay: "Đã thanh toán bằng VNPay",
+      unpaid: "COD",
+    })[status] || "COD";
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -183,6 +189,12 @@ const BookingDetail = () => {
             Trạng thái thanh toán:{" "}
             <span className="font-normal">
               {paymentStatusMapping(bookingDetail?.paymentStatus)}
+            </span>
+          </div>
+          <div className="mt-1.5 font-semibold">
+            Phương thức thanh toán:{" "}
+            <span className="font-normal">
+              {paymentStatusMethod(bookingDetail?.paymentMethod)}
             </span>
           </div>
           <div className="mt-1.5 font-semibold">

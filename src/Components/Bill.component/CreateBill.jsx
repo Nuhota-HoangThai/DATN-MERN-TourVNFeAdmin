@@ -72,7 +72,7 @@ const CreateBillForm = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className={`focus:shadow-outline w-48 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none ${isLoading ? "cursor-not-allowed opacity-50" : ""}`}
+          className={`focus:shadow-outline w-48 rounded bg-blue-900 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none ${isLoading ? "cursor-not-allowed opacity-50" : ""}`}
         >
           {isLoading ? "Creating..." : "Tạo"}
         </button>

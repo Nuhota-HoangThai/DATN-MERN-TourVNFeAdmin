@@ -39,13 +39,19 @@ const BillsList = () => {
 
   return (
     <div className=" mx-4 bg-white px-4 py-8">
-      <h2 className="mb-4 text-xl font-semibold text-gray-800">
+      <h2 className="mb-4 text-2xl font-semibold text-gray-800">
         Danh sách hóa đơn
       </h2>
       {bills.length > 0 ? (
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+              >
+                Mã hóa đơn
+              </th>
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
@@ -64,10 +70,16 @@ const BillsList = () => {
               >
                 Ngày xuất hóa đơn
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-500"
+              >
                 Xem chi tiết
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-500"
+              >
                 Xóa hóa đơn
               </th>
             </tr>
@@ -75,27 +87,28 @@ const BillsList = () => {
           <tbody className="">
             {bills.map((bill) => (
               <tr key={bill._id}>
+                <td className="whitespace-nowrap px-6 py-4">{bill._id}</td>
                 <td className="whitespace-nowrap px-6 py-4">
                   {bill.booking._id}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4">
+                <td className="whitespace-nowrap px-6 py-4 text-red-600">
                   {bill.totalCost?.toLocaleString()} đ
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
                   {new Date(bill.issuedDate)?.toLocaleDateString()}
                 </td>
-                <td>
+                <td className="text-center">
                   <Link
                     to={`/bill/${bill._id}`}
-                    className="text-indigo-600 hover:text-indigo-900"
+                    className="italic text-indigo-600 underline hover:text-indigo-900"
                   >
                     Chi tiết
                   </Link>
                 </td>
-                <td className="whitespace-nowrap px-6 py-4">
+                <td className="whitespace-nowrap px-6 py-4 text-center">
                   <button
                     onClick={() => deleteBill(bill._id)}
-                    className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                    className="rounded  px-4 py-2  text-red-600 "
                   >
                     Xóa
                   </button>

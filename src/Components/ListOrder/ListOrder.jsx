@@ -127,42 +127,44 @@ const ListOrder = () => {
           <table className="min-w-full table-auto">
             <thead className="bg-blue-950 text-white ">
               <tr>
-                <th className="px-4 py-2 text-left text-lg">Mã đặt</th>
-                <th className="px-4 py-2 text-left">Ngày đặt</th>
-                <th className="px-4 py-2 text-left">Khách đặt</th>
-                <th className="px-4 py-2 text-left">Tour</th>
-                <th className="px-4 py-2 text-left">Thanh toán</th>
-                <th className="px-4 py-2 text-left">Trạng thái</th>
-                <th className="px-4 py-2 text-left">Hành động</th>
-                <th className="px-4 py-2 text-left">Chi tiết đơn</th>
-                <th className="px-4 py-2 text-left">Xóa đơn</th>
+                <th className="px-4 py-2 text-left ">Mã đặt</th>
+                <th className="px-4 py-2 text-center">Ngày đặt</th>
+                <th className="px-4 py-2 text-center">Khách đặt</th>
+                <th className="px-4 py-2 text-center">Tour</th>
+                <th className="px-4 py-2 text-center">Thanh toán</th>
+                <th className="px-4 py-2 text-center">Trạng thái</th>
+                <th className="px-4 py-2 text-center">Hành động</th>
+                <th className="px-4 py-2 text-center">Chi tiết đơn</th>
+                <th className="px-4 py-2 text-center">Xóa đơn</th>
               </tr>
             </thead>
             <tbody className="bg-white ">
               {bookings.map((booking) => (
                 <tr key={booking._id} className="border-x border-b ">
-                  <td className="border-x px-4 py-2">{booking._id}</td>
-                  <td className="border-x px-4 py-2">
+                  <td className="border-x px-2 py-2 text-center">
+                    {booking._id}
+                  </td>
+                  <td className="border-x px-2 py-2 text-center">
                     {formatDateVN(booking.bookingDate)}
                   </td>
-                  <td className="border-x px-4 py-2">
+                  <td className="border-x px-2 py-2 text-center">
                     {booking.user?.name || "N/A"}
                   </td>
-                  <td className="border-x px-4 py-2">
+                  <td className="border-x px-2 py-2 text-center">
                     {booking.tour?.nameTour || "N/A"}
                   </td>
-                  <td className={`border-x px-4 py-2 `}>
+                  <td className={`border-x px-2 py-2 text-center `}>
                     {paymentStatusMapping(booking?.paymentStatus)}
                   </td>
                   <td
-                    className={`border-x px-4 py-2 ${getStatusStyle(
+                    className={`border-x px-2 py-2 text-center ${getStatusStyle(
                       booking.status,
                     )}`}
                   >
                     {translateStatus(booking.status)}
                   </td>
 
-                  <td className="relative flex items-center justify-center border-x px-4 py-2 ">
+                  <td className="relative flex items-center justify-center border-x px-2 py-2 text-center ">
                     {booking.status !== "completed" && (
                       <>
                         <button
@@ -176,7 +178,7 @@ const ListOrder = () => {
                             <div className="py-1">
                               {booking.status === "pending" && (
                                 <button
-                                  className="block w-full px-4 py-2 text-left text-sm text-gray-700"
+                                  className="block w-full  py-2 text-center text-sm text-gray-700"
                                   onClick={() =>
                                     confirmOrderStatus(booking._id, "confirmed")
                                   }
@@ -188,7 +190,7 @@ const ListOrder = () => {
                                 booking.status,
                               ) && (
                                 <button
-                                  className={`block w-full px-4 py-2 text-left text-sm text-gray-700 ${
+                                  className={`block w-full py-2 text-center  text-sm text-gray-700 ${
                                     booking.status !== "pending"
                                       ? "cursor-not-allowed opacity-50"
                                       : ""
@@ -204,7 +206,7 @@ const ListOrder = () => {
                               )}
                               {booking.status === "confirmed" && (
                                 <button
-                                  className="block w-full px-4 py-2 text-left text-sm text-gray-700"
+                                  className="block w-full px-2 py-2 text-center  text-sm text-gray-700"
                                   onClick={() =>
                                     confirmOrderStatus(booking._id, "completed")
                                   }
@@ -218,7 +220,7 @@ const ListOrder = () => {
                       </>
                     )}
                   </td>
-                  <td className="border-x px-4 py-2 text-center">
+                  <td className="border-x  px-2 py-2 text-center">
                     <Link
                       to={`/booking-detail/${booking._id}`}
                       className="italic underline"
@@ -226,7 +228,7 @@ const ListOrder = () => {
                       Chi tiết
                     </Link>
                   </td>
-                  <td className="border-x px-4 py-2">
+                  <td className="border-x px-2 py-2 text-center">
                     <button
                       className="text-red-500"
                       onClick={() => remove_booking(booking._id)}
