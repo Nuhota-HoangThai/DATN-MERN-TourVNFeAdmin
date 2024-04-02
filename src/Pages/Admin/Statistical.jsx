@@ -1,13 +1,12 @@
 import {} from "react";
+import { Link } from "react-router-dom";
 
 import StatisticalTotalTours from "../../Components/Statisical.component/StatisticalTotal/StatisticalTotalTours";
 import StatisticalTotalBookings from "../../Components/Statisical.component/StatisticalTotal/StatisticalTotalBooking";
 import StatisticalTotalReviews from "../../Components/Statisical.component/StatisticalTotal/StatisticalTotalReview";
 import StatisticalTotalUser from "../../Components/Statisical.component/StatisticalTotal/StatisticalTotalUser";
 
-import DayRevene from "../../Components/Statisical.component/Revenue/DayRevene";
-import MonthlyRevenue from "../../Components/Statisical.component/Revenue/MonthlyRevenue";
-import YearRevene from "../../Components/Statisical.component/Revenue/YearRevene";
+import StatisticalBookingStatus from "../../Components/Statisical.component/StatisticalStatus/BookingStatus";
 
 const Statistical = () => {
   return (
@@ -23,15 +22,17 @@ const Statistical = () => {
           </div>
         </div>
       </div>
+
       <div className="mx-2 my-8 rounded bg-white shadow-xl">
         <div className="p-4">
           <h1 className="text-2xl font-bold">Thống kê doanh thu</h1>
           <div className="mx-2 grid grid-cols-1 gap-2">
-            <DayRevene />
-            <MonthlyRevenue />
-            <YearRevene />
+            <Link to="/common-revenue">Xem doanh thu</Link>
           </div>
         </div>
+      </div>
+      <div>
+        <StatisticalBookingStatus />
       </div>
     </div>
   );

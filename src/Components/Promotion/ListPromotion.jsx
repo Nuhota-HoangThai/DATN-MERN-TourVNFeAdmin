@@ -10,28 +10,42 @@ const ListPromotion = () => {
   const [promotions, setPromotions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPromotions = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(
-          `${BASE_URL}/tourPromotion/getAllPromotion`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
+  const fetchPromotions = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${BASE_URL}/tourPromotion/getAllPromotion`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
           },
-        );
-        setPromotions(response.data);
-      } catch (error) {
-        console.error("Failed to fetch promotions:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+        },
+      );
+      setPromotions(response.data);
+    } catch (error) {
+      console.error("Failed to fetch promotions:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPromotions();
   }, [token]);
+
+  const remove_promotion = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}/tourPromotion/deletePromotion/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      await fetchPromotions();
+    } catch (error) {
+      console.error("Error removing promotion:", error);
+    }
+  };
 
   if (isLoading) {
     return <div className="text-center text-lg">Đang tải...</div>;
@@ -49,31 +63,51 @@ const ListPromotion = () => {
   }
 
   return (
-    <div className="p-4">
-      <div className="mb-4 text-right">
+    <div className="p-6">
+      <div className="mb-6 text-right">
         <Link
           to="/addPromotion"
-          className="inline-block rounded bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          className="inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Tạo khuyến mãi mới
         </Link>
       </div>
-      <div className="overflow-x-auto rounded-lg shadow">
-        <table className="whitespace-no-wrap w-full">
-          <thead>
-            <tr className="bg-blue-900 text-left font-bold text-white">
-              <th className="px-6 py-3">Tên Khuyến Mãi</th>
-              <th className="px-6 py-3">Mô Tả</th>
-              <th className="px-6 py-3">Phần Trăm Giảm Giá</th>
-              <th className="px-6 py-3">Ngày Bắt Đầu</th>
-              <th className="px-6 py-3">Ngày Kết Thúc</th>
-              <th className="px-6 py-3">Hành Động</th>
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-left text-sm text-gray-500">
+          <thead className="bg-blue-700 text-xs uppercase text-white">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Tên Khuyến Mãi
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Mô Tả
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Phần Trăm Giảm Giá
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Ngày Bắt Đầu
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Ngày Kết Thúc
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Hành Động
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Xóa
+              </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody>
             {promotions.map((promotion) => (
-              <tr key={promotion._id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">{promotion.namePromotion}</td>
+              <tr
+                key={promotion._id}
+                className="border-b bg-white hover:bg-gray-50"
+              >
+                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                  {promotion.namePromotion}
+                </td>
                 <td className="px-6 py-4">{promotion.descriptionPromotion}</td>
                 <td className="px-6 py-4">{promotion.discountPercentage}%</td>
                 <td className="px-6 py-4">
@@ -85,11 +119,18 @@ const ListPromotion = () => {
                 <td className="px-6 py-4">
                   <Link
                     to={`/editPromotion/${promotion._id}`}
-                    className="mr-4 text-blue-600 hover:text-blue-800"
+                    className="font-medium text-blue-600 hover:underline"
                   >
                     Chỉnh sửa
                   </Link>
-                  {/* Thêm nút xóa hoặc các hành động khác tại đây */}
+                </td>
+                <td className="px-6 py-4">
+                  <button
+                    onClick={() => remove_promotion(promotion._id)}
+                    className="font-medium text-red-600 hover:underline"
+                  >
+                    Xóa
+                  </button>
                 </td>
               </tr>
             ))}

@@ -33,7 +33,7 @@ const Navbar = () => {
       <div className="text-lg">
         {currentUser ? (
           <div className="flex gap-8">
-            <Link to="/admin">
+            <Link to="/profileUser">
               <span>Xin chào: </span>
               {currentUser.name}
             </Link>

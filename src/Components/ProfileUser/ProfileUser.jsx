@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+import { useSelector } from "react-redux";
+
+import defaultImage from "../../assets/images/logoicon.png";
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({
+    image: "",
     name: "",
     email: "",
     phone: "",
@@ -13,47 +16,31 @@ const UserProfile = () => {
     cccd: "",
     role: "",
   });
+  const { currentUser } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN);
-        if (!token) {
-          setError("Mã xác thực không có");
-          setLoading(false);
-          navigate("/login");
-          return;
-        }
-
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.user.id;
-
-        const config = {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              import.meta.env.VITE_AUTH_TOKEN,
-            )}`,
-          },
-        };
-
         const { data } = await axios.get(
-          `${BASE_URL}/user/getUserById/${userId}`,
-          config,
+          `${BASE_URL}/user/getUserById/${currentUser.id}`,
+          {
+            headers: { Authorization: "Bearer " + currentUser.token },
+          },
         );
-
         setUserProfile(data.user);
         setLoading(false);
       } catch (error) {
+        console.error(error);
         setError(error.response ? error.response.data.message : error.message);
         setLoading(false);
       }
     };
 
     fetchUserProfile();
-  }, [navigate]);
+  }, [navigate, currentUser]);
 
   const translateRole = (role) => {
     const roles = {
@@ -74,31 +61,94 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="mx-auto mt-20 max-w-4xl p-5">
-      <div className="mt-10 rounded-lg bg-white p-6 shadow-2xl">
-        <h1 className="mb-4 text-2xl font-semibold">Thông tin cá nhân</h1>
-        <div className="space-y-3">
-          <p>
-            <strong className="font-medium">Tên: </strong> {userProfile.name}
-          </p>
-          <p>
-            <strong className="font-medium">CCCD: </strong> {userProfile.cccd}
-          </p>
-          <p>
-            <strong className="font-medium">Email: </strong> {userProfile.email}
-          </p>
-          <p>
-            <strong className="font-medium">Số Điện Thoại: </strong>{" "}
-            {userProfile.phone}
-          </p>
-          <p>
-            <strong className="font-medium">Địa chỉ: </strong>{" "}
-            {userProfile.address}
-          </p>
-          <p>
-            <strong className="font-medium">Vai trò: </strong>
-            {translateRole(userProfile.role)}
-          </p>
+    <div className="mx-auto mt-28 max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+        <div className="flex items-center justify-between px-4 py-5 sm:px-6">
+          <div>
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              Thông tin cá nhân
+            </h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              Thông tin chi tiết và hồ sơ.
+            </p>
+          </div>
+          <button
+            onClick={() => navigate(`/update_user/${userProfile._id}`)}
+            className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none"
+          >
+            Chỉnh sửa hồ sơ
+          </button>
+        </div>
+        <div className="border-t border-gray-200">
+          <dl>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Ảnh đại diện
+              </dt>
+              <dd className="mt-1  text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {Array.isArray(userProfile.image) &&
+                userProfile.image.length > 0 ? (
+                  <img
+                    className="rounded-full"
+                    src={`${BASE_URL}/${userProfile.image[0].replace(/\\/g, "/")}`}
+                    alt="user"
+                    style={{ width: "50px", height: "50px" }}
+                  />
+                ) : typeof userProfile.image === "string" ? (
+                  <img
+                    className="rounded-full"
+                    src={`${BASE_URL}/${userProfile.image.replace(/\\/g, "/")}`}
+                    alt="user"
+                    style={{ width: "50px", height: "50px" }}
+                  />
+                ) : (
+                  <img
+                    src={defaultImage}
+                    alt="Default"
+                    style={{ width: "50px", height: "50px" }}
+                  />
+                )}
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Tên đầy đủ</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {userProfile.name}
+              </dd>
+            </div>
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Email</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                {userProfile.email}
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Số điện thoại
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                {userProfile.phone}
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">CCCD/CMND</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                {userProfile.cccd}
+              </dd>
+            </div>
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Địa chỉ</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                {userProfile.address}
+              </dd>
+            </div>
+            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Vai trò</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                {translateRole(userProfile.role)}
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     </div>

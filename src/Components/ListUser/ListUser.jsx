@@ -85,7 +85,7 @@ const ListUser = () => {
                   Tên
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  CCCD
+                  CCCD/CMND
                 </th>
                 <th scope="col" className="px-6 py-3">
                   SĐT

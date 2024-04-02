@@ -83,21 +83,21 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl p-5">
-      <div className="mt-10 rounded-lg bg-white p-8 shadow-lg">
-        <h1 className="text-center text-3xl font-semibold text-blue-900">
+    <div className="mx-auto mt-2 h-[600px] max-w-xl p-5">
+      <div className=" rounded-lg bg-white p-8 shadow-xl">
+        <h1 className="text-center text-2xl font-semibold text-blue-900">
           Cập nhật thông tin người dùng
         </h1>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        <form onSubmit={handleSubmit} className="mt-2 space-y-6">
           <div className="flex justify-center">
             <label
               htmlFor="file-input"
               className="flex cursor-pointer items-center gap-4"
             >
               <img
-                src={previewImage}
+                src={previewImage || "path/to/default/image"}
                 alt="Preview"
-                className="h-24 w-24 rounded-full object-cover"
+                className="h-24 w-24 rounded-full border-2 border-gray-300 object-cover"
               />
               <input
                 onChange={handleImageChange}
@@ -106,18 +106,22 @@ const UpdateUser = () => {
                 id="file-input"
                 className="hidden"
               />
-              <svg
-                className="h-6 w-6 text-gray-500"
+              {/* <svg
+                className="h-6 w-6 text-gray-500 hover:text-gray-700"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 2a1 1 0 011 1v.5l-4 4l-3-3l-4 4V5h10zM4 5a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V5a1 1 0 00-1-1H4z"></path>
-              </svg>
+                <path
+                  fillRule="evenodd"
+                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 2a1 1 0 011 1v.5l-4 4l-3-3l-4 4V5h10zM4 5a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V5a1 1 0 00-1-1H4z"
+                  clipRule="evenodd"
+                ></path>
+              </svg> */}
             </label>
           </div>
-          <div className=" grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="mt-5">
+          <div className="grid grid-cols-1 gap-6 ">
+            <div>
               <label
                 htmlFor="name"
                 className="block text-lg font-medium text-gray-700"
@@ -125,17 +129,18 @@ const UpdateUser = () => {
                 Tên
               </label>
               <input
-                id="name"
+                type="text"
                 name="name"
+                id="name"
                 value={userData.name}
                 onChange={(e) =>
                   setUserData({ ...userData, name: e.target.value })
                 }
-                placeholder="Tên"
-                className="mt-1 block w-full rounded-md border-black px-2 py-1.5 shadow-2xl  "
+                placeholder="Nhập tên"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
-            <div className="mt-5">
+            <div>
               <label
                 htmlFor="cccd"
                 className="block text-lg font-medium text-gray-700"
@@ -143,17 +148,18 @@ const UpdateUser = () => {
                 Căn cước công dân
               </label>
               <input
-                id="cccd"
+                type="text"
                 name="cccd"
+                id="cccd"
                 value={userData.cccd}
                 onChange={(e) =>
                   setUserData({ ...userData, cccd: e.target.value })
                 }
                 placeholder="Số căn cước công dân"
-                className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
-            <div className="mt-5">
+            <div>
               <label
                 htmlFor="phone"
                 className="block text-lg font-medium text-gray-700"
@@ -161,17 +167,18 @@ const UpdateUser = () => {
                 Số điện thoại
               </label>
               <input
-                id="phone"
+                type="tel"
                 name="phone"
+                id="phone"
                 value={userData.phone}
                 onChange={(e) =>
                   setUserData({ ...userData, phone: e.target.value })
                 }
                 placeholder="Số điện thoại"
-                className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
-            <div className="mt-5">
+            <div>
               <label
                 htmlFor="email"
                 className="block text-lg font-medium text-gray-700"
@@ -179,17 +186,18 @@ const UpdateUser = () => {
                 Email
               </label>
               <input
-                id="email"
+                type="email"
                 name="email"
+                id="email"
                 value={userData.email}
                 onChange={(e) =>
                   setUserData({ ...userData, email: e.target.value })
                 }
                 placeholder="Email"
-                className="mt-1 block w-full rounded-md border-gray-300 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
-            <div className="mt-5 md:col-span-2">
+            <div className="">
               <label
                 htmlFor="address"
                 className="block text-lg font-medium text-gray-700"
@@ -197,17 +205,18 @@ const UpdateUser = () => {
                 Địa chỉ
               </label>
               <input
-                id="address"
+                type="text"
                 name="address"
+                id="address"
                 value={userData.address}
                 onChange={(e) =>
                   setUserData({ ...userData, address: e.target.value })
                 }
                 placeholder="Địa chỉ"
-                className="mt-1 block w-full rounded-md border-gray-900 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
-            <div className="mt-5 md:col-span-2">
+            <div className="">
               <label
                 htmlFor="role"
                 className="block text-lg font-medium text-gray-700"
@@ -221,7 +230,7 @@ const UpdateUser = () => {
                 onChange={(e) =>
                   setUserData({ ...userData, role: e.target.value })
                 }
-                className="mt-1 block w-full rounded-md border-gray-900 px-2 py-1.5 shadow-2xl  focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               >
                 <option value="customer">Khách hàng</option>
                 <option value="staff">Nhân viên</option>
@@ -232,7 +241,7 @@ const UpdateUser = () => {
           </div>
           <button
             type="submit"
-            className="mt-5 w-full rounded-lg bg-blue-900 py-3 text-lg font-semibold text-white shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="mt-4 w-full rounded-md bg-blue-900 py-1 text-lg font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Cập nhật
           </button>

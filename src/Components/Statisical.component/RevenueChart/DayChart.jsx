@@ -23,7 +23,9 @@ ChartJS.register(
 const RevenueChart = ({ revenueData }) => {
   // Chuẩn bị dữ liệu cho biểu đồ
   const chartData = {
-    labels: revenueData.map((data) => data._id), // Lấy ngày làm nhãn
+    labels: revenueData.map(
+      (data) => `${data._id.day}/${data._id.month}/${data._id.year}`,
+    ), // Thêm năm vào nhãn
     datasets: [
       {
         label: "Doanh Thu",

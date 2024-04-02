@@ -22,12 +22,6 @@ const ListOrder = () => {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   };
 
-  // const formatOrderId = (id) => {
-  //   return id.length <= 8
-  //     ? id
-  //     : `${id.substring(0, 5)}...${id.substring(id.length - 3)}`;
-  // };
-
   const toggleDropdown = (bookingId) => {
     setDropdownOpen((prev) => ({ ...prev, [bookingId]: !prev[bookingId] }));
   };
