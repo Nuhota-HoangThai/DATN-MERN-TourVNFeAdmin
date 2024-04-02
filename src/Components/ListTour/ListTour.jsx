@@ -132,9 +132,9 @@ const ListTour = () => {
                     {" "}
                     {tour.price !== tour.originalPrice && tour.promotion ? (
                       <span>
-                        {tour.price?.toLocaleString()} <br />
+                        {tour.price?.toLocaleString()} đ<br />
                         <span className="text-gray-500 line-through">
-                          {tour.originalPrice?.toLocaleString()}
+                          {tour.originalPrice?.toLocaleString()} đ
                         </span>
                       </span>
                     ) : (
