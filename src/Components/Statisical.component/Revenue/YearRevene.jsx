@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
 import YearChart from "../RevenueChart/YearChart";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const RevenueByYear = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [revenueData, setRevenueData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,10 +18,13 @@ const RevenueByYear = () => {
   const fetchRevenueByYear = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/statistical/yearly-revenue`);
+      const res = await axios.get(`${BASE_URL}/statistical/yearly-revenue`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
-      const data = await response.json();
-      setRevenueData(data);
+      setRevenueData(res.data);
     } catch (error) {
       console.error("Failed to fetch revenue by year:", error);
     } finally {

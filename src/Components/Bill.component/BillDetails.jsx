@@ -29,9 +29,13 @@ const BillDetails = () => {
 
   if (isLoading) return <div>Đang tải...</div>;
   if (error) return <div>{error}</div>;
+
   const formatDateVN = (dateString) => {
     const date = new Date(dateString);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   };
 
   const translateStatus = (status) =>
@@ -117,10 +121,7 @@ const BillDetails = () => {
                   {paymentStatusMethod(billDetails?.paymentMethod)}
                 </span>
               </p>
-              <p>
-                Ngày Xuất:{" "}
-                {new Date(billDetails.issuedDate)?.toLocaleDateString()}
-              </p>
+              <p>Ngày Xuất: {formatDateVN(new Date(billDetails.issuedDate))}</p>
               <p>Ghi Chú (Công ty dành cho bạn): {billDetails.notesBill}</p>
             </div>{" "}
             <div className="">
@@ -130,6 +131,12 @@ const BillDetails = () => {
                     Người đặt:{" "}
                     <span className="font-normal">
                       {billDetails?.user?.name || "N/A"}
+                    </span>
+                  </div>
+                  <div className="font-semibold">
+                    Email:{" "}
+                    <span className="font-normal">
+                      {billDetails?.user?.email || "N/A"}
                     </span>
                   </div>
                   <div className="font-semibold">

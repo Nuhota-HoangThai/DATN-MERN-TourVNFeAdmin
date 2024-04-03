@@ -3,17 +3,25 @@ import axios from "axios";
 import { BASE_URL } from "../../../utils/config";
 
 import MonthChart from "../RevenueChart/MonthChart";
+import { useSelector } from "react-redux";
 
 const RevenueByMonth = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [revenueData, setRevenueData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const fetchRevenueData = async () => {
-    setLoading(true); // Bắt đầu tải
+    setLoading(true);
     try {
       const response = await axios.get(
         `${BASE_URL}/statistical/monthly-revenue`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
       );
       setRevenueData(response.data);
       setError(""); // Xóa thông báo lỗi nếu lần gọi trước đó có lỗi

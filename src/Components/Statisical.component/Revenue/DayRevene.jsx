@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
 import DayChart from "../RevenueChart/DayChart";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const RevenueByDay = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [revenueData, setRevenueData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,9 +18,16 @@ const RevenueByDay = () => {
   const fetchRevenueByDay = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/statistical/daily-revenue`);
+      const response = await axios.get(
+        `${BASE_URL}/statistical/daily-revenue`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
 
-      const data = await response.json();
+      const data = await response.data;
       setRevenueData(data);
     } catch (error) {
       console.error("Failed to fetch revenue by day:", error);

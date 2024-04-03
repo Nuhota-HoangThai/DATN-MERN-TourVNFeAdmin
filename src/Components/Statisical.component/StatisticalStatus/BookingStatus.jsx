@@ -4,8 +4,11 @@ import { BASE_URL } from "../../../utils/config";
 
 import BookingStatusTable from "./BookingStatusTable";
 import BookingStatusChart from "../RevenueChart/BookingStatusChart";
+import { useSelector } from "react-redux";
 
 const BookingStatus = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [bookingStats, setBookingStats] = useState(null);
 
   useEffect(() => {
@@ -13,6 +16,11 @@ const BookingStatus = () => {
       try {
         const { data } = await axios.get(
           `${BASE_URL}/statistical/booking-stats`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          },
         );
         setBookingStats(data.data);
       } catch (error) {

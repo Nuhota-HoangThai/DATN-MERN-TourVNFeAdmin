@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../utils/config";
 import { IoReload } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const TotalReviews = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const [totalReviews, setTotalReviews] = useState(0);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -18,7 +21,11 @@ const TotalReviews = () => {
       if (startDate && endDate) {
         url += `?startDate=${startDate}&endDate=${endDate}`;
       }
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
       setTotalReviews(response.data.totalReviews);
     } catch (error) {

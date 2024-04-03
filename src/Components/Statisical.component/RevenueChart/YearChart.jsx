@@ -33,6 +33,9 @@ const RevenueChart = ({ revenueData }) => {
 
   return (
     <div>
+      <h1>
+        Biểu đồ đường hiển thị doanh thu theo năm {new Date().getFullYear()}
+      </h1>
       <Line data={chartData} options={{ responsive: true }} />
     </div>
   );

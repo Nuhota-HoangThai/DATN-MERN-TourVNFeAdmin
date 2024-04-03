@@ -33,6 +33,14 @@ const BillsList = () => {
     fetchBills();
   }, []);
 
+  const formatDateVN = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   if (isLoading) return <div className="py-4 text-center">Đang tải...</div>;
   if (error)
     return <div className="py-4 text-center text-red-500">{error}</div>;
@@ -95,7 +103,7 @@ const BillsList = () => {
                   {bill.totalCost?.toLocaleString()} đ
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  {new Date(bill.issuedDate)?.toLocaleDateString()}
+                  {formatDateVN(new Date(bill.issuedDate))}
                 </td>
                 <td className="text-center">
                   <Link

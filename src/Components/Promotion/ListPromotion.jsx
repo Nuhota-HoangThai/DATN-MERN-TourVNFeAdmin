@@ -47,6 +47,14 @@ const ListPromotion = () => {
     }
   };
 
+  const formatDateVN = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   if (isLoading) {
     return <div className="text-center text-lg">Đang tải...</div>;
   }
@@ -83,7 +91,7 @@ const ListPromotion = () => {
                 Mô Tả
               </th>
               <th scope="col" className="px-6 py-3">
-                Phần Trăm Giảm Giá
+                Giảm Giá (%)
               </th>
               <th scope="col" className="px-6 py-3">
                 Ngày Bắt Đầu
@@ -109,12 +117,14 @@ const ListPromotion = () => {
                   {promotion.namePromotion}
                 </td>
                 <td className="px-6 py-4">{promotion.descriptionPromotion}</td>
-                <td className="px-6 py-4">{promotion.discountPercentage}%</td>
-                <td className="px-6 py-4">
-                  {new Date(promotion.startDatePromotion).toLocaleDateString()}
+                <td className="px-6 py-4 text-center">
+                  {promotion.discountPercentage}%
                 </td>
                 <td className="px-6 py-4">
-                  {new Date(promotion.endDatePromotion).toLocaleDateString()}
+                  {formatDateVN(new Date(promotion.startDatePromotion))}
+                </td>
+                <td className="px-6 py-4">
+                  {formatDateVN(new Date(promotion.endDatePromotion))}
                 </td>
                 <td className="px-6 py-4">
                   <Link
