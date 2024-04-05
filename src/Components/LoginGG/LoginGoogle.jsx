@@ -1,4 +1,4 @@
-import React from "react"; // Đảm bảo bạn nhập React nếu bạn sử dụng JSX
+import {} from "react"; // Đảm bảo bạn nhập React nếu bạn sử dụng JSX
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";

@@ -5,8 +5,11 @@ import { BASE_URL } from "../../utils/config";
 
 import JsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
 
 const BillDetails = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
   const { id } = useParams(); // Lấy id từ URL
   const [billDetails, setBillDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +18,11 @@ const BillDetails = () => {
   useEffect(() => {
     const fetchBillDetails = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/bill/billDetail/${id}`);
+        const response = await axios.get(`${BASE_URL}/bill/billDetail/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
         setBillDetails(response.data);
         setIsLoading(false);
       } catch (err) {

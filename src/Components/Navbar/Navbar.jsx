@@ -16,9 +16,21 @@ const Navbar = () => {
     localStorage.removeItem("auth-token");
     navigate("/loginAdmin");
   };
+
+  const translateRole = (role) => {
+    const roleTranslations = {
+      admin: "Quản trị viên",
+      customer: "Khách hàng",
+      staff: "Nhân viên",
+      guide: "Hướng dẫn viên",
+    };
+
+    return roleTranslations[role] || role;
+  };
+
   return (
-    <div className=" flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
-      <Link to="/" className=" group flex items-center gap-1 ">
+    <div className="flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
+      <Link to="/" className="group flex items-center gap-1">
         <img src={logoViVu3Mien} alt="" className="w-20" />
         <div>
           <div className="vivu3mien-logo text-2xl font-bold text-cyan-500">
@@ -32,12 +44,21 @@ const Navbar = () => {
 
       <div className="text-lg">
         {currentUser ? (
-          <div className="flex gap-8">
-            <Link to="/profileUser">
-              <span>Xin chào: </span>
-              {currentUser.name}
-            </Link>
-            <button onClick={handleLogout}>Đăng xuất</button>
+          <div className="flex justify-between gap-8">
+            <div className="flex items-center gap-4">
+              <Link to="/profileUser" className="flex ">
+                <span>Xin chào: </span>
+                <strong className="ml-3">
+                  {currentUser.name} - {translateRole(currentUser?.role)}
+                </strong>
+              </Link>
+            </div>
+
+            <div>
+              <button onClick={handleLogout} className="underline">
+                Đăng xuất
+              </button>
+            </div>
           </div>
         ) : (
           <Link to="/loginAdmin" className="text-slate-700 hover:underline">

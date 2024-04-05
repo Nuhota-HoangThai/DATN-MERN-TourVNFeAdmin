@@ -8,6 +8,11 @@ import { useSelector } from "react-redux";
 const ListOrder = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
+  const [pageInfo, setPageInfo] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,15 +34,22 @@ const ListOrder = () => {
     setDropdownOpen((prev) => ({ ...prev, [bookingId]: !prev[bookingId] }));
   };
 
-  const fetchBookings = async () => {
+  const fetchBookings = async (page = 1) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/booking/listBookings`, {
-        headers: {
-          Authorization: "Bearer " + token,
+      const { data } = await axios.get(
+        `${BASE_URL}/booking/listBookingsLimit?page=${page}&limit=8`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         },
-      });
+      );
 
-      setBookings(data);
+      setBookings(data.bookings);
+      setPageInfo({
+        currentPage: page,
+        totalPages: data.totalPages,
+      });
     } catch (error) {
       console.error("There was a problem with fetching bookings:", error);
       setError(error.message);
@@ -114,47 +126,66 @@ const ListOrder = () => {
       unpaid: "Chưa thanh toán",
     })[status] || "N/A";
 
+  const handlePageChange = (newPage) => {
+    fetchBookings(newPage);
+  };
+
   return (
-    <div className="mx-2 my-8 max-h-[600px]  ">
-      <h2 className="mb-6 text-center text-2xl font-bold">
-        Danh sách đặt tour
-      </h2>
-      {bookings.length > 0 ? (
-        <div className="max-h-[600px] overflow-x-auto  overflow-y-auto rounded-xl">
-          <table className="min-w-full table-auto">
-            <thead className="bg-blue-950 text-white ">
+    <div className="max-h-[600px] w-full">
+      <h2 className="my-2 text-center text-xl font-bold">Danh sách đặt tour</h2>
+      <div className="">
+        {" "}
+        {bookings.length > 0 ? (
+          <table className="w-full  table-fixed rounded-2xl text-left text-sm">
+            <thead className="bg-blue-500 text-xs uppercase text-white">
               <tr>
-                <th className="px-4 py-2 text-left ">Mã đặt</th>
-                <th className="px-4 py-2 text-center">Ngày đặt</th>
-                <th className="px-4 py-2 text-center">Khách đặt</th>
-                <th className="px-4 py-2 text-center">Tour</th>
-                <th className="px-4 py-2 text-center">Thanh toán</th>
-                <th className="px-4 py-2 text-center">Trạng thái</th>
-                <th className="px-4 py-2 text-center">Hành động</th>
-                <th className="px-4 py-2 text-center">Chi tiết đơn</th>
-                <th className="px-4 py-2 text-center">Xóa đơn</th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Mã đặt
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Ngày đặt
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Khách đặt
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Tour
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Thanh toán
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Trạng thái
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Hành động
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Chi tiết đơn
+                </th>
+                <th scope="col" className="w-8 px-6 py-3">
+                  Xóa
+                </th>
               </tr>
             </thead>
-            <tbody className="bg-white ">
+            <tbody className="">
               {bookings.map((booking) => (
-                <tr key={booking._id} className="border-x border-b ">
-                  <td className="border-x px-2 py-2 text-center">
-                    {booking._id}
-                  </td>
-                  <td className="border-x px-2 py-2 text-center">
+                <tr key={booking._id} className="bg-white hover:bg-gray-100">
+                  <td className="ellipsis border-b px-6 py-4">{booking._id}</td>
+                  <td className="ellipsis border-b px-6 py-4">
                     {formatDateVN(booking.bookingDate)}
                   </td>
-                  <td className="border-x px-2 py-2 text-center">
+                  <td className="ellipsis border-b px-6 py-4">
                     {booking.user?.name || "N/A"}
                   </td>
-                  <td className="border-x px-2 py-2 text-center">
+                  <td className="ellipsis border-b px-6 py-4">
                     {booking.tour?.nameTour || "N/A"}
                   </td>
-                  <td className={`border-x px-2 py-2 text-center `}>
+                  <td className={`ellipsis border-b px-6 py-4`}>
                     {paymentStatusMapping(booking?.paymentStatus)}
                   </td>
                   <td
-                    className={`border-x px-2 py-2 text-center ${getStatusStyle(
+                    className={`ellipsis border-b px-6 py-4 ${getStatusStyle(
                       booking.status,
                     )}`}
                   >
@@ -237,10 +268,24 @@ const ListOrder = () => {
               ))}
             </tbody>
           </table>
-        </div>
-      ) : (
-        <p className="mt-5 text-center">Không có đơn đặt tour nào!!!</p>
-      )}
+        ) : (
+          <p className="mt-5 text-center">Không có đơn đặt tour nào!!!</p>
+        )}
+      </div>
+      {/* phân trang */}
+      <div className="mt-4 flex justify-center">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 rounded bg-blue-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 };

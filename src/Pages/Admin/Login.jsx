@@ -8,7 +8,7 @@ import {
   signInFailure,
 } from "../../redux/user/userSlice";
 
-import LoginGoogle from "../../Components/LoginGG/LoginGoogle"
+//import LoginGoogle from "../../Components/LoginGG/LoginGoogle"
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -73,7 +73,7 @@ const Login = () => {
             {loading ? "Đang tải..." : "Đăng nhập"}
           </button>
         </form>
-        <LoginGoogle />
+        {/* <LoginGoogle /> */}
         <div className="mt-6 text-center">
           <p className="text-sm">
             Chưa có tài khoản?{" "}

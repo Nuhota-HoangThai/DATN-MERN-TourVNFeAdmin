@@ -5,7 +5,7 @@
 body {
   margin: 0;
   /* font-family: "Poppins"; */
-  color: rgba(2, 2, 67, 0.826);
+
   /* //font-size: 18px; */
   background-color: rgb(223, 223, 244);
   height: 100vh;
@@ -25,4 +25,10 @@ body {
 .content {
   flex: 1; /* Chiếm lấy phần còn lại của màn hình */
   overflow-y: auto;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

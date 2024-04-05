@@ -13,7 +13,10 @@ const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const [image, setImage] = useState(null);
+  const [video, setVideo] = useState(null);
   const [previewImage, setPreviewImage] = useState([upload]);
+  const [previewVideo, setPreviewVideo] = useState([upload]);
+
   const [tourTypes, setTourTypes] = useState([]);
   const [tourDirectory, setTourDirectory] = useState([]);
   const [tourPromotion, setTourPromotion] = useState([]);
@@ -23,6 +26,7 @@ const UpdateTour = () => {
 
   const [tourData, setTourData] = useState({
     image: "",
+    video: "",
     nameTour: "",
     maxParticipants: "",
     price: "",
@@ -127,6 +131,11 @@ const UpdateTour = () => {
         formData.append("image", img); // Thêm từng hình ảnh vào formData
       });
     }
+    if (video && video.length) {
+      video.forEach((vid) => {
+        formData.append("video", vid); // Thêm từng video vào formData
+      });
+    }
 
     try {
       const { data } = await axios.put(
@@ -155,6 +164,17 @@ const UpdateTour = () => {
         URL.createObjectURL(file),
       );
       setPreviewImage(filesArrayUrls); // Cập nhật các URL xem trước cho tất cả hình ảnh được chọn
+    }
+  };
+
+  const handleVideoChange = (e) => {
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files);
+      setVideo(filesArray); // Lưu trữ tất cả các file video được chọn
+      const filesArrayUrls = filesArray.map((file) =>
+        URL.createObjectURL(file),
+      );
+      setPreviewVideo(filesArrayUrls); // Cập nhật các URL xem trước cho tất cả video được chọn
     }
   };
 
@@ -188,35 +208,68 @@ const UpdateTour = () => {
       <div className="rounded-2xl  bg-white  p-5 md:p-8">
         <h1 className="mb-4 text-xl font-semibold">Cập nhật Tour</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="mb-4 flex justify-center">
-            <label htmlFor="file-input" className="flex cursor-pointer gap-4">
-              {previewImage.length > 0 ? (
-                previewImage.map((image, index) => (
+          <div>
+            <div className="mb-4 flex justify-center">
+              <label htmlFor="file-input" className="flex cursor-pointer gap-4">
+                {previewImage.length > 0 ? (
+                  previewImage.map((image, index) => (
+                    <img
+                      src={image}
+                      alt="Preview"
+                      key={index}
+                      style={{ width: "100px", height: "100px" }}
+                    />
+                  ))
+                ) : (
                   <img
-                    src={image}
-                    alt="Preview"
-                    key={index}
+                    src={upload}
+                    alt="Upload"
                     style={{ width: "100px", height: "100px" }}
                   />
-                ))
-              ) : (
-                <img
-                  src={upload}
-                  alt="Upload"
-                  style={{ width: "100px", height: "100px" }}
-                />
-              )}
-            </label>
-            <input
-              onChange={handleImageChange}
-              type="file"
-              name="image"
-              id="file-input"
-              className="flex"
-              multiple // Cho phép chọn nhiều hình ảnh
-            />
+                )}
+              </label>
+              <input
+                onChange={handleImageChange}
+                type="file"
+                name="image"
+                id="file-input"
+                className="flex"
+                multiple // Cho phép chọn nhiều hình ảnh
+              />
+            </div>
+            {/** Video */}
+            <div className="mb-4 flex justify-center">
+              <label
+                htmlFor="video-input"
+                className="flex cursor-pointer gap-4"
+              >
+                {previewVideo.length > 0 ? (
+                  previewVideo.map((video, index) => (
+                    <video
+                      src={video}
+                      alt="Video"
+                      key={index}
+                      controls
+                      style={{ width: "100px", height: "100px" }}
+                    />
+                  ))
+                ) : (
+                  <div className="mt-10 border border-black">
+                    <h1 className="py-36 text-center">Thêm video</h1>
+                  </div>
+                )}
+              </label>
+              <input
+                onChange={handleVideoChange}
+                type="file"
+                name="video"
+                id="video-input"
+                className="flex"
+                accept="video/*"
+              />
+            </div>
           </div>
-
+          {/** */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
