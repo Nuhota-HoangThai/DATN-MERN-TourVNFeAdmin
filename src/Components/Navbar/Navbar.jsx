@@ -29,7 +29,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between bg-white px-14 py-2 shadow-2xl">
+    <div className="flex items-center justify-between bg-white px-14 py-2 shadow">
       <Link to="/" className="group flex items-center gap-1">
         <img src={logoViVu3Mien} alt="" className="w-20" />
         <div>
@@ -49,7 +49,7 @@ const Navbar = () => {
               <Link to="/profileUser" className="flex ">
                 <span>Xin chào: </span>
                 <strong className="ml-3">
-                  {currentUser.name} - {translateRole(currentUser?.role)}
+                  {translateRole(currentUser?.role)} - {currentUser.name}
                 </strong>
               </Link>
             </div>

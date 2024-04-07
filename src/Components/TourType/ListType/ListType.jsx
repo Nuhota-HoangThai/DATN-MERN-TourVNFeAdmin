@@ -11,22 +11,36 @@ function TourTypesList() {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const [tourTypes, setTourTypes] = useState([]);
+
+  const [pageInfo, setPageInfo] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
   const [selectedTourTypeId, setSelectedTourTypeId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
-  const fetchTourTypes = async () => {
+  const fetchTourTypes = async (page = 1) => {
     setIsLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get(`${BASE_URL}/tourType/getAllTourType`, {
-        headers: {
-          Authorization: "Bearer " + token,
+      const { data } = await axios.get(
+        `${BASE_URL}/tourType/getAllTourTypeLimit?page=${page}&limit=5`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         },
-      });
+      );
 
       setTourTypes(data.tourTypes);
+      setPageInfo({
+        currentPage: page,
+        totalPages: data.totalPages,
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -37,6 +51,10 @@ function TourTypesList() {
   useEffect(() => {
     fetchTourTypes();
   }, []);
+
+  const handlePageChange = (newPage) => {
+    fetchTourTypes(newPage);
+  };
 
   const selectTourType = (id) => {
     setSelectedTourTypeId(id);
@@ -74,98 +92,100 @@ function TourTypesList() {
   }
 
   return (
-    <div className="max-h-[600px] w-full p-4">
-      <div className="flex justify-between">
-        <h2 className="my-2 text-center text-2xl  font-bold">Loại Tour</h2>
-        <Link to={"/addTourType"} className=" no-underline">
-          <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
+    <div className="max-h-[600px] w-full overflow-auto">
+      <div className="flex items-center justify-between">
+        <h2 className="my-2 text-xl font-bold text-gray-800">Loại Tour</h2>
+        <Link to={"/addTourType"} className=" mr-5 no-underline">
+          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-gray-200 py-2">
             <p className="pl-2">Thêm loại tour</p>
           </div>
         </Link>
       </div>
-      {tourTypes.length > 0 ? (
-        <div>
-          <table className="  min-w-full overflow-hidden rounded-md  shadow">
-            <thead className=" bg-blue-950 font-bold text-white ">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
-                >
-                  Tên Loại Tour
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
-                >
-                  Mô tả
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-center text-xs uppercase tracking-wider"
-                >
-                  Cập nhật
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs uppercase tracking-wider"
-                >
-                  Xóa
-                </th>
-              </tr>
-            </thead>
-            <tbody className=" divide-y divide-gray-200 bg-white">
-              {tourTypes.map((tourType) => (
-                <tr
-                  key={tourType._id}
-                  className="cursor-pointer hover:bg-gray-50 "
-                >
-                  <td
-                    onClick={() => selectTourType(tourType._id)}
-                    className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                  >
-                    {tourType.typeName}
-                  </td>
-                  <td
-                    className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      maxWidth: "700px",
-                    }}
-                  >
-                    <div
-                      className="h-auto p-4"
-                      dangerouslySetInnerHTML={{ __html: tourType.description }}
-                    ></div>
-                  </td>
-                  <td className="py-3 text-center text-sm font-medium ">
-                    <button
-                      onClick={() => handleUpdate(tourType._id)}
-                      className=""
-                    >
-                      Sửa
-                    </button>
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
-                    <button
-                      onClick={() => handleDelete(tourType._id)}
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      Xóa
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
 
-          {selectedTourTypeId && <ToursList tourTypeId={selectedTourTypeId} />}
-        </div>
-      ) : (
-        <p className="mt-5 text-center">Không có loại tour nào!!!</p>
-      )}
+      <div>
+        {tourTypes.length > 0 ? (
+          <div className="">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-gray-200 ">
+                <tr>
+                  <th className="px-6 py-3 text-xs  uppercase tracking-wider">
+                    Tên Loại Tour
+                  </th>
+                  <th className="px-6 py-3 text-xs  uppercase tracking-wider">
+                    Mô tả
+                  </th>
+                  <th className="px-6 py-3 text-center text-xs  uppercase tracking-wider">
+                    Cập nhật
+                  </th>
+                  <th className="px-6 py-3 text-center text-xs  uppercase tracking-wider">
+                    Xóa
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {tourTypes.map((tourType) => (
+                  <tr key={tourType._id} className="hover:bg-gray-50">
+                    <td
+                      className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+                      onClick={() => selectTourType(tourType._id)}
+                    >
+                      {tourType.typeName}
+                    </td>
+                    <td
+                      className="px-6 py-4 text-sm font-medium text-gray-900"
+                      style={{ maxWidth: "700px" }}
+                    >
+                      <div
+                        className="overflow-hidden overflow-ellipsis whitespace-nowrap"
+                        dangerouslySetInnerHTML={{
+                          __html: tourType.description,
+                        }}
+                      ></div>
+                    </td>
+                    <td className="py-4 text-center">
+                      <button
+                        onClick={() => handleUpdate(tourType._id)}
+                        className="font-medium text-indigo-600 hover:text-indigo-800"
+                      >
+                        Sửa
+                      </button>
+                    </td>
+                    <td className="py-4 text-center">
+                      <button
+                        onClick={() => handleDelete(tourType._id)}
+                        className="font-medium text-red-600 hover:text-red-800"
+                      >
+                        Xóa
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {selectedTourTypeId && (
+              <ToursList tourTypeId={selectedTourTypeId} />
+            )}
+          </div>
+        ) : (
+          <p className="mt-5 text-center text-gray-500">
+            Không có loại tour nào.
+          </p>
+        )}
+      </div>
+      {/* phân trang */}
+      <div className="mt-4 flex justify-center">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 }

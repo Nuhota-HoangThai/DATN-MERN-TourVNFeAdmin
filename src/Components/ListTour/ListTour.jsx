@@ -73,7 +73,7 @@ const ListTour = () => {
       <div className="flex justify-between">
         <h1 className="my-2 text-center text-xl font-bold">Danh sách tour</h1>
         <Link to={"/addTour"} className=" mr-5 no-underline">
-          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-blue-500 py-1 text-white">
+          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-gray-200 py-2">
             <p className="pl-2">Thêm tour</p>
           </div>
         </Link>
@@ -81,7 +81,7 @@ const ListTour = () => {
       <div className="">
         {allTours.length > 0 ? (
           <table className="w-full  table-fixed rounded-2xl text-left text-sm">
-            <thead className="bg-blue-500 text-xs uppercase text-white">
+            <thead className="bg-gray-200 text-xs uppercase ">
               <tr>
                 <th scope="col" className="w-8 px-6 py-3">
                   Stt
@@ -141,7 +141,7 @@ const ListTour = () => {
                     {formatRegion(tour.regions)}
                   </td>
 
-                  <td className="ellipsis border-b px-6 py-4">
+                  <td className="ellipsis border-b px-6 py-4 text-blue-800">
                     <Link
                       to={`/tour-detail/${tour._id}`}
                       className="italic underline"
@@ -173,7 +173,7 @@ const ListTour = () => {
             <button
               key={pageNum}
               onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-blue-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
             >
               {pageNum}
             </button>

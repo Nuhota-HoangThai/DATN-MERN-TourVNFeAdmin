@@ -4,10 +4,7 @@
 
 body {
   margin: 0;
-  /* font-family: "Poppins"; */
-
-  /* //font-size: 18px; */
-  background-color: rgb(223, 223, 244);
+  background-color: white;
   height: 100vh;
 }
 

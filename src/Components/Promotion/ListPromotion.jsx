@@ -75,14 +75,14 @@ const ListPromotion = () => {
       <div className="mb-6 text-right">
         <Link
           to="/addPromotion"
-          className="inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          className="inline-flex items-center justify-center rounded-md bg-gray-200 px-5 py-2.5 text-center text-sm font-medium hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Tạo khuyến mãi mới
         </Link>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-left text-sm text-gray-500">
-          <thead className="bg-blue-700 text-xs uppercase text-white">
+          <thead className="bg-blue-500 text-xs uppercase text-white">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Tên Khuyến Mãi

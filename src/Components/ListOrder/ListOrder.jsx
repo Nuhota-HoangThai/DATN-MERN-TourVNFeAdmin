@@ -37,7 +37,7 @@ const ListOrder = () => {
   const fetchBookings = async (page = 1) => {
     try {
       const { data } = await axios.get(
-        `${BASE_URL}/booking/listBookingsLimit?page=${page}&limit=8`,
+        `${BASE_URL}/booking/listBookingsLimit?page=${page}&limit=10`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -131,72 +131,78 @@ const ListOrder = () => {
   };
 
   return (
-    <div className="max-h-[600px] w-full">
+    <div className="max-h-[600px] w-full overflow-auto">
       <h2 className="my-2 text-center text-xl font-bold">Danh sách đặt tour</h2>
       <div className="">
-        {" "}
         {bookings.length > 0 ? (
-          <table className="w-full  table-fixed rounded-2xl text-left text-sm">
-            <thead className="bg-blue-500 text-xs uppercase text-white">
+          <table className="w-full table-fixed rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
+            <thead className="bg-gray-200 text-xs uppercase ">
               <tr>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-8 border-b border-gray-200 px-6 py-3"
+                >
+                  Stt
+                </th>
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Mã đặt
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Ngày đặt
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Khách đặt
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Tour
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Thanh toán
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Trạng thái
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Hành động
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
-                  Chi tiết đơn
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                  Chi tiết
                 </th>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Xóa
                 </th>
               </tr>
             </thead>
-            <tbody className="">
-              {bookings.map((booking) => (
+            <tbody className="divide-y divide-gray-200">
+              {bookings.map((booking, index) => (
                 <tr key={booking._id} className="bg-white hover:bg-gray-100">
-                  <td className="ellipsis border-b px-6 py-4">{booking._id}</td>
-                  <td className="ellipsis border-b px-6 py-4">
+                  <td className="px-6 py-3 text-center">
+                    {index + 1 + (pageInfo.currentPage - 1) * 8}
+                  </td>
+                  <td className="ellipsis px-6 py-3">{booking._id}</td>
+                  <td className="ellipsis px-6 py-3">
                     {formatDateVN(booking.bookingDate)}
                   </td>
-                  <td className="ellipsis border-b px-6 py-4">
+                  <td className="ellipsis px-6 py-3">
                     {booking.user?.name || "N/A"}
                   </td>
-                  <td className="ellipsis border-b px-6 py-4">
+                  <td className="ellipsis px-6 py-3">
                     {booking.tour?.nameTour || "N/A"}
                   </td>
-                  <td className={`ellipsis border-b px-6 py-4`}>
+                  <td className="ellipsis px-6 py-3">
                     {paymentStatusMapping(booking?.paymentStatus)}
                   </td>
                   <td
-                    className={`ellipsis border-b px-6 py-4 ${getStatusStyle(
-                      booking.status,
-                    )}`}
+                    className={`ellipsis px-6 py-3 ${getStatusStyle(booking.status)}`}
                   >
                     {translateStatus(booking.status)}
                   </td>
 
-                  <td className="relative flex items-center justify-center border-x px-2 py-2 text-center ">
+                  <td className="relative flex items-center justify-center px-6 py-3">
                     {booking.status !== "completed" && (
                       <>
                         <button
-                          className="mt-2 flex items-center justify-center"
+                          className="flex items-center"
                           onClick={() => toggleDropdown(booking._id)}
                         >
                           Hành động
@@ -248,17 +254,17 @@ const ListOrder = () => {
                       </>
                     )}
                   </td>
-                  <td className="border-x  px-2 py-2 text-center">
+                  <td className="px-6 py-3">
                     <Link
                       to={`/booking-detail/${booking._id}`}
-                      className="italic underline"
+                      className="italic text-blue-800 underline"
                     >
                       Chi tiết
                     </Link>
                   </td>
-                  <td className="border-x px-2 py-2 text-center">
+                  <td className="px-6 py-3">
                     <button
-                      className="text-red-500"
+                      className="text-red-500 hover:text-red-700"
                       onClick={() => remove_booking(booking._id)}
                     >
                       Xóa
@@ -279,7 +285,7 @@ const ListOrder = () => {
             <button
               key={pageNum}
               onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-blue-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
             >
               {pageNum}
             </button>

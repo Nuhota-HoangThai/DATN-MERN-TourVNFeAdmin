@@ -53,15 +53,15 @@ const UserProfile = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>Đang tải...</p>;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <p>Lỗi: {error}</p>;
   }
 
   return (
-    <div className="mx-auto mt-28 max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto my-8 max-w-4xl px-4 sm:px-6 lg:px-8">
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="flex items-center justify-between px-4 py-5 sm:px-6">
           <div>

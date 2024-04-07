@@ -9,18 +9,23 @@ import axios from "axios";
 function ListTourDirectories() {
   const { token } = useSelector((state) => state.user.currentUser);
 
+  const [pageInfo, setPageInfo] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
   const [tourDirectories, setTourDirectories] = useState([]);
   const [selectedTourDirectoryId, setSelectedTourDirectoryId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetchTourDirectories = async () => {
+  const fetchTourDirectories = async (page = 1) => {
     setIsLoading(true);
     setError(null);
     try {
       const { data } = await axios.get(
-        `${BASE_URL}/tourDirectory/getAllTourDirectories`,
+        `${BASE_URL}/tourDirectory/getAllTourDirectoriesLimit?page=${page}&limit=5`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -29,6 +34,10 @@ function ListTourDirectories() {
       );
 
       setTourDirectories(data.tourDirectories);
+      setPageInfo({
+        currentPage: page,
+        totalPages: data.totalPages,
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -39,6 +48,10 @@ function ListTourDirectories() {
   useEffect(() => {
     fetchTourDirectories();
   }, []);
+
+  const handlePageChange = (newPage) => {
+    fetchTourDirectories(newPage);
+  };
 
   const selectTourDirectory = (id) => {
     setSelectedTourDirectoryId(id);
@@ -76,87 +89,68 @@ function ListTourDirectories() {
   }
 
   return (
-    <div className="max-h-[600px] w-full p-4">
-      <div className="flex justify-between">
-        <h2 className="my-2 text-center text-2xl  font-bold">Danh Mục Tour</h2>
-        <Link to={"/addTourDirectory"} className="no-underline">
-          <div className="mb-2 flex w-48 items-center justify-center rounded-lg bg-blue-950 py-2 text-white">
-            <p className="pl-2">Thêm danh mục tour</p>
+    <div className="max-h-[600px] w-full">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-gray-800">Danh Mục Tour</h2>
+        <Link to={"/addTourDirectory"} className="mr-5">
+          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-gray-200 py-2">
+            <p className="pl-2">Thêm danh mục</p>
           </div>
         </Link>
       </div>
       {tourDirectories.length > 0 ? (
         <div>
-          <table className="  min-w-full overflow-hidden rounded-md  shadow">
-            <thead className=" bg-blue-950 font-bold text-white ">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-gray-200">
               <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
-                >
+                <th className="px-6 py-3 text-xs  uppercase tracking-wider">
                   Tên Loại Tour
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs  uppercase tracking-wider"
-                >
+                <th className="px-6 py-3 text-xs  uppercase tracking-wider">
                   Mô tả
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-center text-xs uppercase tracking-wider"
-                >
+                <th className="w-32 px-6 py-3 text-xs uppercase tracking-wider">
                   Cập nhật
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs uppercase tracking-wider"
-                >
+                <th className="px-6 py-3 text-xs  uppercase tracking-wider">
                   Xóa
                 </th>
               </tr>
             </thead>
-            <tbody className=" divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-gray-200 bg-white">
               {tourDirectories.map((tourDirectory) => (
                 <tr
                   key={tourDirectory._id}
-                  className="cursor-pointer hover:bg-gray-50 "
+                  className="cursor-pointer hover:bg-gray-50"
                 >
                   <td
+                    className="whitespace-nowrap px-6 py-2 text-sm font-medium text-gray-900"
                     onClick={() => selectTourDirectory(tourDirectory._id)}
-                    className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                   >
                     {tourDirectory.directoryName}
                   </td>
                   <td
-                    className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      maxWidth: "700px",
-                    }}
+                    className="px-6 py-2 text-sm font-medium text-gray-900"
+                    style={{ maxWidth: "700px" }}
                   >
                     <div
-                      className="h-auto  p-4"
                       dangerouslySetInnerHTML={{
                         __html: tourDirectory.directoryDescription,
                       }}
                     ></div>
-                    {/* {tourDirectory.directoryDescription} */}
                   </td>
-                  <td className="py-3 text-center text-sm font-medium ">
+                  <td className="py-2 text-center">
                     <button
                       onClick={() => handleUpdate(tourDirectory._id)}
-                      className=""
+                      className="font-medium text-indigo-600 hover:text-indigo-800"
                     >
                       Sửa
                     </button>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
+                  <td className="py-2 text-center">
                     <button
                       onClick={() => handleDelete(tourDirectory._id)}
-                      className="text-red-600 hover:text-red-900"
+                      className="font-medium text-red-600 hover:text-red-800"
                     >
                       Xóa
                     </button>
@@ -170,8 +164,23 @@ function ListTourDirectories() {
           )}
         </div>
       ) : (
-        <p className="mt-5 text-center">Không có danh mục tour nào!</p>
+        <p className="mt-5 text-center text-gray-500">
+          Không có danh mục tour nào!
+        </p>
       )}
+      <div className="mt-4 flex justify-center">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 rounded px-4 py-2 ${pageInfo.currentPage === pageNum ? "bg-gray-700" : "bg-gray-500"} text-white`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 }

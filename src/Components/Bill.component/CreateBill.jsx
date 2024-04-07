@@ -44,34 +44,28 @@ const CreateBillForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-4 my-4 rounded-lg bg-white shadow-xl"
+      className="mx-auto my-4 max-w-4xl rounded-lg bg-white p-2 shadow-xl"
     >
-      <div className="p-6">
-        {/* {error && <p className="text-red-500">{error}</p>} */}
-        <div className="mx-3 mb-6 flex flex-wrap">
-          <h2 className="flex items-center text-xl font-semibold text-gray-900">
-            Mã đặt tour:
-          </h2>
-          <div className="flex w-full items-center px-3 md:mb-0 md:w-1/2">
-            <input
-              type="text"
-              id="bookingId"
-              placeholder="Nhập mã đặt tour"
-              className="w-full appearance-none rounded-lg border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={bookingId}
-              onChange={(e) => setBookingId(e.target.value)}
-              required
-            />
-          </div>
-          <div className="w-54 flex items-center px-3">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`w-full rounded-lg bg-blue-900 px-8 py-2 font-semibold text-white transition-colors duration-200 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-auto ${isLoading ? "cursor-not-allowed opacity-50" : ""}`}
-            >
-              {isLoading ? "Đang tạo..." : "Tạo hóa đơn"}
-            </button>
-          </div>
+      <div className="grid grid-cols-5 gap-5">
+        <div className="col-span-4">
+          <input
+            type="text"
+            id="bookingId"
+            placeholder="Nhập mã đặt tour"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-700 shadow-sm "
+            value={bookingId}
+            onChange={(e) => setBookingId(e.target.value)}
+            required
+          />
+        </div>
+        <div className="">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="rounded-lg bg-gray-200 px-4 py-2  transition-colors duration-200 ease-in-out hover:bg-gray-700 hover:text-white  focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isLoading ? "Đang tạo..." : "Tạo hóa đơn"}
+          </button>
         </div>
       </div>
     </form>

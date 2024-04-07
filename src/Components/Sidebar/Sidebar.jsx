@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 
 // Kếp tục sử dụng các icon đã được import từ trước và thêm một số icon mới nếu cần
 import {
@@ -13,25 +13,9 @@ import { RiBookReadLine, RiTeamLine } from "react-icons/ri";
 import { MdOutlineTour } from "react-icons/md";
 
 const Sidebar = () => {
-  const { currentUser } = useSelector((state) => state.user);
-
-  const translateRole = (role) => {
-    const roleTranslations = {
-      admin: "Quản trị viên",
-      customer: "Khách hàng",
-      staff: "Nhân viên",
-      guide: "Hướng dẫn viên",
-    };
-
-    return roleTranslations[role] || role;
-  };
-
   return (
-    <div className="h-screen bg-gray-800 text-white shadow-2xl">
-      <h1 className="pt-10 text-center text-xl font-bold">
-        {translateRole(currentUser?.role)}
-      </h1>
-      <div className="mx-2 pt-10">
+    <div className="h-screen bg-gray-200 text-gray-800">
+      <div className="mx-2 pt-6">
         {[
           {
             icon: <AiFillHome />,
@@ -71,7 +55,7 @@ const Sidebar = () => {
           {
             icon: <RiTeamLine />,
             text: "Người Dùng",
-            link: "/listUser",
+            link: "/listAdmin",
           },
           {
             icon: <BsGraphUp />,
@@ -80,9 +64,11 @@ const Sidebar = () => {
           },
         ].map((item, index) => (
           <Link to={item.link} key={index} className="no-underline">
-            <div className="my-5 flex items-center rounded-lg bg-gray-700 px-4 py-3 shadow transition duration-200 ease-in-out hover:bg-gray-600 hover:shadow-lg">
-              <div className="text-xl text-yellow-400">{item.icon}</div>
-              <p className="pl-3 text-sm font-medium">{item.text}</p>
+            <div className="my-5 flex items-center rounded-lg bg-white px-4 py-3 shadow-sm transition duration-300 ease-in-out hover:bg-blue-200 hover:shadow-lg">
+              <div className="text-xl text-gray-900">{item.icon}</div>
+              <p className="pl-3 text-sm font-medium text-gray-700">
+                {item.text}
+              </p>
             </div>
           </Link>
         ))}

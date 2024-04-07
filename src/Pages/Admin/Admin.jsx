@@ -7,16 +7,21 @@ import ListTour from "../../Components/ListTour/ListTour";
 import TourDetail from "../../Components/ListTour/TourDetail";
 
 import ListUser from "../../Components/ListUser/ListUser";
+import ListAdmin from "../../Components/ListUser/ListAdmin";
+import ListStaff from "../../Components/ListUser/ListStaff";
+import ListGuide from "../../Components/ListUser/ListGuide";
+import ListCustomer from "../../Components/ListUser/ListCustomer";
+import AddUser from "../../Components/ListUser/AddUser";
+import UpdateUser from "../../Components/ListUser/UpdateUser";
 
 import ListOrder from "../../Components/ListOrder/ListOrder";
 import BookingDetails from "../../Components/ListOrder/BookingDetail";
 
-import AddUser from "../../Components/AddUser/AddUser";
 import Statistical from "../../Pages/Admin/Statistical";
 import HomeAdmin from "./HomeAdmin";
 
 import UpdateTour from "../../Components/UpdateTour/UpdateTour";
-import UpdateUser from "../../Components/UpdateUser/UpdateUser";
+
 import Login from "./Login";
 
 import AddTourType from "../../Components/TourType/AddTourType/AddTourType";
@@ -63,12 +68,65 @@ const Admin = () => {
             element={<BookingDetails />}
           />
 
-          <Route path="/listUser" element={<ListUser />} />
+          <Route
+            path="/listAdmin"
+            element={
+              <ListUser>
+                <ListAdmin />
+              </ListUser>
+            }
+          />
+          <Route
+            path="/listStaff"
+            element={
+              <ListUser>
+                <ListStaff />
+              </ListUser>
+            }
+          />
+          <Route
+            path="/listGuide"
+            element={
+              <ListUser>
+                <ListGuide />
+              </ListUser>
+            }
+          />
+          <Route
+            path="/listCustomer"
+            element={
+              <ListUser>
+                <ListCustomer />
+              </ListUser>
+            }
+          />
+          <Route
+            path="/addUser"
+            element={
+              <ListUser>
+                <AddUser />
+              </ListUser>
+            }
+          />
+          <Route
+            path="/update_user/:id"
+            element={
+              <ListUser>
+                <UpdateUser />
+              </ListUser>
+            }
+          />
+          {/* <Route path="/update_user/:id" element={<UpdateUser />} /> */}
+          {/* <Route path="/addUser" element={<AddUser />} /> */}
+          {/* <Route path="/listUser" element={<ListUser />} /> */}
+          {/* <Route path="/listAdmin" element={<ListAdmin />} /> */}
+          {/* <Route path="/listStaff" element={<ListStaff />} /> */}
+          {/* <Route path="/listGuide" element={<ListGuide />} /> */}
+          {/* <Route path="/listCustomer" element={<ListCustomer />} /> */}
+
           <Route path="/profileUser" element={<ProfileUser />} />
-          <Route path="/addUser" element={<AddUser />} />
 
           <Route path="/update_tour/:id" element={<UpdateTour />} />
-          <Route path="/update_user/:id" element={<UpdateUser />} />
 
           <Route path="/loginAdmin" element={<Login />} />
           <Route path="/register" element={<Register />} />
