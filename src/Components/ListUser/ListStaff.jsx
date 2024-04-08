@@ -75,12 +75,12 @@ const ListUser = () => {
     <div className="max-h-[600px] w-full">
       <div className="flex justify-between">
         <h1 className="my-2 text-center text-xl font-bold">
-          Thông tin người dùng
+          Thông tin nhân viên
         </h1>
       </div>
       {allUsers.length > 0 ? (
         <table className="w-full  table-fixed rounded-2xl text-left text-sm">
-          <thead className="bg-gray-500 text-xs uppercase">
+          <thead className="bg-gray-200 text-xs uppercase">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Hình
@@ -102,6 +102,9 @@ const ListUser = () => {
               </th>
               <th scope="col" className="px-6 py-3">
                 Vai trò
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Lương/tháng
               </th>
               <th scope="col" className="px-6 py-3">
                 Hành động
@@ -142,6 +145,9 @@ const ListUser = () => {
                 <td className="ellipsis border-b px-6 py-2">{user.address}</td>
                 <td className="ellipsis border-b px-6 py-2">
                   {translateRole(user.role)}
+                </td>{" "}
+                <td className="ellipsis border-b px-6 py-2 text-red-500">
+                  {user.wage?.toLocaleString()} đ
                 </td>
                 <td className="ellipsis border-b px-6 py-2">
                   <button

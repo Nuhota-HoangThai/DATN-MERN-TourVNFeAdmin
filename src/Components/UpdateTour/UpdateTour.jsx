@@ -20,6 +20,7 @@ const UpdateTour = () => {
   const [tourTypes, setTourTypes] = useState([]);
   const [tourDirectory, setTourDirectory] = useState([]);
   const [tourPromotion, setTourPromotion] = useState([]);
+  const [allUsersGuide, setAllUsersGuide] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -41,9 +42,23 @@ const UpdateTour = () => {
     priceForYoungChildren: "",
     priceForInfants: "",
     additionalFees: "",
-
     promotion: "",
+    userGuide: "",
   });
+
+  const fetchInfo = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/user/get_all_usersGuide`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      const data = res.data;
+      setAllUsersGuide(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const fetchTourTypes = async () => {
     try {
@@ -86,7 +101,6 @@ const UpdateTour = () => {
           },
         },
       );
-      // console.log(data); // Verify the structure of the received data
       setTourPromotion(data);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -95,11 +109,7 @@ const UpdateTour = () => {
 
   const fetchTour = async () => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`, {
-        // headers: {
-        //   Authorization: "Bearer " + token,
-        // },
-      });
+      const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`);
       setTourData(data.tour);
       if (Array.isArray(data.tour.image)) {
         const imagesUrls = data.tour.image.map(
@@ -113,6 +123,7 @@ const UpdateTour = () => {
   };
 
   useEffect(() => {
+    fetchInfo();
     fetchTourCategories();
     fetchTourTypes();
     fetchTourPromotion();
@@ -208,7 +219,7 @@ const UpdateTour = () => {
       <div className="rounded-2xl  bg-white  p-5 md:p-8">
         <h1 className="mb-4 text-xl font-semibold">Cập nhật Tour</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+          <div className="flex">
             <div className="mb-4 flex justify-center">
               <label htmlFor="file-input" className="flex cursor-pointer gap-4">
                 {previewImage.length > 0 ? (
@@ -217,15 +228,11 @@ const UpdateTour = () => {
                       src={image}
                       alt="Preview"
                       key={index}
-                      style={{ width: "100px", height: "100px" }}
+                      className="h-28 w-40"
                     />
                   ))
                 ) : (
-                  <img
-                    src={upload}
-                    alt="Upload"
-                    style={{ width: "100px", height: "100px" }}
-                  />
+                  <img src={upload} alt="Upload" className="h-28 w-40" />
                 )}
               </label>
               <input
@@ -250,7 +257,7 @@ const UpdateTour = () => {
                       alt="Video"
                       key={index}
                       controls
-                      style={{ width: "100px", height: "100px" }}
+                      className="h-28 w-40"
                     />
                   ))
                 ) : (
@@ -310,26 +317,47 @@ const UpdateTour = () => {
               </select>
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Khuyến mãi
-            </label>
-            <select
-              className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              value={tourData.promotion}
-              onChange={(e) =>
-                setTourData({ ...tourData, promotion: e.target.value })
-              }
-            >
-              <option value="">Chọn loại khuyến mãi</option>
-              {tourPromotion?.map((promotion) => (
-                <option key={promotion._id} value={promotion._id}>
-                  {promotion.namePromotion}
-                </option>
-              ))}
-            </select>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Khuyến mãi
+              </label>
+              <select
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                value={tourData.promotion}
+                onChange={(e) =>
+                  setTourData({ ...tourData, promotion: e.target.value })
+                }
+              >
+                <option value="">Chọn loại khuyến mãi</option>
+                {tourPromotion?.map((promotion) => (
+                  <option key={promotion._id} value={promotion._id}>
+                    {promotion.namePromotion}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Hướng dẫn viên
+              </label>
+              <select
+                className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                value={tourData.userGuide}
+                onChange={(e) =>
+                  setTourData({ ...tourData, userGuide: e.target.value })
+                }
+              >
+                <option value="">Chọn hướng dẫn viên</option>
+                {allUsersGuide?.map((guide) => (
+                  <option key={guide._id} value={guide._id}>
+                    {guide.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="grid grid-cols-2  gap-6">
+          <div className="grid grid-cols-2  gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Tên tour
@@ -490,7 +518,7 @@ const UpdateTour = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2  gap-6">
+          <div className="grid grid-cols-2  gap-4">
             <div>
               <label className="block text-sm  font-medium text-gray-700">
                 Ngày khởi hành

@@ -19,6 +19,8 @@ const AddUser = () => {
     role: "customer",
     address: "",
     cccd: "",
+    dob: "",
+    sex: "",
   });
 
   const changeHandler = (e) => {
@@ -57,107 +59,152 @@ const AddUser = () => {
   };
 
   return (
-    <div className="mx-auto w-96 rounded bg-white p-8 shadow-2xl">
-      <h1 className="mb-6 text-2xl font-bold ">Thêm người dùng mới</h1>
+    <div className="mx-auto max-w-4xl rounded-lg bg-white p-8 shadow-xl">
+      <h1 className="mb-6 text-xl font-bold text-gray-900">
+        Thêm người dùng mới
+      </h1>
       {successMessage && (
-        <div className="mb-4 text-green-500">{successMessage}</div>
+        <div
+          className="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700"
+          role="alert"
+        >
+          {successMessage}
+        </div>
       )}
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && (
+        <p
+          className="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Họ tên"
-            onChange={changeHandler}
-            value={formData.name}
-            className="mt-1 w-full rounded-md border p-2"
-          />
+        <div className="-mx-2 flex flex-wrap">
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Họ tên"
+              onChange={changeHandler}
+              value={formData.name}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Số điện thoại"
+              onChange={changeHandler}
+              value={formData.phone}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="Số điện thoại"
-            onChange={changeHandler}
-            value={formData.phone}
-            className="mt-1 w-full rounded-md border p-2"
-          />
+        <div className="-mx-2 flex flex-wrap">
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Địa chỉ email"
+              onChange={changeHandler}
+              value={formData.email}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Mật khẩu"
+              onChange={changeHandler}
+              value={formData.password}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Địa chỉ email"
-            onChange={changeHandler}
-            value={formData.email}
-            className="mt-1 w-full rounded-md border p-2"
-          />
+        <div className="-mx-2 flex flex-wrap">
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="password"
+              placeholder="Xác nhận mật khẩu"
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+              name="confirmPassword"
+              id="confirmPassword"
+              onChange={changeHandler}
+              value={formData.confirmPassword}
+            />
+          </div>
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="text"
+              id="address"
+              name="address"
+              placeholder="Địa chỉ"
+              onChange={changeHandler}
+              value={formData.address}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Mật khẩu"
-            onChange={changeHandler}
-            value={formData.password}
-            className="mt-1 w-full rounded-md border p-2"
-          />
+        <div className="-mx-2 flex flex-wrap">
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="text"
+              id="cccd"
+              name="cccd"
+              placeholder="Căn cước công dân"
+              onChange={changeHandler}
+              value={formData.cccd}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              placeholder="Ngày sinh"
+              onChange={changeHandler}
+              value={formData.dob}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          {" "}
-          <input
-            type="password"
-            placeholder="Xác nhận mật khẩu"
-            className="mt-1 w-full rounded-md border p-2"
-            name="confirmPassword"
-            id="confirmPassword"
-            onChange={changeHandler}
-            value={formData.confirmPassword}
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            id="address"
-            name="address"
-            placeholder="Địa chỉ"
-            onChange={changeHandler}
-            value={formData.address}
-            className="mt-1 w-full rounded-md border p-2"
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            id="cccd"
-            name="cccd"
-            placeholder="Căn cước công dân"
-            onChange={changeHandler}
-            value={formData.cccd}
-            className="mt-1 w-full rounded-md border p-2"
-          />
-        </div>
-        <div className="mb-4">
-          <select
-            name="role"
-            id="role"
-            className="block w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-          >
-            <option value="admin">Quản trị viên</option>
-            <option value="staff">Nhân viên</option>
-            <option value="guide">Hướng dẫn viên</option>
-            <option value="customer">Khách hàng</option>
-          </select>
+        <div className="-mx-2 flex flex-wrap">
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <input
+              type="text"
+              id="sex"
+              name="sex"
+              placeholder="Giới tính"
+              onChange={changeHandler}
+              value={formData.sex}
+              className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+          </div>
+          <div className="mb-4 w-full px-2 md:w-1/2">
+            <select
+              name="role"
+              id="role"
+              className="mt-1 block w-full appearance-none rounded-md border border border-gray-300 bg-white px-3 px-4 py-2 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            >
+              <option value="admin">Quản trị viên</option>
+              <option value="staff">Nhân viên</option>
+              <option value="guide">Hướng dẫn viên</option>
+              <option value="customer">Khách hàng</option>
+            </select>
+          </div>
         </div>
         <button
           type="submit"
-          className="w-full rounded-md bg-blue-950 p-2 text-white hover:bg-blue-700 focus:border-blue-300 focus:outline-none focus:ring"
+          className="mt-4 w-full rounded-md bg-blue-600 p-3 text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
         >
           Thêm
         </button>

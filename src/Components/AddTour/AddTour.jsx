@@ -341,6 +341,7 @@ const AddTour = () => {
               <div className="mb-4">
                 <label
                   htmlFor="description"
+                  name="description"
                   className="mb-2 block text-sm font-bold text-gray-700"
                 >
                   Thông tin chi tiết

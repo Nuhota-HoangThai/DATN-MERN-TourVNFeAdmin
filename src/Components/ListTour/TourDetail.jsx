@@ -22,12 +22,8 @@ const TourDetail = () => {
       setIsLoading(true);
       const response = await axios.get(
         `${BASE_URL}/tour/getTourById/${tourId}`,
-        {
-          //   headers: {
-          //     Authorization: "Bearer " + token,
-          //   },
-        },
       );
+      console.log(response.data);
       setTour(response.data.tour);
       setIsLoading(false);
     } catch (err) {
@@ -35,6 +31,7 @@ const TourDetail = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchTour();
   }, [tourId]);
@@ -187,7 +184,7 @@ const TourDetail = () => {
             {displayImages.length === 1 ? (
               <div className="image-grid-item">
                 <img
-                  className="mx-auto h-[400px]"
+                  className="mx-auto h-40 w-40"
                   src={`${BASE_URL}/${displayImages[0].replace(/\\/g, "/")}`}
                   alt="Tour Image"
                 />
@@ -197,7 +194,7 @@ const TourDetail = () => {
                 {displayImages.map((image, index) => (
                   <div key={index} className="image-grid-item">
                     <img
-                      className="mx-auto h-[400px]"
+                      className="mx-auto h-40 w-40"
                       src={`${BASE_URL}/${image.replace(/\\/g, "/")}`}
                       alt={`Tour Image ${index + 1}`}
                     />
@@ -214,7 +211,7 @@ const TourDetail = () => {
             {displayVideos.length === 1 ? (
               <div className="image-grid-item">
                 <video
-                  className="mx-auto h-[400px]"
+                  className="mx-auto h-40 w-40"
                   src={`${BASE_URL}/${displayVideos[0].replace(/\\/g, "/")}`}
                   controls
                 />
@@ -224,7 +221,7 @@ const TourDetail = () => {
                 {displayVideos.map((video, index) => (
                   <div key={index} className="image-grid-item">
                     <video
-                      className="mx-auto h-[400px]"
+                      className="mx-auto h-40 w-40"
                       src={`${BASE_URL}/${video.replace(/\\/g, "/")}`}
                       alt={`Tour video ${index + 1}`}
                       controls
@@ -252,6 +249,10 @@ const TourDetail = () => {
                 detail:
                   tour.tourDirectory.directoryName ||
                   "Không thuộc danh mục nào",
+              },
+              {
+                title: "Hướng dẫn viên",
+                detail: tour.userGuide.name || "Đang cập nhật",
               },
               {
                 title: "Khuyến mãi",

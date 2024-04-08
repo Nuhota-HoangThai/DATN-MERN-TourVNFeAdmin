@@ -75,7 +75,7 @@ const ListUser = () => {
     <div className="max-h-[600px] w-full">
       <div className="flex justify-between">
         <h1 className="my-2 text-center text-xl font-bold">
-          Thông tin người dùng
+          Thông tin khách hàng
         </h1>
       </div>
       {allUsers.length > 0 ? (
