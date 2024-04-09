@@ -12,6 +12,7 @@ import "react-quill/dist/quill.snow.css";
 
 import TourType from "./TourType";
 import TourDirectory from "./TourDirectory";
+import Schedule from "./Schedule";
 
 const AddTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -20,6 +21,8 @@ const AddTour = () => {
   const [video, setVideo] = useState([]);
   const [description, setDescription] = useState("");
   const [selectedTourType, setSelectedTourType] = useState("");
+
+  const [scheduleContent, setScheduleContent] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -54,6 +57,7 @@ const AddTour = () => {
     setError("");
 
     let formData = new FormData(e.target);
+
     if (video.length > 0) {
       formData.append("video", video[0]);
     }
@@ -132,6 +136,7 @@ const AddTour = () => {
           <div className="grid grid-cols-2">
             {/**/}
             <div>
+              {/*fhsh*/}
               <div className="grid grid-cols-2 gap-4">
                 <TourDirectory />
                 <TourType
@@ -336,8 +341,7 @@ const AddTour = () => {
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
-              </div>
-
+              </div>{" "}
               <div className="mb-4">
                 <label
                   htmlFor="description"
@@ -349,6 +353,12 @@ const AddTour = () => {
                 <ReactQuill
                   value={description}
                   onChange={handleDescriptionChange}
+                />
+              </div>
+              <div className="mb-4">
+                <Schedule
+                  content={scheduleContent}
+                  setContent={setScheduleContent}
                 />
               </div>
             </div>

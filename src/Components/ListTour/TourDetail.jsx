@@ -252,7 +252,7 @@ const TourDetail = () => {
               },
               {
                 title: "Hướng dẫn viên",
-                detail: tour.userGuide.name || "Đang cập nhật",
+                detail: tour.userGuide?.name || "Đang cập nhật",
               },
               {
                 title: "Khuyến mãi",
@@ -305,17 +305,21 @@ const TourDetail = () => {
               },
               {
                 title: "Phí phụ thu",
-                detail: tour.additionalFees,
+                detail: tour.additionalFees?.toLocaleString(),
               },
               {
                 title: "Thông tin chi tiết (Điểm nhấn)",
                 detail: tour.description,
               },
               {
+                title: "Lịch trình",
+                detail: tour.schedule,
+              },
+              {
                 title: "Sửa tour",
                 detail: (
                   <button
-                    className=" text-sm "
+                    className=" text-sm text-blue-800"
                     onClick={() => navigateToUpdateTour(tour._id)}
                   >
                     Sửa

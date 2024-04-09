@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
-import { useSelector } from "react-redux";
 import axios from "axios";
 
 const ToursList = ({ tourTypeId }) => {

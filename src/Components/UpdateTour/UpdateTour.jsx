@@ -9,6 +9,9 @@ import "react-quill/dist/quill.snow.css";
 
 import upload from "../../assets/images/upload.png";
 
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -21,6 +24,8 @@ const UpdateTour = () => {
   const [tourDirectory, setTourDirectory] = useState([]);
   const [tourPromotion, setTourPromotion] = useState([]);
   const [allUsersGuide, setAllUsersGuide] = useState([]);
+
+  const [editorLoaded, setEditorLoaded] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -44,6 +49,7 @@ const UpdateTour = () => {
     additionalFees: "",
     promotion: "",
     userGuide: "",
+    schedule: "",
   });
 
   const fetchInfo = async () => {
@@ -110,13 +116,15 @@ const UpdateTour = () => {
   const fetchTour = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`);
-      setTourData(data.tour);
+
       if (Array.isArray(data.tour.image)) {
         const imagesUrls = data.tour.image.map(
           (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
         );
         setPreviewImage(imagesUrls);
       }
+      //console.log(data);
+      setTourData(data.tour);
     } catch (error) {
       console.error("Error fetching tour:", error);
     }
@@ -129,6 +137,13 @@ const UpdateTour = () => {
     fetchTourPromotion();
     fetchTour();
   }, [id]);
+
+  useEffect(() => {
+    if (tourData && tourData.schedule) {
+      // Make sure your data is ready
+      setEditorLoaded(true); // This will render CKEditor
+    }
+  }, [tourData]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -551,7 +566,7 @@ const UpdateTour = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Thông tin chi tiết
+              Điểm nhấn
             </label>
             <ReactQuill
               theme="snow"
@@ -561,7 +576,21 @@ const UpdateTour = () => {
               }
             />
           </div>
-
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Lịch trình
+            </label>
+            {editorLoaded && (
+              <CKEditor
+                editor={ClassicEditor}
+                data={tourData.schedule}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setTourData({ ...tourData, schedule: data });
+                }}
+              />
+            )}
+          </div>
           <button
             type="submit"
             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

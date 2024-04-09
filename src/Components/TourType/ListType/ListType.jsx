@@ -80,7 +80,7 @@ function TourTypesList() {
   };
 
   const handleUpdate = (id) => {
-    navigate(`/updateTourType/${id}`); // Corrected usage
+    navigate(`/updateTourType/${id}`);
   };
 
   if (isLoading) {

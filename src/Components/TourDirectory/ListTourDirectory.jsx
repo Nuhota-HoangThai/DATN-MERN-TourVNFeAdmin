@@ -104,6 +104,9 @@ function ListTourDirectories() {
             <thead className="bg-gray-200">
               <tr>
                 <th className="px-6 py-3 text-xs  uppercase tracking-wider">
+                  Hình
+                </th>
+                <th className="px-6 py-3 text-xs  uppercase tracking-wider">
                   Tên Loại Tour
                 </th>
                 <th className="px-6 py-3 text-xs  uppercase tracking-wider">
@@ -123,6 +126,19 @@ function ListTourDirectories() {
                   key={tourDirectory._id}
                   className="cursor-pointer hover:bg-gray-50"
                 >
+                  <td>
+                    {tourDirectory.image ? (
+                      <img
+                        src={`${BASE_URL}/${tourDirectory.image.replace(/\\/g, "/")}`}
+                        alt="promotion"
+                        className="h-auto w-28 rounded-md object-cover"
+                      />
+                    ) : (
+                      <p className="text-center text-gray-500">
+                        Không có hình ảnh
+                      </p>
+                    )}
+                  </td>
                   <td
                     className="whitespace-nowrap px-6 py-2 text-sm font-medium text-gray-900"
                     onClick={() => selectTourDirectory(tourDirectory._id)}

@@ -71,8 +71,8 @@ const ListPromotion = () => {
   }
 
   return (
-    <div className="p-6">
-      <div className="mb-6 text-right">
+    <div className="">
+      <div className="mx-2 my-6 text-right">
         <Link
           to="/addPromotion"
           className="inline-flex items-center justify-center rounded-md bg-gray-200 px-5 py-2.5 text-center text-sm font-medium hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300"
@@ -80,10 +80,13 @@ const ListPromotion = () => {
           Tạo khuyến mãi mới
         </Link>
       </div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="relative  shadow-md">
         <table className="w-full text-left text-sm text-gray-500">
-          <thead className="bg-blue-500 text-xs uppercase text-white">
+          <thead className="bg-gray-200 text-xs uppercase ">
             <tr>
+              <th scope="col" className="px-6 py-3">
+                Hình ảnh
+              </th>
               <th scope="col" className="px-6 py-3">
                 Tên Khuyến Mãi
               </th>
@@ -113,6 +116,20 @@ const ListPromotion = () => {
                 key={promotion._id}
                 className="border-b bg-white hover:bg-gray-50"
               >
+                {/* Displaying an Image */}
+                <td className="px-6 py-4">
+                  {promotion.image ? (
+                    <img
+                      src={`${BASE_URL}/${promotion.image.replace(/\\/g, "/")}`}
+                      alt="promotion"
+                      className="h-auto w-28 rounded-md object-cover"
+                    />
+                  ) : (
+                    <p className="text-center text-gray-500">
+                      Không có hình ảnh
+                    </p>
+                  )}
+                </td>
                 <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                   {promotion.namePromotion}
                 </td>

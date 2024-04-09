@@ -4,39 +4,55 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
 const AddTourDirectory = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
-  const [directoryName, setDirectoryName] = useState("");
-  const [directoryDescription, setDirectoryDescription] = useState("");
+  const [image, setImage] = useState(null);
+
   const [message, setMessage] = useState("");
   //const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    directoryName: "",
+    directoryDescription: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formDataToSend = new FormData();
+    for (const key in formData) {
+      formDataToSend.append(key, formData[key]);
+    }
+
+    if (image) {
+      formDataToSend.append("image", image);
+    }
+
     try {
       const response = await axios.post(
         `${BASE_URL}/tourDirectory/createTourDirectory`,
-        {
-          directoryName,
-          directoryDescription,
-        },
+        formDataToSend, // Sửa ở đây
         {
           headers: {
+            "Content-Type": "multipart/form-data", // Thêm dòng này nếu cần
             Authorization: "Bearer " + token,
           },
         },
       );
       setMessage(response.data.message);
-      setDirectoryName("");
-      setDirectoryDescription("");
+      console.log(response.data);
       // navigate("/listTourDirectory"); // Chỉnh sửa lại đường dẫn sau khi thêm thành công
     } catch (error) {
-      setMessage(error.response.data.message || "Lỗi tạo danh mục tour");
+      setMessage(error.response?.data?.message || "Lỗi tạo danh mục tour");
     }
   };
 
@@ -47,6 +63,36 @@ const AddTourDirectory = () => {
       </h2>
       {message && <p className="mt-4 text-center text-green-500">{message}</p>}
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        {/* Image input */}
+        <div>
+          <label
+            htmlFor="file-input"
+            className="mb-1 block cursor-pointer text-sm font-medium text-gray-700"
+          >
+            Thêm hình ảnh
+          </label>
+          {image ? (
+            <div className="mb-4 flex justify-center">
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Hình ảnh địa điểm"
+                onLoad={() => URL.revokeObjectURL(image)}
+                className="h-auto max-w-xs rounded-md shadow-sm"
+              />
+            </div>
+          ) : (
+            <div className="mb-4 flex h-48 w-full items-center justify-center rounded-md border-2 border-dashed border-gray-300">
+              <span className="text-sm text-gray-500">Chưa có hình ảnh</span>
+            </div>
+          )}
+          <input
+            onChange={(e) => setImage(e.target.files[0])}
+            type="file"
+            name="image"
+            id="file-input"
+            className="hidden"
+          />
+        </div>
         <div>
           <label
             htmlFor="directoryName"
@@ -56,26 +102,25 @@ const AddTourDirectory = () => {
           </label>
           <input
             type="text"
-            id="directoryName"
-            value={directoryName}
-            onChange={(e) => setDirectoryName(e.target.value)}
+            name="directoryName"
+            value={formData.directoryName}
+            onChange={handleInputChange}
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             required
-            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           />
         </div>
-        <div>
-          <label
-            htmlFor="directoryDescription"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Thông tin thêm:
+        <div className="mb-4">
+          <label className="mb-2 block text-sm font-bold text-gray-700">
+            Mô tả:
+            <input
+              type="text"
+              name="directoryDescription"
+              value={formData.directoryDescription}
+              onChange={handleInputChange}
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+              //required
+            />
           </label>
-          <ReactQuill
-            theme="snow"
-            value={directoryDescription}
-            onChange={setDirectoryDescription}
-            className="mt-1 block w-full"
-          />
         </div>
         <button
           type="submit"

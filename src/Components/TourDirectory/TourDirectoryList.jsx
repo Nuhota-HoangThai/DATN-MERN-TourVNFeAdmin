@@ -3,7 +3,7 @@ import { BASE_URL } from "../../utils/config";
 import axios from "axios";
 
 const TourDirectoriesList = ({ tourDirectoryId }) => {
-  const [directories, setDirectories] = useState([]);
+  const [tours, setTours] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,10 +13,10 @@ const TourDirectoriesList = ({ tourDirectoryId }) => {
       setError(null);
       try {
         const { data } = await axios.get(
-          `${BASE_URL}/tourDirectory/getTourDirectory/${tourDirectoryId}`,
+          `${BASE_URL}/tour/getTourDirectory/${tourDirectoryId}`,
         );
-
-        setDirectories(data.directories);
+        //console.log(data);
+        setTours(data.tours);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -30,25 +30,23 @@ const TourDirectoriesList = ({ tourDirectoryId }) => {
   return (
     <div className="tour-directories-list">
       <h3 className="my-4 text-xl font-semibold">
-        Danh sách tour thuộc danh mục này
+        Danh sách tour thuộc danh mục {tourDirectoryId}
       </h3>
       {isLoading && <div>Đang tải...</div>}
-      {!isLoading && !error && directories?.length === 0 && (
+      {!isLoading && !error && tours?.length === 0 && (
         <div>Không tìm thấy danh mục tour nào.</div>
       )}
       {!isLoading && !error && (
         <ul className="space-y-4">
-          {directories?.map((directory) => (
+          {tours?.map((tour) => (
             <li
-              key={directory._id}
+              key={tour._id}
               className="overflow-hidden rounded-md bg-white px-6 py-4 shadow"
             >
-              <div className="font-medium text-indigo-600">
-                {directory.directoryName}
-              </div>
-              <div className="text-sm text-gray-500">
-                {directory.directoryDescription}
-              </div>
+              <div className="font-medium text-indigo-600">{tour.nameTour}</div>
+              {/* <div className="text-sm text-gray-500">
+                {tour.description}
+              </div> */}
             </li>
           ))}
         </ul>
