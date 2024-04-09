@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-//import { useSelector } from "react-redux";
 
 // Kếp tục sử dụng các icon đã được import từ trước và thêm một số icon mới nếu cần
 import {
   AiFillHome,
-  // AiOutlineUser,
   AiOutlineOrderedList,
   AiOutlineGift,
 } from "react-icons/ai";

@@ -3,6 +3,8 @@ import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import { getDefaultConvergeTime } from "../../utils/formatDate";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -26,25 +28,6 @@ const AddTour = () => {
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
-
-  const getDefaultConvergeTime = () => {
-    const now = new Date();
-
-    // Thêm giờ GMT+7 vào thời gian hiện tại
-    const localTime = new Date(
-      now.getTime() - now.getTimezoneOffset() * 60000 + 7 * 60 * 60 * 1000,
-    );
-
-    // Format ngày tháng năm theo dd/mm/yyyy
-    const day = localTime.getDate().toString().padStart(2, "0");
-    const month = (localTime.getMonth() + 1).toString().padStart(2, "0"); // Tháng trong JavaScript bắt đầu từ 0
-    const year = localTime.getFullYear();
-    const hours = localTime.getHours().toString().padStart(2, "0");
-    const minutes = localTime.getMinutes().toString().padStart(2, "0");
-
-    // Trả về chuỗi ngày giờ đã được format
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-  };
 
   const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
   const handleDescriptionChange = (value) => {

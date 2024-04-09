@@ -3,6 +3,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 
+import { formatDateVN } from "../../utils/formatDate";
+import {
+  translateStatus,
+  paymentStatusMethod,
+  paymentStatusMapping,
+} from "../../utils/formatStatus";
+
 import JsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
@@ -36,34 +43,6 @@ const BillDetails = () => {
 
   if (isLoading) return <div>Đang tải...</div>;
   if (error) return <div>{error}</div>;
-
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
-  const translateStatus = (status) =>
-    ({
-      pending: "Chờ xử lý",
-      confirmed: "Đã xác nhận",
-      cancelled: "Đã hủy",
-      completed: "Hoàn thành",
-    })[status] || "N/A";
-
-  const paymentStatusMapping = (status) =>
-    ({
-      paid: "Đã thanh toán",
-      unpaid: "Chưa thanh toán",
-    })[status] || "N/A";
-
-  const paymentStatusMethod = (status) =>
-    ({
-      VNPay: "Đã thanh toán bằng VNPay",
-      COD: "COD",
-    })[status] || "COD";
 
   // Hàm để xuất PDF
   const exportPDF = () => {

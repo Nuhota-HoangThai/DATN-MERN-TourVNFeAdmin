@@ -4,6 +4,8 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
+import { formatDateVN } from "../../utils/formatDate";
+
 const ListPromotion = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -45,14 +47,6 @@ const ListPromotion = () => {
     } catch (error) {
       console.error("Error removing promotion:", error);
     }
-  };
-
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
   };
 
   if (isLoading) {

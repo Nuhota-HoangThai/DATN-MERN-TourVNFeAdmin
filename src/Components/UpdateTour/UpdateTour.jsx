@@ -12,6 +12,8 @@ import upload from "../../assets/images/upload.png";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+import { formatDateVN, getDefaultConvergeTime } from "../../utils/formatDate";
+
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -202,31 +204,6 @@ const UpdateTour = () => {
       );
       setPreviewVideo(filesArrayUrls); // Cập nhật các URL xem trước cho tất cả video được chọn
     }
-  };
-
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = ("0" + date.getDate()).slice(-2); // Ensuring two digits
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // JavaScript months are 0-based.
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  };
-
-  const getDefaultConvergeTime = () => {
-    const now = new Date();
-
-    // Không cần thêm giờ GMT+7 nếu bạn muốn sử dụng giờ máy chủ/local
-    const localTime = now;
-
-    // Format ngày tháng năm theo YYYY-MM-DD và giờ phút theo HH:mm
-    const year = localTime.getFullYear();
-    const month = (localTime.getMonth() + 1).toString().padStart(2, "0"); // Tháng trong JavaScript bắt đầu từ 0
-    const day = localTime.getDate().toString().padStart(2, "0");
-    const hours = localTime.getHours().toString().padStart(2, "0");
-    const minutes = localTime.getMinutes().toString().padStart(2, "0");
-
-    // Trả về chuỗi ngày giờ đã được format
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
   return (

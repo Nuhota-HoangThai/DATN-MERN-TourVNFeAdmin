@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/user/userSlice"; // Ensure the path is correct
 
 import logoViVu3Mien from "../../assets/images/logoViVu3Mien.jpg";
+import { translateRole } from "../../utils/formatRole";
 
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -15,17 +16,6 @@ const Navbar = () => {
     dispatch(logout());
     localStorage.removeItem("auth-token");
     navigate("/loginAdmin");
-  };
-
-  const translateRole = (role) => {
-    const roleTranslations = {
-      admin: "Quản trị viên",
-      customer: "Khách hàng",
-      staff: "Nhân viên",
-      guide: "Hướng dẫn viên",
-    };
-
-    return roleTranslations[role] || role;
   };
 
   return (

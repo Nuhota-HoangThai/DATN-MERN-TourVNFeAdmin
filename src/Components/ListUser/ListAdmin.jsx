@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
+import { translateRole } from "../../utils/formatRole";
 import defaultImage from "../../assets/images/logoicon.png";
 
 const ListUser = () => {
@@ -58,17 +59,6 @@ const ListUser = () => {
     } catch (error) {
       console.error("Error removing user:", error);
     }
-  };
-
-  const translateRole = (role) => {
-    const roleTranslations = {
-      admin: "Quản trị viên",
-      //   customer: "Khách hàng",
-      //   staff: "Nhân viên",
-      //   guide: "Hướng dẫn viên",
-    };
-
-    return roleTranslations[role] || role;
   };
 
   return (

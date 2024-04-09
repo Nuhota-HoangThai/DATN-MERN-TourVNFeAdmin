@@ -1,10 +1,4 @@
-const translateStatus = (status) =>
-  ({
-    pending: "Chờ xử lý",
-    confirmed: "Đã xác nhận",
-    cancelled: "Đã hủy",
-    completed: "Hoàn thành",
-  })[status] || "N/A";
+import { translateStatus } from "../../../utils/formatStatus";
 
 const BookingStatusTable = ({ bookingStats }) => (
   <div className="p-4">

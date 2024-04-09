@@ -20,7 +20,7 @@ const TourDirectory = () => {
             },
           },
         );
-        console.log(data); // Verify the structure of the received data
+        //console.log(data); // Verify the structure of the received data
         setTourPromotion(data);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);

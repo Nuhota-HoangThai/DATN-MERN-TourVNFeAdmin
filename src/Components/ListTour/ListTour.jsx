@@ -4,6 +4,8 @@ import { BASE_URL } from "../../utils/config";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+import { formatRegion } from "../../utils/formatRegion";
+
 const ListTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -52,19 +54,6 @@ const ListTour = () => {
       await fetchInfo();
     } catch (error) {
       console.error("Error removing tour:", error);
-    }
-  };
-
-  const formatRegion = (region) => {
-    switch (region) {
-      case "mn":
-        return "Miền Nam";
-      case "mb":
-        return "Miền Bắc";
-      case "mt":
-        return "Miền Trung";
-      default:
-        return "Không xác định";
     }
   };
 

@@ -5,6 +5,7 @@ import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
 import defaultImage from "../../assets/images/logoicon.png";
+import { translateRole } from "../../utils/formatRole";
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({
@@ -41,16 +42,6 @@ const UserProfile = () => {
 
     fetchUserProfile();
   }, [navigate, currentUser]);
-
-  const translateRole = (role) => {
-    const roles = {
-      admin: "Quản trị viên",
-      customer: "Khách hàng",
-      staff: "Nhân viên",
-      guide: "Hướng dẫn viên",
-    };
-    return roles[role] || "Không xác định";
-  };
 
   if (loading) {
     return <p>Đang tải...</p>;

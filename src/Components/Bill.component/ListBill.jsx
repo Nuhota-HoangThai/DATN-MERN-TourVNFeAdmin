@@ -5,6 +5,8 @@ import { BASE_URL } from "../../utils/config";
 import SendEmailButton from "../Bill.component/SendMail";
 import { useSelector } from "react-redux";
 
+import { formatDateVN } from "../../utils/formatDate";
+
 const BillsList = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -28,8 +30,8 @@ const BillsList = () => {
           },
         },
       );
-      //console.log(data);
-      setBills(data);
+      // console.log(data);
+      setBills(data.bills);
       setIsLoading(false);
       setPageInfo({
         currentPage: page,
@@ -60,14 +62,6 @@ const BillsList = () => {
 
   const handlePageChange = (newPage) => {
     fetchBills(newPage);
-  };
-
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
   };
 
   if (isLoading) return <div className="py-4 text-center">Đang tải...</div>;

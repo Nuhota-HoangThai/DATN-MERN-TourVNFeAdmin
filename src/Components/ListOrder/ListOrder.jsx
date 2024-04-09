@@ -5,6 +5,13 @@ import axios from "axios";
 
 import { useSelector } from "react-redux";
 
+import { formatDateVN } from "../../utils/formatDate";
+import {
+  translateStatus,
+  getStatusStyle,
+  paymentStatusMapping,
+} from "../../utils/formatStatus";
+
 const ListOrder = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -21,14 +28,6 @@ const ListOrder = () => {
   useEffect(() => {
     fetchBookings();
   }, []);
-
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
 
   const toggleDropdown = (bookingId) => {
     setDropdownOpen((prev) => ({ ...prev, [bookingId]: !prev[bookingId] }));
@@ -72,22 +71,6 @@ const ListOrder = () => {
     }
   };
 
-  const translateStatus = (status) =>
-    ({
-      pending: "Chờ xử lý",
-      confirmed: "Đã xác nhận",
-      cancelled: "Đã hủy",
-      completed: "Hoàn thành",
-    })[status] || "N/A";
-
-  const getStatusStyle = (status) =>
-    ({
-      pending: "text-yellow-600",
-      confirmed: "text-green-600",
-      cancelled: "text-red-600",
-      completed: "text-blue-600",
-    })[status] || "text-gray-800";
-
   if (loading) return <div className="mt-5 text-center">Đang tải trang...</div>;
 
   if (error)
@@ -119,12 +102,6 @@ const ListOrder = () => {
       setError(error.message);
     }
   };
-
-  const paymentStatusMapping = (status) =>
-    ({
-      paid: "Đã thanh toán",
-      unpaid: "Chưa thanh toán",
-    })[status] || "N/A";
 
   const handlePageChange = (newPage) => {
     fetchBookings(newPage);

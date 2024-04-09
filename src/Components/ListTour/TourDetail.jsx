@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
+import { formatRegion } from "../../utils/formatRegion";
+import { formatDateVNWithTime, formatDateVN } from "../../utils/formatDate";
 const TourDetail = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -59,36 +61,6 @@ const TourDetail = () => {
     }
   };
 
-  const formatDateVNWithTime = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes} ngày ${day}/${month}/${year} `;
-  };
-
-  const formatRegion = (region) => {
-    switch (region) {
-      case "mn":
-        return "miền Nam";
-      case "mb":
-        return "miền Bắc";
-      case "mt":
-        return "miền Trung";
-      default:
-        return "Không xác định";
-    }
-  };
-
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
   const formatPrice = (price) => {
     return <span style={{ color: "red" }}>{price?.toLocaleString()} đ</span>;
   };
@@ -305,7 +277,7 @@ const TourDetail = () => {
               },
               {
                 title: "Phí phụ thu",
-                detail: tour.additionalFees?.toLocaleString(),
+                detail: formatPrice(tour.additionalFees),
               },
               {
                 title: "Thông tin chi tiết (Điểm nhấn)",

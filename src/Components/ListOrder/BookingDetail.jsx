@@ -5,6 +5,14 @@ import { BASE_URL } from "../../utils/config";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+import { formatDateVN } from "../../utils/formatDate";
+
+import {
+  translateStatus,
+  paymentStatusMethod,
+  paymentStatusMapping,
+} from "../../utils/formatStatus";
+
 const BookingDetail = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -36,38 +44,13 @@ const BookingDetail = () => {
     fetchBookingDetail();
   }, [bookingId]);
 
-  const formatDateVN = (dateString) => {
-    const date = new Date(dateString);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-  };
-
-  const translateStatus = (status) =>
-    ({
-      pending: "Chờ xử lý",
-      confirmed: "Đã xác nhận",
-      cancelled: "Đã hủy",
-      completed: "Hoàn thành",
-    })[status] || "N/A";
-
-  const paymentStatusMapping = (status) =>
-    ({
-      paid: "Đã thanh toán",
-      unpaid: "Chưa thanh toán",
-    })[status] || "N/A";
-
-  const paymentStatusMethod = (status) =>
-    ({
-      VNPay: "Đã thanh toán bằng VNPay",
-      unpaid: "COD",
-    })[status] || "COD";
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="mx-auto my-8 max-h-[1000px] max-w-6xl rounded-xl bg-white p-4 ">
       <h1 className="mb-4 text-xl font-bold text-gray-800">
-        Chi tiết đơn đặt tour
+        Chi tiết đơn đặt tour - {bookingId}
       </h1>
       <div className="">
         <div className="flex gap-8 bg-slate-50">
