@@ -40,6 +40,8 @@ const AddTour = () => {
     setError("");
 
     let formData = new FormData(e.target);
+    formData.append("description", description);
+    formData.append("schedule", scheduleContent);
 
     if (video.length > 0) {
       formData.append("video", video[0]);
@@ -221,7 +223,7 @@ const AddTour = () => {
                     name="priceForChildren"
                     id="priceForChildren"
                     placeholder="Nhập giá"
-                    disabled={selectedTourType === "65ff9d9909bebca7df0be4e0"}
+                    disabled={selectedTourType === "661689edb0caba81f9b831c0"}
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
@@ -239,7 +241,10 @@ const AddTour = () => {
                     name="priceForYoungChildren"
                     id="priceForYoungChildren"
                     placeholder="Nhập giá"
-                    disabled={selectedTourType === "65ff9d9909bebca7df0be4e0"}
+                    disabled={
+                      selectedTourType === "661689edb0caba81f9b831c0" ||
+                      selectedTourType === "661689fab0caba81f9b831c6"
+                    }
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
@@ -255,7 +260,11 @@ const AddTour = () => {
                     name="priceForInfants"
                     id="priceForInfants"
                     placeholder="Nhập giá"
-                    disabled={selectedTourType === "65ff9d9909bebca7df0be4e0"}
+                    disabled={
+                      selectedTourType === "661689edb0caba81f9b831c0" ||
+                      selectedTourType === "661689fab0caba81f9b831c6" ||
+                      selectedTourType === "66168a06b0caba81f9b831cc"
+                    }
                     className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </div>
@@ -334,12 +343,14 @@ const AddTour = () => {
                   Thông tin chi tiết
                 </label>
                 <ReactQuill
+                  name="description"
                   value={description}
                   onChange={handleDescriptionChange}
                 />
               </div>
               <div className="mb-4">
                 <Schedule
+                  name="schedule"
                   content={scheduleContent}
                   setContent={setScheduleContent}
                 />

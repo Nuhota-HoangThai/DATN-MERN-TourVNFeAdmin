@@ -12,7 +12,10 @@ import upload from "../../assets/images/upload.png";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { formatDateVN, getDefaultConvergeTime } from "../../utils/formatDate";
+import {
+  formatDateVNAddTour,
+  getDefaultConvergeTime,
+} from "../../utils/formatDate";
 
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -125,7 +128,7 @@ const UpdateTour = () => {
         );
         setPreviewImage(imagesUrls);
       }
-      //console.log(data);
+      console.log("data", data);
       setTourData(data.tour);
     } catch (error) {
       console.error("Error fetching tour:", error);
@@ -138,6 +141,7 @@ const UpdateTour = () => {
     fetchTourTypes();
     fetchTourPromotion();
     fetchTour();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -276,7 +280,8 @@ const UpdateTour = () => {
               </label>
               <select
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                value={tourData.tourDirectory}
+                value={tourData.tourDirectory?._id || tourData.tourDirectory}
+                //value={tourData.tourDirectory}
                 onChange={(e) =>
                   setTourData({ ...tourData, tourDirectory: e.target.value })
                 }
@@ -295,7 +300,8 @@ const UpdateTour = () => {
               </label>
               <select
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                value={tourData.tourType}
+                value={tourData?.tourType?._id}
+                //defaultChecked={tourData.tourType?.typeName}
                 onChange={(e) =>
                   setTourData({ ...tourData, tourType: e.target.value })
                 }
@@ -316,7 +322,7 @@ const UpdateTour = () => {
               </label>
               <select
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                value={tourData.promotion}
+                value={tourData.promotion?._id || tourData.promotion}
                 onChange={(e) =>
                   setTourData({ ...tourData, promotion: e.target.value })
                 }
@@ -335,7 +341,7 @@ const UpdateTour = () => {
               </label>
               <select
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                value={tourData.userGuide}
+                value={tourData.userGuide?._id || tourData.userGuide}
                 onChange={(e) =>
                   setTourData({ ...tourData, userGuide: e.target.value })
                 }
@@ -482,7 +488,7 @@ const UpdateTour = () => {
                 Phí phụ thu (phòng đơn)
               </label>
               <input
-                placeholder=" Phí bổ sung"
+                placeholder="Phí bổ sung"
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 type="number"
                 value={tourData.additionalFees}
@@ -519,7 +525,7 @@ const UpdateTour = () => {
                 placeholder="Nhập ngày khởi hành"
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 type="date"
-                value={formatDateVN(tourData.startDate)}
+                value={formatDateVNAddTour(tourData.startDate)}
                 onChange={(e) =>
                   setTourData({ ...tourData, startDate: e.target.value })
                 }
@@ -533,7 +539,7 @@ const UpdateTour = () => {
                 placeholder="Nhập ngày kết thúc"
                 className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 type="date"
-                value={formatDateVN(tourData.endDate)}
+                value={formatDateVNAddTour(tourData.endDate)}
                 onChange={(e) =>
                   setTourData({ ...tourData, endDate: e.target.value })
                 }

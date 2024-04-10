@@ -1,3 +1,4 @@
+// định dạng ngày tháng năm theo VN
 export const formatDateVN = (dateString) => {
   const date = new Date(dateString);
   const day = date.getDate().toString().padStart(2, "0");
@@ -6,6 +7,7 @@ export const formatDateVN = (dateString) => {
   return `${day}/${month}/${year}`;
 };
 
+// THời gain tập trung
 export const getDefaultConvergeTime = () => {
   const now = new Date();
 
@@ -25,6 +27,7 @@ export const getDefaultConvergeTime = () => {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
+//Thời gian khởi hành
 export const formatDateVNWithTime = (dateTimeString) => {
   const date = new Date(dateTimeString);
   const day = date.getDate().toString().padStart(2, "0");
@@ -33,4 +36,16 @@ export const formatDateVNWithTime = (dateTimeString) => {
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes} ngày ${day}/${month}/${year} `;
+};
+
+export const formatDateVNAddTour = (date) => {
+  const d = new Date(date);
+  let month = "" + (d.getMonth() + 1);
+  let day = "" + d.getDate();
+  const year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-"); // Chuyển đổi sang định dạng yyyy-MM-dd
 };
