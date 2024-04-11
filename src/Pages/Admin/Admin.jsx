@@ -42,6 +42,11 @@ import Bill from "./Bill";
 import BillDetails from "../../Components/Bill.component/BillDetails";
 import CommonRevenue from "../../Components/Statisical.component/CommonRevenue/CommonRevenue";
 
+import Blog from "./Blog";
+import AddBlog from "../../Components/Blog.component/AddBlog";
+import BlogDetail from "../../Components/Blog.component/BlogDetail";
+// import UpdateBlog from "../../Components/Blog.component/UpdateBlog";
+
 const Admin = () => {
   const location = useLocation();
 
@@ -116,13 +121,6 @@ const Admin = () => {
               </ListUser>
             }
           />
-          {/* <Route path="/update_user/:id" element={<UpdateUser />} /> */}
-          {/* <Route path="/addUser" element={<AddUser />} /> */}
-          {/* <Route path="/listUser" element={<ListUser />} /> */}
-          {/* <Route path="/listAdmin" element={<ListAdmin />} /> */}
-          {/* <Route path="/listStaff" element={<ListStaff />} /> */}
-          {/* <Route path="/listGuide" element={<ListGuide />} /> */}
-          {/* <Route path="/listCustomer" element={<ListCustomer />} /> */}
 
           <Route path="/profileUser" element={<ProfileUser />} />
 
@@ -151,6 +149,11 @@ const Admin = () => {
 
           <Route path="/bill" element={<Bill />} />
           <Route path="/bill/:id" element={<BillDetails />} />
+
+          <Route path="/listBlog" element={<Blog />} />
+          <Route path="/addBlog" element={<AddBlog />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+          {/* <Route path="/editBlog/:id" element={<UpdateBlog />} /> */}
         </Routes>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { tourService } from "../../service/tourService";
 
 import { getDefaultConvergeTime } from "../../utils/formatDate";
 
@@ -46,23 +45,16 @@ const AddTour = () => {
     if (video.length > 0) {
       formData.append("video", video[0]);
     }
-    await axios
-      .post(`${BASE_URL}/tour/addTour`, formData, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then(() => {
-        setIsSuccess(true);
-      })
-      .catch((error) => {
-        setError("Thêm tour thất bại.");
-        console.error(error);
-      });
+
+    try {
+      await tourService.addTour(formData, token);
+      setIsSuccess(true);
+    } catch (error) {
+      setError("Thêm tour thất bại.");
+      console.error(error);
+    }
   };
-
   // Cài đặt cho Slider
-
   const sliderSettings = {
     dots: true,
     // infinite: true,
