@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { addNewBlog } from "../../service/blogSevice";
-
+import { useSelector } from "react-redux";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-
-import { useSelector } from "react-redux";
+import { createBlog } from "../../api/blogApi"; // Import hàm createBlog từ file api
 
 const AddBlog = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -18,40 +15,38 @@ const AddBlog = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
   const handleDescriptionChange = (event, editor) => {
     const data = editor.getData();
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       body: data,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await addNewBlog(formData, token);
+      const response = await createBlog(formData, token);
       alert("Tạo blog thành công!");
+      console.log(response);
     } catch (error) {
-      console.error("Failed to create blog:", error);
-      alert("Lỗi tạo blog.");
+      console.error("Error creating blog:", error);
+      alert("Tạo blog thất bại");
     }
   };
 
   return (
     <div className="mt-8 flex h-[600px] justify-center">
-      {" "}
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-4xl space-y-6 rounded-lg bg-white p-8 shadow-xl"
       >
-        {" "}
         <PerfectScrollbar>
           <h2 className="text-2xl font-semibold text-gray-800">Tạo blog mới</h2>
           <div>

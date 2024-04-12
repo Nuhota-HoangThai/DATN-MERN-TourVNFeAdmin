@@ -41,21 +41,37 @@ const AllTourGuide = () => {
   };
 
   return (
-    <div>
-      <h1>Tours Đã Có Hướng Dẫn Viên</h1>
+    <div className="container mx-auto px-4">
+      <h1 className="my-4 text-2xl font-bold">Tours Đã Có Hướng Dẫn Viên</h1>
       {Object.keys(groupedTours).map((guideId) => (
-        <div key={guideId}>
-          <h2>Hướng dẫn viên: {groupedTours[guideId].guideName}</h2>
-          <ul>
-            {groupedTours[guideId].tours.map((tour) => (
-              <li key={tour._id}>
-                <h3>{tour.nameTour}</h3>
-                <p>Loại tour: {tour.tourType?.typeName}</p>
-                <p>Danh mục tour: {tour.tourDirectory?.directoryName}</p>
-                <p>Giá: ${tour.price.toFixed(2)}</p>
-              </li>
-            ))}
-          </ul>
+        <div key={guideId} className="mb-8">
+          <h2 className="mb-3 text-lg font-semibold">
+            Hdv: {groupedTours[guideId].guideName}
+          </h2>
+          <table className="min-w-full table-auto">
+            <thead>
+              <tr className="bg-gray-200 text-left">
+                <th className="px-4 py-2">Tên tour</th>
+                <th className="px-4 py-2">Loại tour</th>
+                <th className="px-4 py-2">Danh mục tour</th>
+                <th className="px-4 py-2">Giá</th>
+              </tr>
+            </thead>
+            <tbody>
+              {groupedTours[guideId].tours.map((tour) => (
+                <tr key={tour._id} className="border-b">
+                  <td className="px-4 py-2">{tour.nameTour}</td>
+                  <td className="px-4 py-2">{tour.tourType?.typeName}</td>
+                  <td className="px-4 py-2">
+                    {tour.tourDirectory?.directoryName}
+                  </td>
+                  <td className="px-4 py-2 text-red-500">
+                    {tour.price?.toLocaleString()} đ
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ))}
     </div>

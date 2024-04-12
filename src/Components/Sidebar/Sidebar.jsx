@@ -4,83 +4,86 @@ import {
   AiOutlineGift,
   // AiFillHome, // Uncomment and import if you decide to use it again
 } from "react-icons/ai";
-import { BsBookmarksFill, BsFillBookmarkFill, BsGraphUp } from "react-icons/bs";
+import { BsBookmarksFill, BsGraphUp } from "react-icons/bs";
 import { RiTeamLine, RiBillLine } from "react-icons/ri";
 import { MdOutlineTour, MdOutlineCategory, MdEventSeat } from "react-icons/md";
+import { FaBlogger } from "react-icons/fa";
+import { MdOutlineRateReview } from "react-icons/md";
+import { SiFoursquarecityguide } from "react-icons/si";
 
 const Sidebar = () => {
   const currentUserRole = useSelector((state) => state.user.currentUser.role); // assuming role is a property of currentUser object
-  console.log("Current user role:", currentUserRole);
+  //console.log("Current user role:", currentUserRole);
   // Xác định tất cả các mục thanh bên có vai trò truy cập
   const sidebarItems = [
     {
-      icon: <MdOutlineTour />,
+      icon: <MdOutlineTour color="blue" />,
       text: "Quản Lý Tour",
       link: "/listTour",
       role: ["admin"],
     },
     {
-      icon: <MdEventSeat />,
+      icon: <MdEventSeat color="green" />,
       text: "Đặt Tour",
       link: "/listOrder",
       role: ["admin", "staff"],
     },
     {
-      icon: <RiBillLine />,
+      icon: <RiBillLine color="red" />,
       text: "Hóa Đơn",
       link: "/bill",
       role: ["admin", "staff"],
     },
     {
-      icon: <MdOutlineCategory />,
+      icon: <MdOutlineCategory color="purple" />,
       text: "Loại Tour",
       link: "/listType",
       role: ["admin"],
     },
     {
-      icon: <BsBookmarksFill />,
+      icon: <BsBookmarksFill color="orange" />,
       text: "Danh Mục Tour",
       link: "/listTourDirectory",
       role: ["admin"],
     },
     {
-      icon: <AiOutlineGift />,
+      icon: <AiOutlineGift color="pink" />,
       text: "Khuyến Mãi",
       link: "/listPromotion",
       role: ["admin"],
     },
     {
-      icon: <RiTeamLine />,
+      icon: <RiTeamLine color="teal" />,
       text: "Người Dùng",
       link: "/listAdmin",
       role: ["admin"],
     },
     {
-      icon: <BsGraphUp />,
+      icon: <BsGraphUp color="darkblue" />,
       text: "Thống Kê",
       link: "/statistical",
       role: ["admin"],
     },
     {
-      icon: <BsFillBookmarkFill />,
+      icon: <FaBlogger color="gold" />,
       text: "Blog",
       link: "/listBlog",
       role: ["admin"],
     },
     {
-      icon: <AiOutlineGift />,
+      icon: <MdOutlineRateReview color="silver" />,
       text: "Đánh giá",
       link: "/review",
       role: ["admin"],
     },
     {
-      icon: <AiOutlineGift />,
+      icon: <SiFoursquarecityguide color="brown" />,
       text: "Tour HDV",
       link: "/all-tour-guide",
       role: ["admin"],
     },
     {
-      icon: <AiOutlineGift />,
+      icon: <SiFoursquarecityguide color="black" />,
       text: "Tour cá nhân HDV",
       link: "/tour-guide",
       role: ["guide"],
