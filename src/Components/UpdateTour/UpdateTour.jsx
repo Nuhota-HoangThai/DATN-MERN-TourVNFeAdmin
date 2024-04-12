@@ -20,6 +20,7 @@ import {
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
+  const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [previewImage, setPreviewImage] = useState([upload]);
@@ -98,7 +99,7 @@ const UpdateTour = () => {
 
       setTourDirectory(data.tourDirectories);
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      setError(error.message);
     }
   };
 
@@ -128,7 +129,7 @@ const UpdateTour = () => {
         );
         setPreviewImage(imagesUrls);
       }
-      console.log("data", data);
+      // console.log("data", data);
       setTourData(data.tour);
     } catch (error) {
       console.error("Error fetching tour:", error);
@@ -146,8 +147,7 @@ const UpdateTour = () => {
 
   useEffect(() => {
     if (tourData && tourData.schedule) {
-      // Make sure your data is ready
-      setEditorLoaded(true); // This will render CKEditor
+      setEditorLoaded(true);
     }
   }, [tourData]);
 
@@ -184,7 +184,8 @@ const UpdateTour = () => {
       alert("Cập nhật tour thành công!");
       navigate("/listTour");
     } catch (error) {
-      console.error("Lỗi cập nhật tour:", error);
+      alert("Cập nhật tour không thành công!");
+      setError(error.message);
     }
   };
 
@@ -574,6 +575,7 @@ const UpdateTour = () => {
               />
             )}
           </div>
+
           <button
             type="submit"
             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

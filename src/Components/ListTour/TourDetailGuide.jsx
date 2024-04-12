@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios"; // Đảm bảo bạn đã cài đặt axios
 import { BASE_URL } from "../../utils/config";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,13 +10,10 @@ import Slider from "react-slick";
 import { formatRegion } from "../../utils/formatRegion";
 import { formatDateVNWithTime, formatDateVN } from "../../utils/formatDate";
 const TourDetail = () => {
-  const { token } = useSelector((state) => state.user.currentUser);
-
   const { tourId } = useParams();
   const [tour, setTour] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const fetchTour = async () => {
     try {
@@ -39,27 +35,6 @@ const TourDetail = () => {
   }, [tourId]);
 
   // update tour
-
-  const navigateToUpdateTour = (id) => {
-    navigate(`/update_tour/${id}`);
-  };
-
-  const remove_tour = async (id) => {
-    if (window.confirm("Bạn có chắc muốn xóa tour này?")) {
-      try {
-        await axios.delete(`${BASE_URL}/tour/removeTour/${id}`, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-
-        await fetchTour();
-        navigate("/listTour");
-      } catch (error) {
-        console.error("Error removing tour:", error);
-      }
-    }
-  };
 
   const formatPrice = (price) => {
     return <span style={{ color: "red" }}>{price?.toLocaleString()} đ</span>;
@@ -286,28 +261,6 @@ const TourDetail = () => {
               {
                 title: "Lịch trình",
                 detail: tour.schedule,
-              },
-              {
-                title: "Sửa tour",
-                detail: (
-                  <button
-                    className=" text-sm text-blue-800"
-                    onClick={() => navigateToUpdateTour(tour._id)}
-                  >
-                    Sửa
-                  </button>
-                ),
-              },
-              {
-                title: "Xóa tour",
-                detail: (
-                  <button
-                    className=" text-sm text-red-500"
-                    onClick={() => remove_tour(tour._id)}
-                  >
-                    Xóa
-                  </button>
-                ),
               },
             ].map((row) => (
               <tr key={row.title}>

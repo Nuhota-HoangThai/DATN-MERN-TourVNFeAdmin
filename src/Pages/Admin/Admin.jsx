@@ -28,7 +28,7 @@ import AddTourType from "../../Components/TourType/AddTourType/AddTourType";
 import ListType from "../../Components/TourType/ListType/ListType";
 import UpdateTourType from "../../Components/TourType/UpdateTourType/UpdateTourType";
 import ProfileUser from "../../Components/ProfileUser/ProfileUser";
-import Register from "./Register";
+//import Register from "./Register";
 
 import AddTourDirectory from "../../Components/TourDirectory/AddTourDirectory";
 import ListTourDirectory from "../../Components/TourDirectory/ListTourDirectory";
@@ -45,27 +45,36 @@ import CommonRevenue from "../../Components/Statisical.component/CommonRevenue/C
 import Blog from "./Blog";
 import AddBlog from "../../Components/Blog.component/AddBlog";
 import BlogDetail from "../../Components/Blog.component/BlogDetail";
+import ReviewList from "./Review";
 // import UpdateBlog from "../../Components/Blog.component/UpdateBlog";
 
+import Guide from "../Guide/Guide";
+import TourDetailGuide from "../../Components/ListTour/TourDetailGuide";
+
+import AllTourGuide from "./AllTourGuide";
 const Admin = () => {
   const location = useLocation();
 
-  const isLoginPage = location.pathname === "/loginAdmin";
+  const hideSidebar = location.pathname === "/loginAdmin";
 
   return (
     <div className="layout grid grid-cols-5 gap-1">
-      {!isLoginPage && (
+      {!hideSidebar && (
         <div className="sidebar col-span-1 w-full">
           <Sidebar />
         </div>
       )}
 
-      <div className={`content ${isLoginPage ? "col-span-5" : "col-span-4"}`}>
+      <div className={`content ${hideSidebar ? "col-span-5" : "col-span-4"}`}>
         <Routes>
           <Route path="/" element={<HomeAdmin />} />
           <Route path="/listTour" element={<ListTour />} />
           <Route path="/addTour" element={<AddTour />} />
           <Route path="/tour-detail/:tourId" element={<TourDetail />} />
+          <Route
+            path="/tour-detail-guide/:tourId"
+            element={<TourDetailGuide />}
+          />
 
           <Route path="/listOrder" element={<ListOrder />} />
           <Route
@@ -127,7 +136,7 @@ const Admin = () => {
           <Route path="/update_tour/:id" element={<UpdateTour />} />
 
           <Route path="/loginAdmin" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/register" element={<Register />} /> */}
 
           <Route path="/addTourType" element={<AddTourType />} />
           <Route path="/listType" element={<ListType />} />
@@ -154,6 +163,10 @@ const Admin = () => {
           <Route path="/addBlog" element={<AddBlog />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
           {/* <Route path="/editBlog/:id" element={<UpdateBlog />} /> */}
+
+          <Route path="/review" element={<ReviewList />} />
+          <Route path="/tour-guide" element={<Guide />} />
+          <Route path="/all-tour-guide" element={<AllTourGuide />} />
         </Routes>
       </div>
     </div>
