@@ -63,14 +63,26 @@ const ListUser = () => {
 
   return (
     <div className="max-h-[600px] w-full">
-      <div className="flex justify-between">
-        <h1 className="my-2 text-center text-xl font-bold">
-          Thông tin khách hàng
-        </h1>
+      <div className="my-1 flex justify-between">
+        <h1 className="text-center font-bold">Thông tin khách hàng</h1>
+        {/* phân trang */}
+        <div className="flex items-center justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
       {allUsers.length > 0 ? (
         <table className="w-full  table-fixed rounded-2xl text-left text-sm">
-          <thead className="bg-gray-200 text-xs uppercase ">
+          <thead className="bg-blue-800 text-xs uppercase text-white ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Hình
@@ -156,20 +168,6 @@ const ListUser = () => {
       ) : (
         <p className="mt-5 text-center">Không có người dùng nào!!!</p>
       )}
-      {/* phân trang */}
-      <div className="mt-4 flex justify-center">
-        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
-            >
-              {pageNum}
-            </button>
-          ),
-        )}
-      </div>
     </div>
   );
 };

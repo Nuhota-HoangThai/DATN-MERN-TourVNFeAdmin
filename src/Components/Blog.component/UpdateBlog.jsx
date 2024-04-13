@@ -10,7 +10,7 @@ const UpdateBlog = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
-    description: "",
+    body: "",
   });
 
   useEffect(() => {
@@ -71,10 +71,10 @@ const UpdateBlog = () => {
           />
         </div>
         <div>
-          <label htmlFor="description">Mô tả:</label>
+          <label htmlFor="body">Mô tả:</label>
           <CKEditor
             editor={ClassicEditor}
-            data={formData.description}
+            data={formData.body}
             onChange={handleEditorChange}
           />
         </div>

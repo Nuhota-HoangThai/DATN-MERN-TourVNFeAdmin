@@ -70,12 +70,29 @@ const BillsList = () => {
 
   return (
     <div className="max-h-[600px] w-full overflow-auto">
-      <h2 className="my-2 text-center text-xl font-bold">Danh sách hóa đơn</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="font-bold">Danh sách hóa đơn</h2>
+        {/* phân trang */}
+        <div className="my-1 flex justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
+      </div>
       {bills.length > 0 ? (
         <table className="min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-200 text-xs uppercase">
+          <thead className="bg-blue-800 text-xs uppercase text-white">
             <tr>
               {[
+                "STT",
                 "Mã hóa đơn",
                 "Mã đặt tour",
                 "Tổng tiền",
@@ -94,8 +111,11 @@ const BillsList = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white text-left">
-            {bills?.map((bill) => (
+            {bills?.map((bill, index) => (
               <tr key={bill._id}>
+                <td className="w-8 px-6 py-3 text-center">
+                  {index + 1 + (pageInfo.currentPage - 1) * 7}
+                </td>
                 <td className="whitespace-nowrap px-6 py-4 text-gray-900">
                   {bill._id}
                 </td>
@@ -108,7 +128,7 @@ const BillsList = () => {
                 <td className="whitespace-nowrap px-6 py-4 text-gray-900">
                   {formatDateVN(bill.issuedDate)}
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-6 py-4 text-left">
                   <Link
                     to={`/bill/${bill._id}`}
                     className="italic text-indigo-600 underline hover:text-indigo-900"
@@ -116,7 +136,7 @@ const BillsList = () => {
                     Chi tiết
                   </Link>
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-6 py-4 text-left">
                   <button
                     onClick={() => deleteBill(bill._id)}
                     className="text-red-600 hover:text-red-800"
@@ -124,7 +144,7 @@ const BillsList = () => {
                     Xóa
                   </button>
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-6 py-4 text-left">
                   <SendEmailButton email={bill.user.email} billId={bill._id} />
                 </td>
               </tr>
@@ -134,20 +154,6 @@ const BillsList = () => {
       ) : (
         <p className="text-center text-gray-500">Không có hóa đơn nào.</p>
       )}
-      {/* phân trang */}
-      <div className="mt-4 flex justify-center">
-        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
-            >
-              {pageNum}
-            </button>
-          ),
-        )}
-      </div>
     </div>
   );
 };

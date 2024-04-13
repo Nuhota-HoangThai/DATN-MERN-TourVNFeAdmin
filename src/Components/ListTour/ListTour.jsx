@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import { formatRegion } from "../../utils/formatRegion";
+import { CgAddR } from "react-icons/cg";
 
 const ListTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -18,7 +19,7 @@ const ListTour = () => {
   const fetchInfo = async (page = 1) => {
     try {
       const { data } = await axios.get(
-        `${BASE_URL}/tour/getAllToursLimit?page=${page}&limit=8`,
+        `${BASE_URL}/tour/getAllToursLimit?page=${page}&limit=10`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -59,18 +60,30 @@ const ListTour = () => {
 
   return (
     <div className="max-h-[600px] w-full">
-      <div className="flex justify-between">
-        <h1 className="my-2 text-center text-xl font-bold">Danh sách tour</h1>
-        <Link to={"/addTour"} className=" mr-5 no-underline">
-          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-gray-200 py-2">
-            <p className="pl-2">Thêm tour</p>
-          </div>
+      <div className="my-1 flex justify-between">
+        <Link to={"/addTour"} className="no-underline">
+          <CgAddR color="red" size={"30px"} />
         </Link>
+        <h2 className="font-bold">Danh sách tour</h2>
+        {/* phân trang */}
+        <div className="flex items-center justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
       <div className="">
         {allTours.length > 0 ? (
           <table className="w-full  table-fixed rounded-2xl text-left text-sm">
-            <thead className="bg-gray-200 text-xs uppercase ">
+            <thead className="bg-blue-800 text-xs uppercase text-white">
               <tr>
                 <th scope="col" className="w-8 px-6 py-3">
                   Stt
@@ -155,20 +168,6 @@ const ListTour = () => {
           <p className="mt-5 text-center">Không có tour nào!!!</p>
         )}
       </div>{" "}
-      {/* phân trang */}
-      <div className="mt-4 flex justify-center">
-        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
-            >
-              {pageNum}
-            </button>
-          ),
-        )}
-      </div>
     </div>
   );
 };

@@ -108,12 +108,28 @@ const ListOrder = () => {
   };
 
   return (
-    <div className="max-h-[600px] w-full overflow-auto">
-      <h2 className="my-2 text-center text-xl font-bold">Danh sách đặt tour</h2>
+    <div className="max-h-[600px] w-full">
+      <div className="flex items-center justify-between">
+        <h2 className="font-bold">Danh sách đặt tour</h2>
+        {/* phân trang */}
+        <div className="my-1 flex justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
+      </div>
       <div className="">
         {bookings.length > 0 ? (
           <table className="w-full table-fixed rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
-            <thead className="bg-gray-200 text-xs uppercase ">
+            <thead className="bg-blue-800 text-xs uppercase text-white ">
               <tr>
                 <th
                   scope="col"
@@ -253,20 +269,6 @@ const ListOrder = () => {
           </table>
         ) : (
           <p className="mt-5 text-center">Không có đơn đặt tour nào!!!</p>
-        )}
-      </div>
-      {/* phân trang */}
-      <div className="mt-4 flex justify-center">
-        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
-            >
-              {pageNum}
-            </button>
-          ),
         )}
       </div>
     </div>

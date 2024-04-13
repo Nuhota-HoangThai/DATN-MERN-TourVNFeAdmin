@@ -10,8 +10,10 @@ export const createBlog = async (formData, token) => {
   return response.data;
 };
 
-export const getAllBlogs = async () => {
-  const response = await axios.get(`${BASE_URL}/blog/getAll`);
+export const getAllBlogs = async (page = 1) => {
+  const response = await axios.get(
+    `${BASE_URL}/blog/getAll?page=${page}&limit=8`,
+  );
   return response.data;
 };
 

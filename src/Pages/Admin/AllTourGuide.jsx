@@ -41,16 +41,18 @@ const AllTourGuide = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="my-4 text-2xl font-bold">Tours Đã Có Hướng Dẫn Viên</h1>
+    <div className="container mx-auto ">
+      <h1 className="mb-4 mt-1 text-center font-bold">
+        Tour Đã Có Hướng Dẫn Viên
+      </h1>
       {Object.keys(groupedTours).map((guideId) => (
         <div key={guideId} className="mb-8">
-          <h2 className="mb-3 text-lg font-semibold">
+          <h2 className="mb-2 font-semibold underline">
             Hdv: {groupedTours[guideId].guideName}
           </h2>
           <table className="min-w-full table-auto">
             <thead>
-              <tr className="bg-gray-200 text-left">
+              <tr className="bg-blue-800 text-left text-white">
                 <th className="px-4 py-2">Tên tour</th>
                 <th className="px-4 py-2">Loại tour</th>
                 <th className="px-4 py-2">Danh mục tour</th>

@@ -96,7 +96,7 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="h-screen bg-gray-200 text-gray-800">
+    <div className="h-screen bg-blue-800 text-gray-800">
       <div className="mx-2 pt-2">
         {accessibleItems.map((item, index) => (
           <Link to={item.link} key={index} className="no-underline">

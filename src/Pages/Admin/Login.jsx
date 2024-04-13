@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -74,7 +74,7 @@ const Login = () => {
           </button>
         </form>
         {/* <LoginGoogle /> */}
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <p className="text-sm">
             Chưa có tài khoản?{" "}
             <Link
@@ -84,7 +84,7 @@ const Login = () => {
               Đăng ký
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

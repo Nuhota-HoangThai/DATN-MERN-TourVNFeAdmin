@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import TourDirectoriesList from "./TourDirectoryList";
 import axios from "axios";
 
+import { CgAddR } from "react-icons/cg";
+
 function ListTourDirectories() {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -90,19 +92,33 @@ function ListTourDirectories() {
 
   return (
     <div className="max-h-[600px] w-full">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-800">Danh Mục Tour</h2>
-        <Link to={"/addTourDirectory"} className="mr-5">
-          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-gray-200 py-2">
-            <p className="pl-2">Thêm danh mục</p>
-          </div>
+      <div className="my-1 flex items-center justify-between">
+        <Link to={"/addTourDirectory"} className="">
+          <CgAddR color="red" size={"30px"} />
         </Link>
+        <h2 className="font-bold">Danh mục tour</h2>
+        <div className=" flex items-center justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded ${pageInfo.currentPage === pageNum ? "bg-blue-700" : "bg-blue-500"} text-white`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
       {tourDirectories.length > 0 ? (
         <div>
           <table className="w-full text-left text-sm">
-            <thead className="bg-gray-200">
+            <thead className="bg-blue-800 text-white">
               <tr>
+                <th className="px-6 py-3 text-xs  uppercase tracking-wider">
+                  stt
+                </th>
                 <th className="px-6 py-3 text-xs  uppercase tracking-wider">
                   Hình
                 </th>
@@ -121,17 +137,21 @@ function ListTourDirectories() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {tourDirectories.map((tourDirectory) => (
+              {tourDirectories.map((tourDirectory, index) => (
                 <tr
                   key={tourDirectory._id}
                   className="cursor-pointer hover:bg-gray-50"
                 >
-                  <td>
+                  <td className=" border-b px-6 py-4 text-center">
+                    {index + 1 + (pageInfo.currentPage - 1) * 5}
+                    {/* Hiển thị Số Thứ Tự dựa trên chỉ số và trang hiện tại */}
+                  </td>
+                  <td className="border-b">
                     {tourDirectory.image ? (
                       <img
                         src={`${BASE_URL}/${tourDirectory.image.replace(/\\/g, "/")}`}
                         alt="promotion"
-                        className="h-auto w-28 rounded-md object-cover"
+                        className="h-20 w-28 rounded-md object-cover"
                       />
                     ) : (
                       <p className="text-center text-gray-500">
@@ -140,13 +160,13 @@ function ListTourDirectories() {
                     )}
                   </td>
                   <td
-                    className="whitespace-nowrap px-6 py-2 text-sm font-medium text-gray-900"
+                    className="whitespace-nowrap border-b px-6 py-2 text-sm font-medium text-gray-900"
                     onClick={() => selectTourDirectory(tourDirectory._id)}
                   >
                     {tourDirectory.directoryName}
                   </td>
                   <td
-                    className="px-6 py-2 text-sm font-medium text-gray-900"
+                    className="border-b px-6 py-2 text-sm font-medium text-gray-900"
                     style={{ maxWidth: "700px" }}
                   >
                     <div
@@ -155,7 +175,7 @@ function ListTourDirectories() {
                       }}
                     ></div>
                   </td>
-                  <td className="py-2 text-center">
+                  <td className="border-b py-2 text-center">
                     <button
                       onClick={() => handleUpdate(tourDirectory._id)}
                       className="font-medium text-indigo-600 hover:text-indigo-800"
@@ -163,7 +183,7 @@ function ListTourDirectories() {
                       Sửa
                     </button>
                   </td>
-                  <td className="py-2 text-center">
+                  <td className="border-b py-2 text-center">
                     <button
                       onClick={() => handleDelete(tourDirectory._id)}
                       className="font-medium text-red-600 hover:text-red-800"
@@ -184,19 +204,6 @@ function ListTourDirectories() {
           Không có danh mục tour nào!
         </p>
       )}
-      <div className="mt-4 flex justify-center">
-        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded px-4 py-2 ${pageInfo.currentPage === pageNum ? "bg-gray-700" : "bg-gray-500"} text-white`}
-            >
-              {pageNum}
-            </button>
-          ),
-        )}
-      </div>
     </div>
   );
 }

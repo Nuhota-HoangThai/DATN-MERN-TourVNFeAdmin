@@ -28,7 +28,6 @@ const CreateBillForm = () => {
           },
         },
       );
-      //console.log("Bill created:", response.data);
 
       setBookingId("");
       setNotesBill("");
@@ -44,7 +43,7 @@ const CreateBillForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto my-4 max-w-4xl rounded-lg bg-white p-2 shadow-xl"
+      className="mx-auto my-1 max-w-4xl rounded-lg bg-blue-800 p-2 shadow-xl"
     >
       <div className="grid grid-cols-5 gap-5">
         <div className="col-span-4">
@@ -52,7 +51,7 @@ const CreateBillForm = () => {
             type="text"
             id="bookingId"
             placeholder="Nhập mã đặt tour"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-700 shadow-sm "
+            className="w-full rounded-lg border border-white px-4 py-2 text-gray-700 shadow-sm "
             value={bookingId}
             onChange={(e) => setBookingId(e.target.value)}
             required
@@ -62,7 +61,7 @@ const CreateBillForm = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="rounded-lg bg-gray-200 px-4 py-2  transition-colors duration-200 ease-in-out hover:bg-gray-700 hover:text-white  focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg bg-white px-4 py-2 text-black transition-colors duration-200 ease-in-out hover:bg-blue-500 hover:text-white  focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? "Đang tạo..." : "Tạo hóa đơn"}
           </button>

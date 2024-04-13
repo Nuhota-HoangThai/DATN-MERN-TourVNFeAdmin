@@ -19,9 +19,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between bg-white px-14 py-2 shadow">
+    <div className="flex items-center justify-between bg-blue-950 px-14 py-2 text-white shadow">
       <Link to="/" className="group flex items-center gap-1">
-        <img src={logoViVu3Mien} alt="" className="w-20" />
+        <h1 className="text-lg font-bold">Trang quản trị</h1>
+        {/* <img src={logoViVu3Mien} alt="" className="w-20" />
         <div>
           <div className="vivu3mien-logo text-2xl font-bold text-cyan-500">
             ViVu3Mien
@@ -29,7 +30,7 @@ const Navbar = () => {
           <div className="text-sm font-medium italic text-orange-400">
             Phục vụ tận tâm
           </div>
-        </div>
+        </div> */}
       </Link>
 
       <div className="text-lg">

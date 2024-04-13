@@ -5,6 +5,7 @@ import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
 import { formatDateVN } from "../../utils/formatDate";
+import { CgAddR } from "react-icons/cg";
 
 const ListPromotion = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -12,18 +13,28 @@ const ListPromotion = () => {
   const [promotions, setPromotions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchPromotions = async () => {
+  const [pageInfo, setPageInfo] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
+  const fetchPromotions = async (page = 1) => {
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `${BASE_URL}/tourPromotion/getAllPromotion`,
+      const { data } = await axios.get(
+        `${BASE_URL}/tourPromotion/getAllPromotionLimit?page=${page}&limit=6`,
         {
           headers: {
             Authorization: "Bearer " + token,
           },
         },
       );
-      setPromotions(response.data);
+      //console.log(data.updatedPromotions);
+      setPromotions(data.updatedPromotions);
+      setPageInfo({
+        currentPage: page,
+        totalPages: data.totalPages,
+      });
     } catch (error) {
       console.error("Failed to fetch promotions:", error);
     } finally {
@@ -34,6 +45,10 @@ const ListPromotion = () => {
   useEffect(() => {
     fetchPromotions();
   }, [token]);
+
+  const handlePageChange = (newPage) => {
+    fetchPromotions(newPage);
+  };
 
   const remove_promotion = async (id) => {
     try {
@@ -65,24 +80,40 @@ const ListPromotion = () => {
   }
 
   return (
-    <div className="">
-      <div className="mx-2 my-6 text-right">
-        <Link
-          to="/addPromotion"
-          className="inline-flex items-center justify-center rounded-md bg-gray-200 px-5 py-2.5 text-center text-sm font-medium hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300"
-        >
-          Tạo khuyến mãi mới
+    <div className="max-h-[600px] w-full">
+      <div className=" my-1 flex justify-between">
+        <Link to="/addPromotion">
+          <CgAddR color="red" size={"30px"} />
         </Link>
+        <h2 className="font-bold">Chương trình khuyến mãi</h2>
+
+        {/* phân trang */}
+        <div className="flex items-center justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
-      <div className="relative  shadow-md">
-        <table className="w-full text-left text-sm text-gray-500">
-          <thead className="bg-gray-200 text-xs uppercase ">
+      <div className="">
+        <table className="w-full table-fixed text-left text-sm ">
+          <thead className="bg-blue-800 text-xs uppercase text-white">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="w-8 px-6 py-3">
+                Stt
+              </th>
+              <th scope="col" className="px-6  py-3">
                 Hình ảnh
               </th>
-              <th scope="col" className="px-6 py-3">
-                Tên Khuyến Mãi
+              <th scope="col" className="w-72 px-6 py-3">
+                Khuyến Mãi
               </th>
               <th scope="col" className="px-6 py-3">
                 Mô Tả
@@ -105,29 +136,33 @@ const ListPromotion = () => {
             </tr>
           </thead>
           <tbody>
-            {promotions.map((promotion) => (
+            {promotions.map((promotion, index) => (
               <tr
                 key={promotion._id}
                 className="border-b bg-white hover:bg-gray-50"
               >
+                <td className=" border-b px-6 py-4 text-center">
+                  {index + 1 + (pageInfo.currentPage - 1) * 8}
+                  {/* Hiển thị Số Thứ Tự dựa trên chỉ số và trang hiện tại */}
+                </td>
                 {/* Displaying an Image */}
                 <td className="px-6 py-4">
                   {promotion.image ? (
                     <img
                       src={`${BASE_URL}/${promotion.image.replace(/\\/g, "/")}`}
                       alt="promotion"
-                      className="h-auto w-28 rounded-md object-cover"
+                      className="h-20 w-28 rounded-md object-cover"
                     />
                   ) : (
-                    <p className="text-center text-gray-500">
-                      Không có hình ảnh
-                    </p>
+                    <p className="text-center text-black">Không có hình ảnh</p>
                   )}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+                <td className="ellipsis whitespace-nowrap px-6 py-4 font-medium text-black">
                   {promotion.namePromotion}
                 </td>
-                <td className="px-6 py-4">{promotion.descriptionPromotion}</td>
+                <td className="ellipsis px-6 py-4 text-black">
+                  {promotion.descriptionPromotion}
+                </td>
                 <td className="px-6 py-4 text-center">
                   {promotion.discountPercentage}%
                 </td>

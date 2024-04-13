@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const SidebarListUser = () => {
   return (
-    <div className="bg-gray-800 text-white shadow-md">
+    <div className="bg-blue-800 font-medium text-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4">
         <Link to={"/listAdmin"} className="hover:text-gray-300">
           Danh sách quản trị viên

@@ -5,25 +5,39 @@ import { getAllBlogs, deleteBlog } from "../../api/blogApi";
 // Assuming you have a Redux setup to handle the state where the user token is stored
 import { useSelector } from "react-redux";
 
+import { CgAddR } from "react-icons/cg";
+
 const BlogList = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const [blogs, setBlogs] = useState([]);
+  const [pageInfo, setPageInfo] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
+  const fetchBlogs = async (page = 1) => {
+    try {
+      const data = await getAllBlogs();
+      // console.log(data);
+      setBlogs(data.data);
+      setPageInfo({
+        currentPage: page,
+        totalPages: data.totalPages,
+      });
+    } catch (error) {
+      console.error("Failed to load blogs.", error);
+      alert("Khong co blog.");
+    }
+  };
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const data = await getAllBlogs();
-        //console.log(data);
-        setBlogs(data.data);
-      } catch (error) {
-        console.error("Failed to load blogs.", error);
-        alert("Failed to load blogs.");
-      }
-    };
-
     fetchBlogs();
   }, []);
+
+  const handlePageChange = (newPage) => {
+    fetchBlogs(newPage);
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -37,22 +51,33 @@ const BlogList = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-bold">Danh sách blog</h2>
-        <Link
-          to="/addBlog"
-          className="w-48 rounded bg-gray-200  px-4 py-2 text-center font-bold "
-        >
-          Tạo blog
+    <div className="container mx-auto">
+      <div className="flex items-center justify-between">
+        <Link to="/addBlog" className="">
+          <CgAddR color="red" size={"30px"} />
         </Link>
+        <h2 className="font-bold">Danh sách blog</h2>
+        {/* phân trang */}
+        <div className="my-1 flex justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
-      <table className="w-full table-auto rounded-lg bg-white shadow-md">
-        <thead className="bg-gray-200">
+      <table className="w-full table-auto  bg-white shadow-md">
+        <thead className="bg-blue-800 text-white">
           <tr>
             <th className="px-6 py-3 text-left">Tiêu đề</th>
-            <th className="px-6 py-3 text-center">Xem chi tiết</th>
-            <th className="px-6 py-3 text-center">Cập nhật nhật</th>
+            <th className="px-6 py-3 text-center">Xem chi</th>
+            <th className="px-6 py-3 text-center">Cập nhật</th>
             <th className="px-6 py-3 text-center">Xóa</th>
           </tr>
         </thead>

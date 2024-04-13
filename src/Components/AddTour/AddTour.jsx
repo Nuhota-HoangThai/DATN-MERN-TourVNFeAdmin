@@ -267,7 +267,7 @@ const AddTour = () => {
                     htmlFor="additionalFees"
                     className="mb-2 block text-sm font-bold text-gray-700"
                   >
-                    Phí phụ thu (phòng đơn)
+                    Phí phụ thu
                   </label>
                   <input
                     type="number"
@@ -332,7 +332,7 @@ const AddTour = () => {
                   name="description"
                   className="mb-2 block text-sm font-bold text-gray-700"
                 >
-                  Thông tin chi tiết
+                  Thông tin (Điểm nhấn)
                 </label>
                 <ReactQuill
                   name="description"

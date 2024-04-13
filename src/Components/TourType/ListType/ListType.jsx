@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import { CgAddR } from "react-icons/cg";
+
 function TourTypesList() {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -93,21 +95,35 @@ function TourTypesList() {
 
   return (
     <div className="max-h-[600px] w-full overflow-auto">
-      <div className="flex items-center justify-between">
-        <h2 className="my-2 text-xl font-bold text-gray-800">Loại Tour</h2>
-        <Link to={"/addTourType"} className=" mr-5 no-underline">
-          <div className="my-2 flex w-48 items-center justify-center rounded-lg bg-gray-200 py-2">
-            <p className="pl-2">Thêm loại tour</p>
-          </div>
+      <div className="my-1 flex justify-between">
+        <Link to={"/addTourType"} className="no-underline">
+          <CgAddR color="red" size={"30px"} />
         </Link>
+        <h2 className="font-bold">Loại tour</h2>
+        {/* phân trang */}
+        <div className="flex items-center justify-end">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
-
       <div>
         {tourTypes.length > 0 ? (
           <div className="">
             <table className="w-full text-left text-sm">
-              <thead className="bg-gray-200 ">
+              <thead className="bg-blue-800 text-white">
                 <tr>
+                  <th className="w-8 px-6 py-3 text-xs  uppercase tracking-wider">
+                    STT
+                  </th>
                   <th className="px-6 py-3 text-xs  uppercase tracking-wider">
                     Tên Loại Tour
                   </th>
@@ -122,17 +138,21 @@ function TourTypesList() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {tourTypes.map((tourType) => (
-                  <tr key={tourType._id} className="hover:bg-gray-50">
+              <tbody className="divide-y divide-gray-200  bg-white">
+                {tourTypes.map((tourType, index) => (
+                  <tr key={tourType._id} className=" hover:bg-gray-50">
+                    <td className=" w-8 border-b px-6 py-4 text-center">
+                      {index + 1 + (pageInfo.currentPage - 1) * 5}
+                      {/* Hiển thị Số Thứ Tự dựa trên chỉ số và trang hiện tại */}
+                    </td>
                     <td
-                      className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+                      className="whitespace-nowrap border-b px-6 py-4 text-sm font-medium text-gray-900"
                       onClick={() => selectTourType(tourType._id)}
                     >
                       {tourType.typeName}
                     </td>
                     <td
-                      className="px-6 py-4 text-sm font-medium text-gray-900"
+                      className="border-b px-6 py-4 text-sm font-medium text-gray-900"
                       style={{ maxWidth: "700px" }}
                     >
                       <div
@@ -142,15 +162,15 @@ function TourTypesList() {
                         }}
                       ></div>
                     </td>
-                    <td className="py-4 text-center">
+                    <td className="border-b py-4 text-center">
                       <button
                         onClick={() => handleUpdate(tourType._id)}
-                        className="font-medium text-indigo-600 hover:text-indigo-800"
+                        className=" font-medium text-indigo-600 hover:text-indigo-800"
                       >
                         Sửa
                       </button>
                     </td>
-                    <td className="py-4 text-center">
+                    <td className="border-b py-4 text-center ">
                       <button
                         onClick={() => handleDelete(tourType._id)}
                         className="font-medium text-red-600 hover:text-red-800"
@@ -170,20 +190,6 @@ function TourTypesList() {
           <p className="mt-5 text-center text-gray-500">
             Không có loại tour nào.
           </p>
-        )}
-      </div>
-      {/* phân trang */}
-      <div className="mt-4 flex justify-center">
-        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 rounded bg-gray-500 px-4 py-2 text-white ${pageInfo.currentPage === pageNum ? "bg-gray-700" : ""}`}
-            >
-              {pageNum}
-            </button>
-          ),
         )}
       </div>
     </div>
