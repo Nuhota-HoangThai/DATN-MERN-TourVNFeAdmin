@@ -6,11 +6,13 @@ import { getAllBlogs, deleteBlog } from "../../api/blogApi";
 import { useSelector } from "react-redux";
 
 import { CgAddR } from "react-icons/cg";
+import { BASE_URL } from "../../utils/config";
 
 const BlogList = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const [blogs, setBlogs] = useState([]);
+
   const [pageInfo, setPageInfo] = useState({
     currentPage: 1,
     totalPages: 1,
@@ -75,22 +77,35 @@ const BlogList = () => {
       <table className="w-full table-auto  bg-white shadow-md">
         <thead className="bg-blue-800 text-white">
           <tr>
+            {" "}
+            <th className="px-6 py-3 text-left">Hình</th>
             <th className="px-6 py-3 text-left">Tiêu đề</th>
             <th className="px-6 py-3 text-center">Xem chi</th>
-            <th className="px-6 py-3 text-center">Cập nhật</th>
+            {/* <th className="px-6 py-3 text-center">Cập nhật</th> */}
             <th className="px-6 py-3 text-center">Xóa</th>
           </tr>
         </thead>
         <tbody>
           {blogs.map((blog) => (
             <tr key={blog._id} className="border-b hover:bg-gray-100">
+              <td className="border-b">
+                {blog.image ? (
+                  <img
+                    src={`${BASE_URL}/${blog.image.replace(/\\/g, "/")}`}
+                    alt="promotion"
+                    className="h-20 w-28 rounded-md object-cover"
+                  />
+                ) : (
+                  <p className="text-center text-gray-500">Không có hình ảnh</p>
+                )}
+              </td>
               <td className="px-6 py-2">{blog.title}</td>
               <td className="px-6 py-2 text-center italic text-blue-600 underline">
                 <Link to={`/blog/${blog._id}`}>Chi tiết</Link>
               </td>
-              <td className="px-6 py-2 text-center text-green-600">
+              {/* <td className="px-6 py-2 text-center text-green-600">
                 <Link to={`/editBlog/${blog._id}`}>Cập nhật</Link>
-              </td>
+              </td> */}
               <td className="px-6 py-2 text-center text-red-600">
                 <button
                   onClick={() => handleDelete(blog._id)}

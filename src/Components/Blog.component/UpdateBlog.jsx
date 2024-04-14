@@ -20,7 +20,7 @@ const UpdateBlog = () => {
         setFormData(response.data);
       } catch (error) {
         console.error("Error fetching blog details:", error);
-        alert("Failed to load blog details.");
+        alert("Lỗi không lấy được blog");
       }
     };
 
@@ -72,10 +72,18 @@ const UpdateBlog = () => {
         </div>
         <div>
           <label htmlFor="body">Mô tả:</label>
-          <CKEditor
+          {/* <CKEditor
             editor={ClassicEditor}
             data={formData.body}
             onChange={handleEditorChange}
+          /> */}
+          <CKEditor
+            editor={ClassicEditor}
+            data={formData.body}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setFormData({ ...formData, body: data });
+            }}
           />
         </div>
         <button type="submit">Cập nhật Blog</button>
