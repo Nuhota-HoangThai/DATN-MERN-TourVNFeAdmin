@@ -217,7 +217,13 @@ const BillDetails = () => {
                   </span>
                 </div>
                 <div className="mt-1.5 font-semibold">
-                  Phí phụ thu:{" "}
+                  Số lượng phòng đơn:{" "}
+                  <span className="font-normal">
+                    {billDetails?.singleRoomNumberBill || 0} phòng
+                  </span>
+                </div>
+                <div className="mt-1.5 font-semibold">
+                  Phí phụ thu (phòng đơn):{" "}
                   <span className="font-normal">
                     {billDetails?.surchargeBill?.toLocaleString() || 0} đ
                   </span>

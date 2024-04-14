@@ -100,7 +100,7 @@ const TourDetail = () => {
   const displayVideos = Array.isArray(tour.video) ? tour.video.slice(0, 2) : [];
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     // infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -142,7 +142,7 @@ const TourDetail = () => {
   };
 
   const sliderSettingsVideo = {
-    dots: true,
+    dots: false,
     // infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -155,7 +155,7 @@ const TourDetail = () => {
   };
 
   return (
-    <div className="mx-auto  h-[600px] max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="  8  h-[700px] py-2">
       <PerfectScrollbar>
         {" "}
         <div className=" border border-gray-200 shadow sm:rounded-lg">
@@ -292,30 +292,41 @@ const TourDetail = () => {
                   detail: formatPrice(tour.additionalFees),
                 },
                 {
-                  title: "Thông tin chi tiết (Điểm nhấn)",
+                  title: "Điểm nhấn",
                   detail: (
                     <div
-                      className="h-80"
+                      className="w-full max-w-4xl overflow-hidden"
                       dangerouslySetInnerHTML={{ __html: tour.description }}
+                      style={{ maxWidth: "1024px", width: "100%" }}
                     ></div>
                   ),
                 },
                 {
                   title: "Lịch trình",
                   detail: (
-                    <div className="rounded-xl bg-sky-50 p-4">
+                    <div
+                      className="max-w-4xl rounded-xl p-4"
+                      style={{ maxWidth: "1024px", width: "100%" }}
+                    >
                       <h1 className="mb-4 text-center text-2xl font-bold">
                         Lịch trình
                       </h1>
-                      <HTMLRenderer htmlString={tour.schedule} className="" />
+                      <div className="overflow-hidden">
+                        <HTMLRenderer
+                          htmlString={tour.schedule}
+                          className="w-full"
+                          style={{ maxWidth: "1024px" }}
+                        />
+                      </div>
                     </div>
                   ),
                 },
+
                 {
                   title: "Sửa tour",
                   detail: (
                     <button
-                      className=" text-sm text-blue-800"
+                      className=" bg-blue-600 px-3 py-1.5 text-sm text-white"
                       onClick={() => navigateToUpdateTour(tour._id)}
                     >
                       Cập nhật
@@ -326,7 +337,7 @@ const TourDetail = () => {
                   title: "Xóa tour",
                   detail: (
                     <button
-                      className=" text-sm text-red-500"
+                      className=" bg-red-600 px-3 py-1.5 text-sm text-white"
                       onClick={() => remove_tour(tour._id)}
                     >
                       Xóa

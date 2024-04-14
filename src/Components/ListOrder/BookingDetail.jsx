@@ -151,7 +151,13 @@ const BookingDetail = () => {
             </span>
           </div>
           <div className="mt-1.5 font-semibold">
-            Phí phụ thu:{" "}
+            Số lượng phòng đơn:{" "}
+            <span className="font-normal">
+              {bookingDetail?.singleRoomNumber || 0} phòng
+            </span>
+          </div>
+          <div className="mt-1.5 font-semibold">
+            Phí phụ thu (phòng đơn):{" "}
             <span className="font-normal">
               {bookingDetail?.surcharge?.toLocaleString() || 0} đ
             </span>

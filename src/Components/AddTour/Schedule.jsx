@@ -5,7 +5,6 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 function Schedule({ content, setContent }) {
   return (
     <div>
-      <h2>Lịch trình tour</h2>
       <CKEditor
         editor={ClassicEditor}
         config={{

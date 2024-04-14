@@ -212,7 +212,7 @@ const UpdateTour = () => {
   };
 
   return (
-    <div className="mx-auto my-4 max-h-[600px] max-w-4xl   shadow-lg">
+    <div className="mx-auto my-4 max-h-[600px] max-w-7xl   shadow-lg">
       <div className="rounded-2xl  bg-white  p-5 md:p-8">
         <h1 className="mb-4 text-xl font-semibold">Cập nhật Tour</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
