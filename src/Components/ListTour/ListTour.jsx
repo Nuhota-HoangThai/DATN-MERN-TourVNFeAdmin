@@ -64,6 +64,7 @@ const ListTour = () => {
         <Link to={"/addTour"} className="no-underline">
           <CgAddR color="red" size={"30px"} />
         </Link>
+
         <h2 className="font-bold">Danh sách tour</h2>
         {/* phân trang */}
         <div className="flex items-center justify-end">
@@ -92,6 +93,9 @@ const ListTour = () => {
                   Mã tour
                 </th>
                 <th scope="col" className=" px-6 py-3">
+                  Tên tour
+                </th>
+                <th scope="col" className=" px-6 py-3">
                   Loại tour
                 </th>
                 <th scope="col" className=" px-6 py-3">
@@ -100,9 +104,7 @@ const ListTour = () => {
                 <th scope="col" className=" px-6 py-3">
                   Khuyến mãi
                 </th>
-                <th scope="col" className=" px-6 py-3">
-                  Tên tour
-                </th>
+
                 <th scope="col" className=" px-6 py-3">
                   Miền
                 </th>
@@ -124,6 +126,10 @@ const ListTour = () => {
                   <td className="ellipsis border-b px-6 py-4">
                     <Link to={`/tour-detail/${tour._id}`}>{tour._id}</Link>
                   </td>
+
+                  <td className="ellipsis border-b px-6 py-4">
+                    {tour.nameTour}
+                  </td>
                   <td className=" ellipsis border-b px-6 py-4">
                     {tour.tourType.typeName || "Không thuộc loại tour nào"}
                   </td>
@@ -133,10 +139,6 @@ const ListTour = () => {
                   </td>
                   <td className="ellipsis border-b px-6 py-4">
                     {tour.promotion?.namePromotion || "Không có khuyến mãi"}
-                  </td>
-
-                  <td className="ellipsis border-b px-6 py-4">
-                    {tour.nameTour}
                   </td>
 
                   <td className="ellipsis border-b px-6 py-4">

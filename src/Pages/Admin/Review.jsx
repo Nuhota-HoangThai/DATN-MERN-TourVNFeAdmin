@@ -51,8 +51,8 @@ const ToursWithReviews = () => {
       if (response.status === 200) {
         // Update the local state to remove the deleted review
         setTours((prevTours) =>
-          prevTours.map((tour) => {
-            if (tour._id === tourId) {
+          prevTours?.map((tour) => {
+            if (tour?._id === tourId) {
               return {
                 ...tour,
                 reviews: tour.reviews.filter(
@@ -80,17 +80,17 @@ const ToursWithReviews = () => {
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      {tours.map((tour) => (
-        <div key={tour._id} className="border p-4">
+      {tours?.map((tour) => (
+        <div key={tour?._id} className="border p-4">
           <div>
-            <h2 className="text-xl font-semibold">{tour.nameTour}</h2>
+            <h2 className="text-xl font-semibold">{tour?.nameTour}</h2>
           </div>
           <div>
             <strong className="font-semibold">Đánh giá:</strong>
             <ul className="mt-2 space-y-2">
-              {tour.reviews.map((review) => (
+              {tour?.reviews?.map((review) => (
                 <li
-                  key={review._id}
+                  key={review?._id}
                   className="flex justify-between rounded-md bg-gray-100 p-2"
                 >
                   <div>

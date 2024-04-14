@@ -235,7 +235,7 @@ const TourDetail = () => {
                 ),
               },
               {
-                title: "Giá khách (3-6 tuổi)",
+                title: "Giá khách dưới 6 tuổi",
                 detail: formatPriceWithPromotion(
                   tour.priceForYoungChildren,
                   tour.originalPriceForYoungChildren,
@@ -243,19 +243,15 @@ const TourDetail = () => {
                 ),
               },
               {
-                title: "Giá khách (dưới 3 tuổi)",
-                detail: formatPriceWithPromotion(
-                  tour.priceForInfants,
-                  tour.originalPriceForInfants,
-                  Boolean(tour.promotion),
-                ),
+                title: "Phương tiện di chuyển",
+                detail: tour.transport,
               },
               {
                 title: "Phí phụ thu",
                 detail: formatPrice(tour.additionalFees),
               },
               {
-                title: "Thông tin chi tiết (Điểm nhấn)",
+                title: "Quy định",
                 detail: tour.description,
               },
               {

@@ -139,16 +139,14 @@ const BookingDetail = () => {
             </span>
           </div>
           <div className="mt-1.5 font-semibold">
-            Số lượng khách (3-6 tuổi):{" "}
+            Số lượng khách dưới 6 tuổi:{" "}
             <span className="font-normal">
               {bookingDetail?.numberOfYoungChildren || 0}
             </span>
           </div>
           <div className="mt-1.5 font-semibold">
-            Số lượng khách (dưới 3 tuổi):{" "}
-            <span className="font-normal">
-              {bookingDetail?.numberOfInfants || 0}
-            </span>
+            Phương tiện di chuyển:
+            <span className="font-normal">{bookingDetail?.transport}</span>
           </div>
           <div className="mt-1.5 font-semibold">
             Số lượng phòng đơn:{" "}

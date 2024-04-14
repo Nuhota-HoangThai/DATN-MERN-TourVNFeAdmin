@@ -8,9 +8,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
@@ -24,7 +21,13 @@ const AddTour = () => {
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState([]);
   const [description, setDescription] = useState("");
+
   const [selectedTourType, setSelectedTourType] = useState("");
+  // Condition for disabling and showing message for all age groups
+  const isAllAgesRestricted = selectedTourType === "661689edb0caba81f9b831c0";
+
+  // Condition for disabling and showing message for children under 6
+  const isUnderSixDisabled = selectedTourType === "661689fab0caba81f9b831c6";
 
   const [scheduleContent, setScheduleContent] = useState("");
 
@@ -32,9 +35,9 @@ const AddTour = () => {
   const [error, setError] = useState("");
 
   const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
-  };
+  // const handleDescriptionChange = (value) => {
+  //   setDescription(value);
+  // };
 
   const Add_Tour = async (e) => {
     e.preventDefault();
@@ -212,14 +215,20 @@ const AddTour = () => {
                     >
                       Giá khách (6-16) tuổi
                     </label>
-                    <input
-                      type="number"
-                      name="priceForChildren"
-                      id="priceForChildren"
-                      placeholder="Nhập giá"
-                      disabled={selectedTourType === "661689edb0caba81f9b831c0"}
-                      className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                    />
+                    {isAllAgesRestricted ? (
+                      <p className="text-red-500">
+                        Tour này không dành cho người dưới 16 tuổi
+                      </p>
+                    ) : (
+                      <input
+                        type="number"
+                        name="priceForChildren"
+                        id="priceForChildren"
+                        placeholder="Nhập giá"
+                        disabled={isAllAgesRestricted}
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -228,37 +237,36 @@ const AddTour = () => {
                       htmlFor="priceForYoungChildren"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Giá khách (3-6) tuổi
+                      Giá khách dưới 6 tuổi
                     </label>
-                    <input
-                      type="number"
-                      name="priceForYoungChildren"
-                      id="priceForYoungChildren"
-                      placeholder="Nhập giá"
-                      disabled={
-                        selectedTourType === "661689edb0caba81f9b831c0" ||
-                        selectedTourType === "661689fab0caba81f9b831c6"
-                      }
-                      className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                    />
+                    {isAllAgesRestricted || isUnderSixDisabled ? (
+                      <p className="text-red-500">
+                        Tour này không dành cho người dưới 6 tuổi
+                      </p>
+                    ) : (
+                      <input
+                        type="number"
+                        name="priceForYoungChildren"
+                        id="priceForYoungChildren"
+                        placeholder="Nhập giá"
+                        disabled={isAllAgesRestricted || isUnderSixDisabled}
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                      />
+                    )}
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="priceForInfants"
+                      htmlFor="transport"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Giá khách (dưới 3) tuổi
+                      Phương tiện di chuyển
                     </label>
+
                     <input
-                      type="number"
-                      name="priceForInfants"
-                      id="priceForInfants"
-                      placeholder="Nhập giá"
-                      disabled={
-                        selectedTourType === "661689edb0caba81f9b831c0" ||
-                        selectedTourType === "661689fab0caba81f9b831c6" ||
-                        selectedTourType === "66168a06b0caba81f9b831cc"
-                      }
+                      type="text"
+                      name="transport"
+                      id="transport"
+                      placeholder="Phương tiện di chuyển"
                       className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                     />
                   </div>
@@ -269,7 +277,7 @@ const AddTour = () => {
                       htmlFor="additionalFees"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Phí phụ thu
+                      Phí phụ thu (phòng đơn)
                     </label>
                     <input
                       type="number"
@@ -339,7 +347,10 @@ const AddTour = () => {
                       className="flex h-full w-full cursor-pointer items-center justify-center"
                     >
                       {images.length > 0 ? (
-                        <Slider {...sliderSettings} className="h-full w-full">
+                        <Slider
+                          {...sliderSettings}
+                          className="h-[250px] w-[200px]"
+                        >
                           {images.map((image, index) => {
                             if (
                               image instanceof Blob ||
@@ -347,7 +358,10 @@ const AddTour = () => {
                             ) {
                               const imageUrl = URL.createObjectURL(image);
                               return (
-                                <div key={index} className="h-full w-full">
+                                <div
+                                  key={index}
+                                  className="h-[250px] w-[200px]"
+                                >
                                   <img
                                     className="mx-auto border border-black"
                                     src={imageUrl}
@@ -426,12 +440,12 @@ const AddTour = () => {
                       name="description"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Thông tin (Điểm nhấn)
+                      Quy định
                     </label>
-                    <ReactQuill
+                    <Schedule
                       name="description"
-                      value={description}
-                      onChange={handleDescriptionChange}
+                      content={description}
+                      setContent={setDescription}
                     />
                   </div>
                   <div className="mb-4">

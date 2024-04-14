@@ -272,7 +272,7 @@ const TourDetail = () => {
                   ),
                 },
                 {
-                  title: "Giá khách (3-6 tuổi)",
+                  title: "Giá khách dưới 6 tuổi",
                   detail: formatPriceWithPromotion(
                     tour.priceForYoungChildren,
                     tour.originalPriceForYoungChildren,
@@ -280,25 +280,23 @@ const TourDetail = () => {
                   ),
                 },
                 {
-                  title: "Giá khách (dưới 3 tuổi)",
-                  detail: formatPriceWithPromotion(
-                    tour.priceForInfants,
-                    tour.originalPriceForInfants,
-                    Boolean(tour.promotion),
-                  ),
+                  title: "Phương tiện di chuyển",
+                  detail: tour.transport,
                 },
                 {
                   title: "Phí phụ thu",
                   detail: formatPrice(tour.additionalFees),
                 },
                 {
-                  title: "Điểm nhấn",
+                  title: "Quy định",
                   detail: (
-                    <div
-                      className="w-full max-w-4xl overflow-hidden"
-                      dangerouslySetInnerHTML={{ __html: tour.description }}
-                      style={{ maxWidth: "1024px", width: "100%" }}
-                    ></div>
+                    <div className="overflow-hidden">
+                      <HTMLRenderer
+                        htmlString={tour.description}
+                        className="w-full"
+                        style={{ maxWidth: "1024px" }}
+                      />
+                    </div>
                   ),
                 },
                 {
@@ -308,9 +306,6 @@ const TourDetail = () => {
                       className="max-w-4xl rounded-xl p-4"
                       style={{ maxWidth: "1024px", width: "100%" }}
                     >
-                      <h1 className="mb-4 text-center text-2xl font-bold">
-                        Lịch trình
-                      </h1>
                       <div className="overflow-hidden">
                         <HTMLRenderer
                           htmlString={tour.schedule}

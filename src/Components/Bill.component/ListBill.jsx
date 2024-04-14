@@ -112,15 +112,15 @@ const BillsList = () => {
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white text-left">
             {bills?.map((bill, index) => (
-              <tr key={bill._id}>
+              <tr key={bill?._id}>
                 <td className="w-8 px-6 py-3 text-center">
                   {index + 1 + (pageInfo.currentPage - 1) * 7}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-gray-900">
-                  {bill._id}
+                  {bill?._id}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-gray-900">
-                  {bill.booking._id}
+                  {bill?.booking?._id}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-red-500">
                   {bill.totalCost?.toLocaleString()} đ
