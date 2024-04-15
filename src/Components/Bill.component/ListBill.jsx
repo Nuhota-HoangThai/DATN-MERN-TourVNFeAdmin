@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 
 import { formatDateVN } from "../../utils/formatDate";
 
+import { IoEyeSharp } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
+
 const BillsList = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -94,11 +97,10 @@ const BillsList = () => {
               {[
                 "STT",
                 "Mã hóa đơn",
-                "Mã đặt tour",
+                "Tên tour",
                 "Tổng tiền",
                 "Ngày xuất",
-                "Xem",
-                "Xóa",
+                "Hành động",
                 "Gửi hóa đơn",
               ].map((header) => (
                 <th
@@ -120,7 +122,7 @@ const BillsList = () => {
                   {bill?._id}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-gray-900">
-                  {bill?.booking?._id}
+                  {bill?.tour?.nameTour}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-red-500">
                   {bill.totalCost?.toLocaleString()} đ
@@ -128,21 +130,22 @@ const BillsList = () => {
                 <td className="whitespace-nowrap px-6 py-4 text-gray-900">
                   {formatDateVN(bill.issuedDate)}
                 </td>
-                <td className="px-6 py-4 text-left">
-                  <Link
-                    to={`/bill/${bill._id}`}
-                    className="italic text-indigo-600 underline hover:text-indigo-900"
-                  >
-                    Chi tiết
-                  </Link>
-                </td>
-                <td className="px-6 py-4 text-left">
-                  <button
-                    onClick={() => deleteBill(bill._id)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    Xóa
-                  </button>
+                <td className="px-6 py-4">
+                  <div className="flex justify-start gap-2">
+                    {" "}
+                    <Link
+                      to={`/bill/${bill._id}`}
+                      className="border p-1 italic text-indigo-600 underline hover:text-indigo-900"
+                    >
+                      <IoEyeSharp size={"25px"} />
+                    </Link>
+                    <button
+                      onClick={() => deleteBill(bill._id)}
+                      className="border p-1 text-red-600 hover:text-red-800"
+                    >
+                      <FaTrashCan size={"25px"} />
+                    </button>
+                  </div>
                 </td>
                 <td className="px-6 py-4 text-left">
                   <SendEmailButton email={bill.user.email} billId={bill._id} />

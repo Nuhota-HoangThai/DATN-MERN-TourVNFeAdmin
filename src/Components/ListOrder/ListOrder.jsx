@@ -6,6 +6,9 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import { formatDateVN } from "../../utils/formatDate";
+import { IoEyeSharp } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
+
 import {
   translateStatus,
   getStatusStyle,
@@ -128,7 +131,7 @@ const ListOrder = () => {
       </div>
       <div className="">
         {bookings.length > 0 ? (
-          <table className="w-full table-fixed rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
+          <table className="w-full table-auto rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
             <thead className="bg-blue-800 text-xs uppercase text-white ">
               <tr>
                 <th
@@ -155,14 +158,17 @@ const ListOrder = () => {
                 <th scope="col" className="border-b border-gray-200 px-6 py-3">
                   Trạng thái
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="border-b border-gray-200 px-6 py-3 text-center"
+                >
+                  Xử lý
+                </th>
+                <th
+                  scope="col"
+                  className="border-b border-gray-200 px-6 py-3 text-center"
+                >
                   Hành động
-                </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
-                  Chi tiết
-                </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
-                  Xóa
                 </th>
               </tr>
             </thead>
@@ -248,20 +254,20 @@ const ListOrder = () => {
                     )}
                   </td>
                   <td className="px-6 py-3">
-                    <Link
-                      to={`/booking-detail/${booking._id}`}
-                      className="italic text-blue-800 underline"
-                    >
-                      Chi tiết
-                    </Link>
-                  </td>
-                  <td className="px-6 py-3">
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => remove_booking(booking._id)}
-                    >
-                      Xóa
-                    </button>
+                    <div className="flex justify-center gap-2">
+                      <Link
+                        to={`/booking-detail/${booking._id}`}
+                        className=" border p-1 text-blue-800 underline"
+                      >
+                        <IoEyeSharp size={"25px"} />
+                      </Link>
+                      <button
+                        className="border p-1 text-red-500 hover:text-red-700"
+                        onClick={() => remove_booking(booking._id)}
+                      >
+                        <FaTrashCan size={"25px"} />
+                      </button>{" "}
+                    </div>
                   </td>
                 </tr>
               ))}

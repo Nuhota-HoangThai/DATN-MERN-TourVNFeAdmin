@@ -60,14 +60,14 @@ const Admin = () => {
   const hideSidebar = location.pathname === "/loginAdmin";
 
   return (
-    <div className="layout grid grid-cols-5 gap-1">
+    <div className="layout grid grid-cols-7 gap-1">
       {!hideSidebar && (
         <div className="sidebar col-span-1 w-full">
           <Sidebar />
         </div>
       )}
 
-      <div className={`content ${hideSidebar ? "col-span-5" : "col-span-4"}`}>
+      <div className={`content ${hideSidebar ? "col-span-6" : "col-span-5"}`}>
         <Routes>
           <Route path="/" element={<HomeAdmin />} />
           <Route path="/listTour" element={<ListTour />} />

@@ -14,7 +14,7 @@ body {
 }
 
 .sidebar {
-  width: 250px; /* Chiều rộng cố định cho sidebar */
+  width: 200px; /* Chiều rộng cố định cho sidebar */
   height: 100vh; /* Chiều cao toàn màn hình */
   /* overflow-y: auto;  */
 }

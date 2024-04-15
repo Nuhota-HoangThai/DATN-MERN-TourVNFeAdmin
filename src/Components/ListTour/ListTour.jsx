@@ -4,11 +4,15 @@ import { BASE_URL } from "../../utils/config";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-import { formatRegion } from "../../utils/formatRegion";
 import { CgAddR } from "react-icons/cg";
-
+import { IoEyeSharp } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
 const ListTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
+
+  const formatPrice = (price) => {
+    return `${price?.toLocaleString("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  };
 
   const [allTours, setAllTours] = useState([]);
   const [pageInfo, setPageInfo] = useState({
@@ -83,7 +87,7 @@ const ListTour = () => {
       </div>
       <div className="">
         {allTours.length > 0 ? (
-          <table className="w-full  table-fixed rounded-2xl text-left text-sm">
+          <table className="w-full  table-auto rounded-2xl text-left text-sm">
             <thead className="bg-blue-800 text-xs uppercase text-white">
               <tr>
                 <th scope="col" className="w-8 px-6 py-3">
@@ -95,24 +99,13 @@ const ListTour = () => {
                 <th scope="col" className=" px-6 py-3">
                   Tên tour
                 </th>
+
                 <th scope="col" className=" px-6 py-3">
-                  Loại tour
-                </th>
-                <th scope="col" className=" px-6 py-3">
-                  Danh mục
-                </th>
-                <th scope="col" className=" px-6 py-3">
-                  Khuyến mãi
+                  Giá
                 </th>
 
                 <th scope="col" className=" px-6 py-3">
-                  Miền
-                </th>
-                <th scope="col" className=" px-6 py-3">
-                  Xem
-                </th>
-                <th scope="col" className=" px-6 py-3">
-                  Xóa
+                  Hành động
                 </th>
               </tr>
             </thead>
@@ -130,37 +123,40 @@ const ListTour = () => {
                   <td className="ellipsis border-b px-6 py-4">
                     {tour.nameTour}
                   </td>
-                  <td className=" ellipsis border-b px-6 py-4">
-                    {tour.tourType.typeName || "Không thuộc loại tour nào"}
-                  </td>
-                  <td className="ellipsis border-b px-6 py-4">
-                    {tour.tourDirectory.directoryName ||
-                      "Không thuộc danh mục nào"}
-                  </td>
-                  <td className="ellipsis border-b px-6 py-4">
-                    {tour.promotion?.namePromotion || "Không có khuyến mãi"}
-                  </td>
 
-                  <td className="ellipsis border-b px-6 py-4">
-                    {formatRegion(tour.regions)}
+                  <td className=" border-b px-6 py-4">
+                    {" "}
+                    {tour.price !== tour.originalPrice && tour.promotion ? (
+                      <>
+                        <p className="text-red-600">
+                          {formatPrice(tour.price)}{" "}
+                        </p>
+                        <p className="text-base text-gray-500 line-through">
+                          {formatPrice(tour.originalPrice)}
+                        </p>
+                      </>
+                    ) : (
+                      <span className="text-red-600">
+                        {formatPrice(tour.price)}
+                      </span>
+                    )}
                   </td>
-
-                  <td className="ellipsis border-b px-6 py-4 text-blue-800">
-                    <Link
-                      to={`/tour-detail/${tour._id}`}
-                      className="italic underline"
-                    >
-                      Chi tiết
-                    </Link>
-                  </td>
-
-                  <td className="border-b px-6 py-4">
-                    <button
-                      className="text-red-500"
-                      onClick={() => remove_tour(tour._id)}
-                    >
-                      Xóa
-                    </button>
+                  <td className=" border-b px-6 py-4 text-blue-800">
+                    <div className="flex justify-center gap-2">
+                      {" "}
+                      <Link
+                        to={`/tour-detail/${tour._id}`}
+                        className="border p-1 italic underline "
+                      >
+                        <IoEyeSharp size={"25px"} />
+                      </Link>
+                      <button
+                        className="border p-1 text-red-500"
+                        onClick={() => remove_tour(tour._id)}
+                      >
+                        <FaTrashCan size={"25px"} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

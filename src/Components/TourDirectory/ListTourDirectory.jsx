@@ -7,6 +7,7 @@ import TourDirectoriesList from "./TourDirectoryList";
 import axios from "axios";
 
 import { CgAddR } from "react-icons/cg";
+import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
 
 function ListTourDirectories() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -113,7 +114,7 @@ function ListTourDirectories() {
       </div>
       {tourDirectories.length > 0 ? (
         <div>
-          <table className="w-full text-left text-sm">
+          <table className="w-full table-auto text-left text-sm">
             <thead className="bg-blue-800 text-white">
               <tr>
                 <th className="px-6 py-3 text-xs  uppercase tracking-wider">
@@ -129,10 +130,7 @@ function ListTourDirectories() {
                   Mô tả
                 </th>
                 <th className="w-32 px-6 py-3 text-xs uppercase tracking-wider">
-                  Cập nhật
-                </th>
-                <th className="px-6 py-3 text-xs  uppercase tracking-wider">
-                  Xóa
+                  Hành động
                 </th>
               </tr>
             </thead>
@@ -176,20 +174,21 @@ function ListTourDirectories() {
                     ></div>
                   </td>
                   <td className="border-b py-2 text-center">
-                    <button
-                      onClick={() => handleUpdate(tourDirectory._id)}
-                      className="font-medium text-indigo-600 hover:text-indigo-800"
-                    >
-                      Sửa
-                    </button>
-                  </td>
-                  <td className="border-b py-2 text-center">
-                    <button
-                      onClick={() => handleDelete(tourDirectory._id)}
-                      className="font-medium text-red-600 hover:text-red-800"
-                    >
-                      Xóa
-                    </button>
+                    <div className="flex justify-center gap-2">
+                      {" "}
+                      <button
+                        onClick={() => handleUpdate(tourDirectory._id)}
+                        className="border p-1 font-medium text-indigo-600 hover:text-indigo-800"
+                      >
+                        <FaPenToSquare size={"25px"} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(tourDirectory._id)}
+                        className="border p-1 font-medium text-red-600 hover:text-red-800"
+                      >
+                        <FaTrashCan size={"25px"} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

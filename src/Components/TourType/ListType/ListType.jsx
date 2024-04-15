@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import { CgAddR } from "react-icons/cg";
+import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
 
 function TourTypesList() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -131,10 +132,7 @@ function TourTypesList() {
                     Mô tả
                   </th>
                   <th className="px-6 py-3 text-center text-xs  uppercase tracking-wider">
-                    Cập nhật
-                  </th>
-                  <th className="px-6 py-3 text-center text-xs  uppercase tracking-wider">
-                    Xóa
+                    Hành động
                   </th>
                 </tr>
               </thead>
@@ -163,20 +161,21 @@ function TourTypesList() {
                       ></div>
                     </td>
                     <td className="border-b py-4 text-center">
-                      <button
-                        onClick={() => handleUpdate(tourType._id)}
-                        className=" font-medium text-indigo-600 hover:text-indigo-800"
-                      >
-                        Sửa
-                      </button>
-                    </td>
-                    <td className="border-b py-4 text-center ">
-                      <button
-                        onClick={() => handleDelete(tourType._id)}
-                        className="font-medium text-red-600 hover:text-red-800"
-                      >
-                        Xóa
-                      </button>
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => handleUpdate(tourType._id)}
+                          className="border p-1 font-medium text-indigo-600 hover:text-indigo-800"
+                        >
+                          <FaPenToSquare size={"25px"} />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(tourType._id)}
+                          className="border p-1 font-medium text-red-600 hover:text-red-800"
+                        >
+                          <FaTrashCan size={"25px"} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

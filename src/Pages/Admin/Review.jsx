@@ -4,6 +4,9 @@ import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { IoEyeSharp } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
+
 const ToursWithReviews = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = currentUser?.token;
@@ -96,18 +99,18 @@ const ToursWithReviews = () => {
                   <div>
                     <strong>{review.userId.name}</strong>: {review.reviewText}
                   </div>
-                  <div>
+                  <div className="ml-4 flex justify-center gap-2">
                     <button
-                      className="mr-4 rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-700"
+                      className="h-10 rounded border bg-blue-500 p-1  text-white hover:bg-blue-700"
                       onClick={() => navigate(`/review-details/${review._id}`)}
                     >
-                      Xem Chi Tiết
+                      <IoEyeSharp size={"25px"} />
                     </button>
                     <button
-                      className="rounded bg-red-500 px-2 py-1 text-white hover:bg-red-700"
+                      className="h-10 rounded border bg-red-500 p-1 text-white hover:bg-red-700"
                       onClick={() => deleteReview(tour._id, review._id)}
                     >
-                      Xóa
+                      <FaTrashCan size={"25px"} />
                     </button>
                   </div>
                 </li>

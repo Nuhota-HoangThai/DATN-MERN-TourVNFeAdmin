@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import { translateRole } from "../../utils/formatRole";
 import defaultImage from "../../assets/images/logoicon.png";
+import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
 
 const ListUser = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -81,7 +82,7 @@ const ListUser = () => {
         </div>
       </div>
       {allUsers.length > 0 ? (
-        <table className="w-full  table-fixed rounded-2xl text-left text-sm">
+        <table className="w-full  table-auto rounded-2xl text-left text-sm">
           <thead className="bg-blue-800 text-xs uppercase text-white">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -107,9 +108,6 @@ const ListUser = () => {
               </th>
               <th scope="col" className="px-6 py-3">
                 Hành động
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Xóa
               </th>
             </tr>
           </thead>
@@ -146,20 +144,21 @@ const ListUser = () => {
                   {translateRole(user.role)}
                 </td>
                 <td className="ellipsis border-b px-6 py-2">
-                  <button
-                    className="px-6 py-4 text-blue-800"
-                    onClick={() => navigate(`/update_user/${user._id}`)}
-                  >
-                    Sửa
-                  </button>
-                </td>
-                <td className="ellipsis border-b px-6 py-2">
-                  <button
-                    className="text-red-500 hover:text-red-700"
-                    onClick={() => remove_user(user._id)}
-                  >
-                    Xóa
-                  </button>
+                  <div className="flex justify-center gap-2">
+                    {" "}
+                    <button
+                      className="border p-1  text-blue-800"
+                      onClick={() => navigate(`/update_user/${user._id}`)}
+                    >
+                      <FaPenToSquare size={"25px"} />
+                    </button>
+                    <button
+                      className="border p-1 text-red-500 hover:text-red-700"
+                      onClick={() => remove_user(user._id)}
+                    >
+                      <FaTrashCan size={"25px"} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

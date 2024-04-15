@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 
 import { CgAddR } from "react-icons/cg";
 import { BASE_URL } from "../../utils/config";
+import { IoEyeSharp } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
 
 const BlogList = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -80,9 +82,7 @@ const BlogList = () => {
             {" "}
             <th className="px-6 py-3 text-left">Hình</th>
             <th className="px-6 py-3 text-left">Tiêu đề</th>
-            <th className="px-6 py-3 text-center">Xem chi</th>
-            {/* <th className="px-6 py-3 text-center">Cập nhật</th> */}
-            <th className="px-6 py-3 text-center">Xóa</th>
+            <th className="px-6 py-3 text-center">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -101,18 +101,22 @@ const BlogList = () => {
               </td>
               <td className="px-6 py-2">{blog.title}</td>
               <td className="px-6 py-2 text-center italic text-blue-600 underline">
-                <Link to={`/blog/${blog._id}`}>Chi tiết</Link>
-              </td>
-              {/* <td className="px-6 py-2 text-center text-green-600">
-                <Link to={`/editBlog/${blog._id}`}>Cập nhật</Link>
-              </td> */}
-              <td className="px-6 py-2 text-center text-red-600">
-                <button
-                  onClick={() => handleDelete(blog._id)}
-                  className="font-bold"
-                >
-                  Xóa
-                </button>
+                <div className="flex justify-center gap-2">
+                  {" "}
+                  <Link
+                    to={`/blog/${blog._id}`}
+                    className="border p-1 text-blue-500"
+                  >
+                    {" "}
+                    <IoEyeSharp size={"25px"} />
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(blog._id)}
+                    className="border p-1 font-bold text-red-500"
+                  >
+                    <FaTrashCan size={"25px"} />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
