@@ -62,7 +62,7 @@ const Sidebar = () => {
       icon: <BsGraphUp color="darkblue" />,
       text: "Thống Kê",
       link: "/statistical",
-      role: ["admin"],
+      role: ["admin", "staff"],
     },
     {
       icon: <FaBlogger color="gold" />,

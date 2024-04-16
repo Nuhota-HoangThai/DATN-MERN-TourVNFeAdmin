@@ -14,6 +14,8 @@ const ListTour = () => {
     return `${price?.toLocaleString("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [allTours, setAllTours] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     currentPage: 1,
@@ -62,31 +64,29 @@ const ListTour = () => {
     }
   };
 
+  const filteredTours = allTours.filter((tour) =>
+    tour.nameTour.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <div className="max-h-[600px] w-full">
-      <div className="my-1 flex justify-between">
-        <Link to={"/addTour"} className="no-underline">
-          <CgAddR color="red" size={"30px"} />
-        </Link>
-
+      <div className="my-1 flex items-center justify-between">
+        <input
+          type="text"
+          placeholder="Tìm kiếm tour..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="rounded-full border border-blue-800 p-1.5 px-3"
+        />{" "}
         <h2 className="font-bold">Danh sách tour</h2>
-        {/* phân trang */}
-        <div className="flex items-center justify-end">
-          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-            (pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
-              >
-                {pageNum}
-              </button>
-            ),
-          )}
-        </div>
+        <div className="my-1 flex justify-between">
+          <Link to={"/addTour"} className="no-underline">
+            <CgAddR color="red" size={"30px"} />
+          </Link>
+        </div>{" "}
       </div>
       <div className="">
-        {allTours.length > 0 ? (
+        {filteredTours.length > 0 ? (
           <table className="w-full  table-auto rounded-2xl text-left text-sm">
             <thead className="bg-blue-800 text-xs uppercase text-white">
               <tr>
@@ -110,7 +110,7 @@ const ListTour = () => {
               </tr>
             </thead>
             <tbody>
-              {allTours.map((tour, index) => (
+              {filteredTours.map((tour, index) => (
                 <tr key={tour._id} className="bg-white hover:bg-gray-100">
                   <td className=" border-b px-6 py-4 text-center">
                     {index + 1 + (pageInfo.currentPage - 1) * 8}
@@ -166,6 +166,20 @@ const ListTour = () => {
           <p className="mt-5 text-center">Không có tour nào!!!</p>
         )}
       </div>{" "}
+      {/* phân trang */}
+      <div className="mt-2 flex items-center justify-end">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 };

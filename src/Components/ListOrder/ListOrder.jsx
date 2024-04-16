@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/config";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
 import { useSelector } from "react-redux";
-
 import { formatDateVN } from "../../utils/formatDate";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
-
 import {
   translateStatus,
   getStatusStyle,
@@ -27,6 +24,7 @@ const ListOrder = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState({});
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetchBookings();
@@ -74,6 +72,18 @@ const ListOrder = () => {
     }
   };
 
+  const handlePageChange = (newPage) => {
+    fetchBookings(newPage);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value.toLowerCase());
+  };
+
+  const filteredBookings = bookings.filter((booking) =>
+    booking.tour?.nameTour.toLowerCase().includes(filter),
+  );
+
   if (loading) return <div className="mt-5 text-center">Đang tải trang...</div>;
 
   if (error)
@@ -85,9 +95,13 @@ const ListOrder = () => {
 
   const confirmOrderStatus = async (bookingId, newStatus) => {
     try {
+      const updates = { status: newStatus };
+      if (newStatus === "completed") {
+        updates.paymentStatus = "paid";
+      }
       await axios.patch(
         `${BASE_URL}/booking/${bookingId}/confirmStatus`,
-        { status: newStatus },
+        updates,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -97,7 +111,7 @@ const ListOrder = () => {
 
       // Cập nhật danh sách đơn hàng sau khi thay đổi trạng thái thành công
       const updatedBookings = bookings.map((booking) =>
-        booking._id === bookingId ? { ...booking, status: newStatus } : booking,
+        booking._id === bookingId ? { ...booking, ...updates } : booking,
       );
       setBookings(updatedBookings);
     } catch (error) {
@@ -106,13 +120,17 @@ const ListOrder = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
-    fetchBookings(newPage);
-  };
-
   return (
     <div className="max-h-[600px] w-full">
-      <div className="flex items-center justify-between">
+      <div className="my-1 flex items-center justify-between">
+        {" "}
+        <input
+          type="text"
+          placeholder="Nhập tên tour"
+          value={filter}
+          onChange={handleFilterChange}
+          className="rounded-full border border-blue-800 p-1.5 px-3"
+        />
         <h2 className="font-bold">Danh sách đặt tour</h2>
         {/* phân trang */}
         <div className="my-1 flex justify-end">
@@ -130,7 +148,7 @@ const ListOrder = () => {
         </div>
       </div>
       <div className="">
-        {bookings.length > 0 ? (
+        {filteredBookings.length > 0 ? (
           <table className="w-full table-auto rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
             <thead className="bg-blue-800 text-xs uppercase text-white ">
               <tr>
@@ -173,7 +191,7 @@ const ListOrder = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {bookings.map((booking, index) => (
+              {filteredBookings.map((booking, index) => (
                 <tr key={booking._id} className="bg-white hover:bg-gray-100">
                   <td className="px-6 py-3 text-center">
                     {index + 1 + (pageInfo.currentPage - 1) * 8}
