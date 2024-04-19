@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { formatDateVN } from "../../utils/formatDate";
-import { IoEyeSharp } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
+
 import {
   translateStatus,
   getStatusStyle,
@@ -51,7 +50,7 @@ const ListOrder = () => {
         totalPages: data.totalPages,
       });
     } catch (error) {
-      console.error("There was a problem with fetching bookings:", error);
+      console.error(error);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -68,7 +67,7 @@ const ListOrder = () => {
 
       await fetchBookings();
     } catch (error) {
-      console.error("Error removing booking:", error);
+      console.error(error);
     }
   };
 
@@ -123,68 +122,71 @@ const ListOrder = () => {
   return (
     <div className="max-h-[600px] w-full">
       <div className="my-1 flex items-center justify-between">
-        {" "}
+        <h2 className="font-bold">Danh sách đặt tour</h2>
         <input
           type="text"
           placeholder="Nhập tên tour"
           value={filter}
           onChange={handleFilterChange}
-          className="rounded-full border border-blue-800 p-1.5 px-3"
+          className="w-1/2 rounded-full border border-blue-800 p-1.5 px-3"
         />
-        <h2 className="font-bold">Danh sách đặt tour</h2>
-        {/* phân trang */}
-        <div className="my-1 flex justify-end">
-          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-            (pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
-              >
-                {pageNum}
-              </button>
-            ),
-          )}
-        </div>
       </div>
       <div className="">
         {filteredBookings.length > 0 ? (
-          <table className="w-full table-auto rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
-            <thead className="bg-blue-800 text-xs uppercase text-white ">
+          <table className="w-full table-fixed border-collapse rounded-2xl border border-gray-200 text-left text-sm shadow-sm">
+            <thead className="bg-blue-800 text-xs uppercase text-white">
               <tr>
                 <th
                   scope="col"
-                  className="w-8 border-b border-gray-200 px-6 py-3"
+                  className="w-12 border border-gray-300 px-3 py-2 text-center"
                 >
                   Stt
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-3/12 border border-gray-300 px-3 py-2 text-center"
+                >
                   Mã đặt
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-1/12 border border-gray-300 px-3 py-2 text-center"
+                >
                   Ngày đặt
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-2/12 border border-gray-300 px-3 py-2 text-center"
+                >
                   Khách đặt
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-2/12 border border-gray-300 px-3 py-2 text-center"
+                >
                   Tour
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-2/12 border border-gray-300 px-3 py-2 text-center"
+                >
                   Thanh toán
                 </th>
-                <th scope="col" className="border-b border-gray-200 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-2/12 border border-gray-300 px-3 py-2 text-center"
+                >
                   Trạng thái
                 </th>
                 <th
                   scope="col"
-                  className="border-b border-gray-200 px-6 py-3 text-center"
+                  className="w-2/12 border border-gray-300 px-3 py-2 text-center"
                 >
                   Xử lý
                 </th>
                 <th
                   scope="col"
-                  className="border-b border-gray-200 px-6 py-3 text-center"
+                  className="w-2/12 border border-gray-300 px-3 py-2 text-center"
                 >
                   Hành động
                 </th>
@@ -193,43 +195,44 @@ const ListOrder = () => {
             <tbody className="divide-y divide-gray-200">
               {filteredBookings.map((booking, index) => (
                 <tr key={booking._id} className="bg-white hover:bg-gray-100">
-                  <td className="px-6 py-3 text-center">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
                     {index + 1 + (pageInfo.currentPage - 1) * 8}
                   </td>
-                  <td className="ellipsis px-6 py-3">{booking._id}</td>
-                  <td className="ellipsis px-6 py-3">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
+                    {booking._id}
+                  </td>
+                  <td className="border border-gray-300 px-1 py-2 text-left">
                     {formatDateVN(booking.bookingDate)}
                   </td>
-                  <td className="ellipsis px-6 py-3">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
                     {booking.user?.name || "N/A"}
                   </td>
-                  <td className="ellipsis px-6 py-3">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
                     {booking.tour?.nameTour || "N/A"}
                   </td>
-                  <td className="ellipsis px-6 py-3">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
                     {paymentStatusMapping(booking?.paymentStatus)}
                   </td>
                   <td
-                    className={`ellipsis px-6 py-3 ${getStatusStyle(booking.status)}`}
+                    className={`border border-gray-300 px-3 py-2 text-center ${getStatusStyle(booking.status)}`}
                   >
                     {translateStatus(booking.status)}
                   </td>
-
-                  <td className="relative flex items-center justify-center px-6 py-3">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
                     {booking.status !== "completed" && (
                       <>
                         <button
-                          className="flex items-center"
+                          className=""
                           onClick={() => toggleDropdown(booking._id)}
                         >
                           Hành động
                         </button>
                         {dropdownOpen[booking._id] && (
-                          <div className="absolute right-0 z-10 mb-10 mt-36 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="absolute right-40 z-10 mt-4 w-48  divide-gray-100 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div className="py-1">
                               {booking.status === "pending" && (
                                 <button
-                                  className="block w-full  py-2 text-center text-sm text-gray-700"
+                                  className="block w-full py-2 text-center text-sm text-gray-700"
                                   onClick={() =>
                                     confirmOrderStatus(booking._id, "confirmed")
                                   }
@@ -271,20 +274,20 @@ const ListOrder = () => {
                       </>
                     )}
                   </td>
-                  <td className="px-6 py-3">
-                    <div className="flex justify-center gap-2">
+                  <td className="border border-gray-300 px-3 py-2 text-center">
+                    <div className="flex justify-center space-x-2">
                       <Link
                         to={`/booking-detail/${booking._id}`}
-                        className=" border p-1 text-blue-800 underline"
+                        className="w-20 rounded bg-green-500 px-1 py-2 font-bold text-white hover:bg-green-700"
                       >
-                        <IoEyeSharp size={"25px"} />
+                        Chi tiết
                       </Link>
                       <button
-                        className="border p-1 text-red-500 hover:text-red-700"
+                        className="w-20 rounded bg-red-500 px-1 py-2 font-bold text-white hover:bg-red-700"
                         onClick={() => remove_booking(booking._id)}
                       >
-                        <FaTrashCan size={"25px"} />
-                      </button>{" "}
+                        Xóa
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -292,8 +295,22 @@ const ListOrder = () => {
             </tbody>
           </table>
         ) : (
-          <p className="mt-5 text-center">Không có đơn đặt tour nào!!!</p>
+          <p className="mt-10 text-center">Không có đơn đặt tour nào!!!</p>
         )}
+        {/* Phân trang */}
+        <div className="my-5 flex items-center justify-center">
+          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
+        </div>
       </div>
     </div>
   );

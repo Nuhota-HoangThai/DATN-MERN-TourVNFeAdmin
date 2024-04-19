@@ -75,23 +75,9 @@ const BillsList = () => {
     <div className="max-h-[600px] w-full overflow-auto">
       <div className="flex items-center justify-between">
         <h2 className="font-bold">Danh sách hóa đơn</h2>
-        {/* phân trang */}
-        <div className="my-1 flex justify-end">
-          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-            (pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
-              >
-                {pageNum}
-              </button>
-            ),
-          )}
-        </div>
       </div>
       {bills.length > 0 ? (
-        <table className="min-w-full divide-y divide-gray-200 text-sm">
+        <table className="min-w-full border-collapse divide-y divide-gray-200 text-sm">
           <thead className="bg-blue-800 text-xs uppercase text-white">
             <tr>
               {[
@@ -105,49 +91,48 @@ const BillsList = () => {
               ].map((header) => (
                 <th
                   key={header}
-                  className="border-b border-gray-200 px-6 py-3 text-left"
+                  className="border border-gray-200 px-6 py-3 text-center"
                 >
                   {header}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white text-left">
+          <tbody className="divide-y divide-gray-200 bg-white">
             {bills?.map((bill, index) => (
               <tr key={bill?._id}>
-                <td className="w-8 px-6 py-3 text-center">
+                <td className="border border-gray-200 px-6 py-3 text-center">
                   {index + 1 + (pageInfo.currentPage - 1) * 7}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-gray-900">
+                <td className="border border-gray-200 px-6 py-4 text-center text-gray-900">
                   {bill?._id}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-gray-900">
+                <td className="border border-gray-200 px-6 py-4 text-center text-gray-900">
                   {bill?.tour?.nameTour}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-red-500">
+                <td className="border border-gray-200 px-6 py-4 text-center text-red-500">
                   {bill.totalCost?.toLocaleString()} đ
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-gray-900">
+                <td className="border border-gray-200 px-6 py-4 text-center text-gray-900">
                   {formatDateVN(bill.issuedDate)}
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex justify-start gap-2">
-                    {" "}
+                <td className="border border-gray-200 px-6 py-4 text-center">
+                  <div className="flex justify-center gap-2">
                     <Link
                       to={`/bill/${bill._id}`}
-                      className="border p-1 italic text-indigo-600 underline hover:text-indigo-900"
+                      className="w-20 rounded bg-green-500 px-1 py-2 font-bold text-white hover:bg-green-700"
                     >
-                      <IoEyeSharp size={"25px"} />
+                      Chi tiết
                     </Link>
                     <button
                       onClick={() => deleteBill(bill._id)}
-                      className="border p-1 text-red-600 hover:text-red-800"
+                      className="w-20 rounded bg-red-500 px-1 py-2 font-bold text-white hover:bg-red-700"
                     >
-                      <FaTrashCan size={"25px"} />
+                      Xóa
                     </button>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-left">
+                <td className="border border-gray-200 px-6 py-4 text-center">
                   <SendEmailButton email={bill.user.email} billId={bill._id} />
                 </td>
               </tr>
@@ -157,6 +142,20 @@ const BillsList = () => {
       ) : (
         <p className="text-center text-gray-500">Không có hóa đơn nào.</p>
       )}
+      {/* phân trang */}
+      <div className="my-5 flex justify-center">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 h-6 w-6 rounded text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : "bg-blue-500"}`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 };

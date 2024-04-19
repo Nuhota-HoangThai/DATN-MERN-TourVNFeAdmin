@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 import { CgAddR } from "react-icons/cg";
-import { IoEyeSharp } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
+
 const ListTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
-
+  const navigate = useNavigate();
   const formatPrice = (price) => {
     return `${price?.toLocaleString("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
@@ -50,6 +49,10 @@ const ListTour = () => {
     fetchInfo(newPage);
   };
 
+  const navigateToUpdateTour = (id) => {
+    navigate(`/update_tour/${id}`);
+  };
+
   const remove_tour = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/tour/removeTour/${id}`, {
@@ -87,24 +90,37 @@ const ListTour = () => {
       </div>
       <div className="">
         {filteredTours.length > 0 ? (
-          <table className="w-full  table-auto rounded-2xl text-left text-sm">
+          <table className="w-full table-auto border-collapse rounded-2xl text-sm">
             <thead className="bg-blue-800 text-xs uppercase text-white">
               <tr>
-                <th scope="col" className="w-8 px-6 py-3">
+                <th
+                  scope="col"
+                  className="w-8 border border-gray-300 px-6 py-3 text-center"
+                >
                   Stt
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="border border-gray-300 px-6 py-3 text-center"
+                >
                   Mã tour
                 </th>
-                <th scope="col" className=" px-6 py-3">
+                <th
+                  scope="col"
+                  className="border border-gray-300 px-6 py-3 text-center"
+                >
                   Tên tour
                 </th>
-
-                <th scope="col" className=" px-6 py-3">
+                <th
+                  scope="col"
+                  className="border border-gray-300 px-6 py-3 text-center"
+                >
                   Giá
                 </th>
-
-                <th scope="col" className=" px-6 py-3">
+                <th
+                  scope="col"
+                  className="border border-gray-300 px-6 py-3 text-center"
+                >
                   Hành động
                 </th>
               </tr>
@@ -112,26 +128,27 @@ const ListTour = () => {
             <tbody>
               {filteredTours.map((tour, index) => (
                 <tr key={tour._id} className="bg-white hover:bg-gray-100">
-                  <td className=" border-b px-6 py-4 text-center">
+                  <td className="border border-gray-300 px-6 py-4 text-center">
                     {index + 1 + (pageInfo.currentPage - 1) * 8}
-                    {/* Hiển thị Số Thứ Tự dựa trên chỉ số và trang hiện tại */}
                   </td>
-                  <td className="ellipsis border-b px-6 py-4">
-                    <Link to={`/tour-detail/${tour._id}`}>{tour._id}</Link>
+                  <td className="border border-gray-300 px-6 py-4 text-center">
+                    <Link
+                      to={`/tour-detail/${tour._id}`}
+                      className="text-blue-800 hover:underline"
+                    >
+                      {tour._id}
+                    </Link>
                   </td>
-
-                  <td className="ellipsis border-b px-6 py-4">
+                  <td className="border border-gray-300 px-6 py-4 text-center">
                     {tour.nameTour}
                   </td>
-
-                  <td className=" border-b px-6 py-4">
-                    {" "}
+                  <td className="border border-gray-300 px-6 py-4 text-center">
                     {tour.price !== tour.originalPrice && tour.promotion ? (
                       <>
                         <p className="text-red-600">
-                          {formatPrice(tour.price)}{" "}
+                          {formatPrice(tour.price)}
                         </p>
-                        <p className="text-base text-gray-500 line-through">
+                        <p className="text-gray-500 line-through">
                           {formatPrice(tour.originalPrice)}
                         </p>
                       </>
@@ -141,20 +158,19 @@ const ListTour = () => {
                       </span>
                     )}
                   </td>
-                  <td className=" border-b px-6 py-4 text-blue-800">
+                  <td className="border border-gray-300 px-6 py-4">
                     <div className="flex justify-center gap-2">
-                      {" "}
-                      <Link
-                        to={`/tour-detail/${tour._id}`}
-                        className="border p-1 italic underline "
-                      >
-                        <IoEyeSharp size={"25px"} />
-                      </Link>
                       <button
-                        className="border p-1 text-red-500"
+                        className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-green-700"
+                        onClick={() => navigateToUpdateTour(tour._id)}
+                      >
+                        Cập nhật
+                      </button>
+                      <button
+                        className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
                         onClick={() => remove_tour(tour._id)}
                       >
-                        <FaTrashCan size={"25px"} />
+                        Xóa
                       </button>
                     </div>
                   </td>
@@ -167,7 +183,7 @@ const ListTour = () => {
         )}
       </div>{" "}
       {/* phân trang */}
-      <div className="mt-2 flex items-center justify-end">
+      <div className="mt-5 flex items-center justify-center">
         {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
           (pageNum) => (
             <button

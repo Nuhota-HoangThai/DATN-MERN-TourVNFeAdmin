@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/config";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const TourDirectoriesList = ({ tourDirectoryId }) => {
   const [tours, setTours] = useState([]);
@@ -43,10 +44,15 @@ const TourDirectoriesList = ({ tourDirectoryId }) => {
               key={tour._id}
               className="overflow-hidden rounded-md bg-white px-6 py-4 shadow"
             >
-              <div className="font-medium text-indigo-600">{tour.nameTour}</div>
-              {/* <div className="text-sm text-gray-500">
-                {tour.description}
-              </div> */}
+              <div className="font-medium text-indigo-600">
+                {tour.nameTour}{" "}
+                <Link
+                  to={`/tour-detail/${tour._id}`}
+                  className="text-blue-800 hover:underline"
+                >
+                  {tour._id}
+                </Link>
+              </div>
             </li>
           ))}
         </ul>

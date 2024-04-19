@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios"; // Đảm bảo bạn đã cài đặt axios
 import { BASE_URL } from "../../utils/config";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,13 +16,13 @@ import HTMLRenderer from "../HTML.component/HTML";
 import { formatRegion } from "../../utils/formatRegion";
 import { formatDateVNWithTime, formatDateVN } from "../../utils/formatDate";
 const TourDetail = () => {
-  const { token } = useSelector((state) => state.user.currentUser);
+  // const { token } = useSelector((state) => state.user.currentUser);
 
   const { tourId } = useParams();
   const [tour, setTour] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const fetchTour = async () => {
     try {
@@ -30,7 +30,6 @@ const TourDetail = () => {
       const response = await axios.get(
         `${BASE_URL}/tour/getTourById/${tourId}`,
       );
-      //console.log(response.data);
       setTour(response.data.tour);
       setIsLoading(false);
     } catch (err) {
@@ -42,29 +41,6 @@ const TourDetail = () => {
   useEffect(() => {
     fetchTour();
   }, [tourId]);
-
-  // update tour
-
-  const navigateToUpdateTour = (id) => {
-    navigate(`/update_tour/${id}`);
-  };
-
-  const remove_tour = async (id) => {
-    if (window.confirm("Bạn có chắc muốn xóa tour này?")) {
-      try {
-        await axios.delete(`${BASE_URL}/tour/removeTour/${id}`, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-
-        await fetchTour();
-        navigate("/listTour");
-      } catch (error) {
-        console.error("Error removing tour:", error);
-      }
-    }
-  };
 
   const formatPrice = (price) => {
     return <span style={{ color: "red" }}>{price?.toLocaleString()} đ</span>;
@@ -314,29 +290,6 @@ const TourDetail = () => {
                         />
                       </div>
                     </div>
-                  ),
-                },
-
-                {
-                  title: "Sửa tour",
-                  detail: (
-                    <button
-                      className=" bg-blue-600 px-3 py-1.5 text-sm text-white"
-                      onClick={() => navigateToUpdateTour(tour._id)}
-                    >
-                      Cập nhật
-                    </button>
-                  ),
-                },
-                {
-                  title: "Xóa tour",
-                  detail: (
-                    <button
-                      className=" bg-red-600 px-3 py-1.5 text-sm text-white"
-                      onClick={() => remove_tour(tour._id)}
-                    >
-                      Xóa
-                    </button>
                   ),
                 },
               ].map((row) => (

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AllTourGuide = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -57,6 +58,7 @@ const AllTourGuide = () => {
                 <th className="px-4 py-2">Loại tour</th>
                 <th className="px-4 py-2">Danh mục tour</th>
                 <th className="px-4 py-2">Giá</th>
+                <th className="px-4 py-2 text-center">Chi tiết tour</th>
               </tr>
             </thead>
             <tbody>
@@ -69,6 +71,14 @@ const AllTourGuide = () => {
                   </td>
                   <td className="px-4 py-2 text-red-500">
                     {tour.price?.toLocaleString()} đ
+                  </td>
+                  <td className="px-4 py-2 text-center italic underline">
+                    <Link
+                      to={`/tour-detail/${tour._id}`}
+                      className="text-blue-800"
+                    >
+                      Chi tiết
+                    </Link>
                   </td>
                 </tr>
               ))}

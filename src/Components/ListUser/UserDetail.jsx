@@ -1,54 +1,44 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import defaultImage from "../../assets/images/logoicon.png";
 import { translateRole } from "../../utils/formatRole";
 
-const UserProfile = () => {
-  const [userProfile, setUserProfile] = useState({
-    image: "",
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    cccd: "",
-    role: "",
-  });
-  const { currentUser } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(true);
+const UserDetail = () => {
+  const { token } = useSelector((state) => state.user.currentUser);
+
+  const { id } = useParams();
+
+  const [user, setUser] = useState(null);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const fetchUser = async () => {
       try {
-        const { data } = await axios.get(
-          `${BASE_URL}/user/getUserById/${currentUser.id}`,
-          {
-            headers: { Authorization: "Bearer " + currentUser.token },
+        const response = await axios.get(`${BASE_URL}/user/getUserById/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
           },
-        );
-        setUserProfile(data.user);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setError(error.response ? error.response.data.message : error.message);
-        setLoading(false);
+        });
+
+        setUser(response.data.user);
+      } catch (err) {
+        setError("Failed to fetch user");
+        console.error(err);
       }
     };
 
-    fetchUserProfile();
-  }, [navigate, currentUser]);
-
-  if (loading) {
-    return <p>Đang tải...</p>;
-  }
+    fetchUser();
+  }, [id]);
 
   if (error) {
-    return <p>Lỗi: {error}</p>;
+    return <div>Error: {error}</div>;
+  }
+
+  if (!user) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -56,19 +46,10 @@ const UserProfile = () => {
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="flex items-center justify-between px-4 py-5 sm:px-6">
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
-              Thông tin cá nhân
-            </h3>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
               Thông tin chi tiết và hồ sơ.
             </p>
           </div>
-          {/* <button
-            onClick={() => navigate(`/update_user/${userProfile._id}`)}
-            className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none"
-          >
-            Chỉnh sửa hồ sơ
-          </button> */}
         </div>
         <div className="border-t border-gray-200">
           <dl>
@@ -77,18 +58,17 @@ const UserProfile = () => {
                 Ảnh đại diện
               </dt>
               <dd className="mt-1  text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {Array.isArray(userProfile.image) &&
-                userProfile.image.length > 0 ? (
+                {Array.isArray(user.image) && user.image.length > 0 ? (
                   <img
                     className="rounded-full"
-                    src={`${BASE_URL}/${userProfile.image[0].replace(/\\/g, "/")}`}
+                    src={`${BASE_URL}/${user.image[0].replace(/\\/g, "/")}`}
                     alt="user"
                     style={{ width: "50px", height: "50px" }}
                   />
-                ) : typeof userProfile.image === "string" ? (
+                ) : typeof user.image === "string" ? (
                   <img
                     className="rounded-full"
-                    src={`${BASE_URL}/${userProfile.image.replace(/\\/g, "/")}`}
+                    src={`${BASE_URL}/${user.image.replace(/\\/g, "/")}`}
                     alt="user"
                     style={{ width: "50px", height: "50px" }}
                   />
@@ -104,13 +84,13 @@ const UserProfile = () => {
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Tên đầy đủ</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {userProfile.name}
+                {user.name}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Email</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                {userProfile.email}
+                {user.email}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -118,7 +98,7 @@ const UserProfile = () => {
                 Số điện thoại
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                {userProfile.phone}
+                {user.phone}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -126,19 +106,25 @@ const UserProfile = () => {
                 Căn cước công dân
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                {userProfile.cccd}
+                {user.cccd}
               </dd>
             </div>
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Địa chỉ</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                {userProfile.address}
+                {user.address}
               </dd>
             </div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Vai trò</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                {translateRole(userProfile.role)}
+                {translateRole(user.role)}
+              </dd>
+            </div>
+            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Lương tháng</dt>
+              <dd className="mt-1 text-sm text-red-600 sm:col-span-2">
+                {user.wage?.toLocaleString()} đ
               </dd>
             </div>
           </dl>
@@ -148,4 +134,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserDetail;

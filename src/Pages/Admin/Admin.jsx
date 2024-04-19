@@ -54,6 +54,7 @@ import TourDetailGuide from "../../Components/ListTour/TourDetailGuide";
 import AllTourGuide from "./AllTourGuide";
 
 import ReviewDetails from "./ReviewDetail";
+import UserDetail from "../../Components/ListUser/UserDetail";
 const Admin = () => {
   const location = useLocation();
 
@@ -134,6 +135,7 @@ const Admin = () => {
           />
 
           <Route path="/profileUser" element={<ProfileUser />} />
+          <Route path="/user-detail/:id" element={<UserDetail />} />
 
           <Route path="/update_tour/:id" element={<UpdateTour />} />
 

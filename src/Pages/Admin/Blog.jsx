@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// Import the API functions directly
 import { getAllBlogs, deleteBlog } from "../../api/blogApi";
-// Assuming you have a Redux setup to handle the state where the user token is stored
 import { useSelector } from "react-redux";
 
 import { CgAddR } from "react-icons/cg";
@@ -57,64 +55,56 @@ const BlogList = () => {
   return (
     <div className="container mx-auto">
       <div className="flex items-center justify-between">
-        <Link to="/addBlog" className="">
+        <h2 className="font-bold">Danh sách blog</h2>
+        <Link to="/addBlog">
           <CgAddR color="red" size={"30px"} />
         </Link>
-        <h2 className="font-bold">Danh sách blog</h2>
-        {/* phân trang */}
-        <div className="my-1 flex justify-end">
-          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-            (pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
-              >
-                {pageNum}
-              </button>
-            ),
-          )}
-        </div>
       </div>
-      <table className="w-full table-auto  bg-white shadow-md">
+      <table className="w-full table-auto border border-gray-300 bg-white shadow-md">
         <thead className="bg-blue-800 text-white">
           <tr>
-            {" "}
-            <th className="px-6 py-3 text-left">Hình</th>
-            <th className="px-6 py-3 text-left">Tiêu đề</th>
+            <th className="border-r border-gray-300 px-6 py-3 text-left">
+              Hình
+            </th>
+            <th className="border-r border-gray-300 px-6 py-3 text-left">
+              Tiêu đề
+            </th>
             <th className="px-6 py-3 text-center">Hành động</th>
           </tr>
         </thead>
         <tbody>
           {blogs.map((blog) => (
-            <tr key={blog._id} className="border-b hover:bg-gray-100">
-              <td className="border-b">
+            <tr
+              key={blog._id}
+              className="border-t border-gray-300 hover:bg-gray-100"
+            >
+              <td className="border-r border-gray-300 px-6 py-2 text-center">
                 {blog.image ? (
                   <img
                     src={`${BASE_URL}/${blog.image.replace(/\\/g, "/")}`}
-                    alt="promotion"
+                    alt="Blog"
                     className="h-20 w-28 rounded-md object-cover"
                   />
                 ) : (
-                  <p className="text-center text-gray-500">Không có hình ảnh</p>
+                  <p className="text-gray-500">Không có hình ảnh</p>
                 )}
               </td>
-              <td className="px-6 py-2">{blog.title}</td>
-              <td className="px-6 py-2 text-center italic text-blue-600 underline">
+              <td className="border-r border-gray-300 px-6 py-2">
+                {blog.title}
+              </td>
+              <td className="px-6 py-2 text-center">
                 <div className="flex justify-center gap-2">
-                  {" "}
                   <Link
                     to={`/blog/${blog._id}`}
-                    className="border p-1 text-blue-500"
+                    className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
                   >
-                    {" "}
-                    <IoEyeSharp size={"25px"} />
+                    Chi tiết
                   </Link>
                   <button
                     onClick={() => handleDelete(blog._id)}
-                    className="border p-1 font-bold text-red-500"
+                    className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
                   >
-                    <FaTrashCan size={"25px"} />
+                    Xóa
                   </button>
                 </div>
               </td>
@@ -122,6 +112,20 @@ const BlogList = () => {
           ))}
         </tbody>
       </table>
+      {/* Pagination */}
+      <div className="my-4 flex justify-center">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 };

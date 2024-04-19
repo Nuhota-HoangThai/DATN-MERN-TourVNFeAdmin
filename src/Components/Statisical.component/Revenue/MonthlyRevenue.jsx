@@ -47,9 +47,7 @@ const RevenueByMonth = () => {
 
   return (
     <div className="mx-4 my-5 rounded-lg bg-white p-5 shadow-xl">
-      <h2 className="mb-6 text-2xl font-semibold text-gray-800">
-        Doanh Thu Theo Tháng
-      </h2>
+      <h2 className="mb-6 font-semibold text-gray-800">Doanh Thu Theo Tháng</h2>
       {loading ? (
         <p className="text-center text-gray-500">Đang tải...</p>
       ) : (

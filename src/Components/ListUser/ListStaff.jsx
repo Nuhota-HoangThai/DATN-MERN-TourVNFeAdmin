@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
@@ -107,7 +107,7 @@ const ListUser = () => {
                 Vai trò
               </th>
               <th scope="col" className="px-6 py-3">
-                Lương/tháng
+                Xem hồ sơ
               </th>
               <th scope="col" className="px-6 py-3">
                 Hành động
@@ -147,7 +147,12 @@ const ListUser = () => {
                   {translateRole(user.role)}
                 </td>{" "}
                 <td className="ellipsis border-b px-6 py-2 text-red-500">
-                  {user.wage?.toLocaleString()} đ
+                  <Link
+                    to={`/user-detail/${user._id}`}
+                    className="text-blue-800 hover:underline"
+                  >
+                    Hồ sơ
+                  </Link>
                 </td>
                 <td className="ellipsis border-b px-6 py-2">
                   <div className="flex justify-center gap-2">

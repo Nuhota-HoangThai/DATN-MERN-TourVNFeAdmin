@@ -2,7 +2,7 @@ import { translateStatus } from "../../../utils/formatStatus";
 
 const BookingStatusTable = ({ bookingStats }) => (
   <div className="p-4">
-    <h1 className="mb-4 text-2xl font-bold">Thống kê trạng thái đặt tour</h1>
+    <h1 className="mb-4 text-xl font-bold">Thống kê trạng thái đặt tour</h1>
     <table className="w-full text-sm text-gray-500">
       <thead className="bg-gray-50 text-xs uppercase text-gray-700">
         <tr>

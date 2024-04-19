@@ -85,7 +85,7 @@ const BillDetails = () => {
           onClick={exportPDF}
           className="my-2 rounded bg-red-500 px-6 py-2 text-white"
         >
-          Xuất PDF
+          Xuất hóa đơn
         </button>
       </div>
       <div id="billDetailsContent" className="p-8">

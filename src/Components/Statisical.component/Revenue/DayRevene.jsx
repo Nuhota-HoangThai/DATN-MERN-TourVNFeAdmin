@@ -38,9 +38,7 @@ const RevenueByDay = () => {
 
   return (
     <div className="mx-4 my-5 rounded-lg bg-white p-5 shadow-xl">
-      <h2 className="mb-6 text-2xl font-semibold text-gray-800">
-        Doanh Thu Theo Ngày
-      </h2>
+      <h2 className="mb-6 font-semibold text-gray-800">Doanh Thu Theo Ngày</h2>
 
       {loading ? (
         <p className="text-center text-gray-500">Đang tải...</p>
@@ -59,16 +57,6 @@ const RevenueByDay = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {/* {revenueData.map((item) => (
-                  <tr key={item._id}>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                      {item._id}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                      {item.totalRevenue.toLocaleString()} đ
-                    </td>
-                  </tr>
-                ))} */}
                 {revenueData.map(({ _id, totalRevenue }, index) => (
                   <tr key={index}>
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
