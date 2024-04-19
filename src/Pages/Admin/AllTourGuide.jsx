@@ -49,7 +49,13 @@ const AllTourGuide = () => {
       {Object.keys(groupedTours).map((guideId) => (
         <div key={guideId} className="mb-8">
           <h2 className="mb-2 font-semibold underline">
-            Hdv: {groupedTours[guideId].guideName}
+            Hdv:{" "}
+            <Link
+              to={`/user-detail/${guideId}`}
+              className="text-blue-800 hover:underline"
+            >
+              {groupedTours[guideId].guideName}
+            </Link>
           </h2>
           <table className="min-w-full table-auto">
             <thead>

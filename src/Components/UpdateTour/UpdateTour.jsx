@@ -133,7 +133,7 @@ const UpdateTour = () => {
         );
         setPreviewImage(imagesUrls);
       }
-      // console.log("data", data);
+      console.log("data", data);
       setTourData(data.tour);
     } catch (error) {
       console.error("Error fetching tour:", error);
@@ -183,6 +183,7 @@ const UpdateTour = () => {
           },
         },
       );
+      console.log(data);
       setTourData(data.tour);
 
       alert("Cập nhật tour thành công!");
@@ -591,12 +592,6 @@ const UpdateTour = () => {
                   />
                 </div>
               </div>
-              <button
-                type="submit"
-                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Cập nhật Tour
-              </button>
             </div>
             <div className="col-span-3 space-y-4">
               <div>
@@ -627,7 +622,13 @@ const UpdateTour = () => {
                   />
                 )}
               </div>
-            </div>
+            </div>{" "}
+            <button
+              type="submit"
+              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Cập nhật Tour
+            </button>
           </form>
         </div>
       </div>

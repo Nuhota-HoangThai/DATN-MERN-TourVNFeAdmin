@@ -12,7 +12,7 @@ import {
 } from "../../utils/formatStatus";
 
 const ListOrder = () => {
-  const { token } = useSelector((state) => state.user.currentUser);
+  const { token, role } = useSelector((state) => state.user.currentUser);
 
   const [pageInfo, setPageInfo] = useState({
     currentPage: 1,
@@ -282,12 +282,14 @@ const ListOrder = () => {
                       >
                         Chi tiết
                       </Link>
-                      <button
-                        className="w-20 rounded bg-red-500 px-1 py-2 font-bold text-white hover:bg-red-700"
-                        onClick={() => remove_booking(booking._id)}
-                      >
-                        Xóa
-                      </button>
+                      {role !== "staff" && (
+                        <button
+                          className="w-20 rounded bg-red-500 px-1 py-2 font-bold text-white hover:bg-red-700"
+                          onClick={() => remove_booking(booking._id)}
+                        >
+                          Xóa
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

@@ -7,11 +7,8 @@ import { useSelector } from "react-redux";
 
 import { formatDateVN } from "../../utils/formatDate";
 
-import { IoEyeSharp } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
-
 const BillsList = () => {
-  const { token } = useSelector((state) => state.user.currentUser);
+  const { token, role } = useSelector((state) => state.user.currentUser);
 
   const [bills, setBills] = useState([]);
   const [pageInfo, setPageInfo] = useState({
@@ -124,12 +121,14 @@ const BillsList = () => {
                     >
                       Chi tiết
                     </Link>
-                    <button
-                      onClick={() => deleteBill(bill._id)}
-                      className="w-20 rounded bg-red-500 px-1 py-2 font-bold text-white hover:bg-red-700"
-                    >
-                      Xóa
-                    </button>
+                    {role !== "staff" && (
+                      <button
+                        onClick={() => deleteBill(bill._id)}
+                        className="w-20 rounded bg-red-500 px-1 py-2 font-bold text-white hover:bg-red-700"
+                      >
+                        Xóa
+                      </button>
+                    )}
                   </div>
                 </td>
                 <td className="border border-gray-200 px-6 py-4 text-center">
