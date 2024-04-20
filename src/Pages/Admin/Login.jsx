@@ -8,6 +8,8 @@ import {
   signInFailure,
 } from "../../redux/user/userSlice";
 
+import axios from "axios";
+
 //import LoginGoogle from "../../Components/LoginGG/LoginGoogle"
 
 const Login = () => {
@@ -23,25 +25,31 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      dispatch(signInStart());
-      const res = await fetch(`${BASE_URL}/user/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
+    dispatch(signInStart());
 
-      if (data.success === false) {
-        dispatch(signInFailure(data.message));
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/user/loginAdmin`,
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+
+      if (!data.success) {
+        dispatch(signInFailure(data.error));
+        alert(data.error); // Optionally replace with a more integrated notification system
         return;
       }
+
       dispatch(signInSuccess(data));
-      navigate("/");
+      navigate("/"); // Redirect to the home page or dashboard based on role
     } catch (error) {
-      dispatch(signInFailure(error.message));
+      console.error("Login Error:", error);
+      dispatch(
+        signInFailure(error.message || "Unable to connect to the server."),
+      );
+      alert("Đã xảy ra lỗi khi cố gắng đăng nhập.");
     }
   };
   return (
@@ -50,7 +58,7 @@ const Login = () => {
         <h1 className="text-center text-2xl font-bold text-gray-900">
           Đăng nhập
         </h1>
-        {error && <p className="mt-4 text-center text-red-500">{error}</p>}
+
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <input
             type="email"
