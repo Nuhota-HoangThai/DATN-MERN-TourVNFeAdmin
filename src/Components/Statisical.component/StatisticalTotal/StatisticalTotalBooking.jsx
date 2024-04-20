@@ -30,7 +30,7 @@ const TotalBookings = () => {
           Authorization: "Bearer " + token,
         },
       });
-
+      //console.log(response.data);
       setToursSold(response.data.toursSold);
     } catch (error) {
       setError(error.message);

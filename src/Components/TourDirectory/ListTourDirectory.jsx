@@ -7,7 +7,6 @@ import TourDirectoriesList from "./TourDirectoryList";
 import axios from "axios";
 
 import { CgAddR } from "react-icons/cg";
-import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
 
 function ListTourDirectories() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -131,7 +130,7 @@ function ListTourDirectories() {
                     {tourDirectory.image ? (
                       <img
                         src={`${BASE_URL}/${tourDirectory.image.replace(/\\/g, "/")}`}
-                        alt="promotion"
+                        alt=""
                         className="mx-auto h-20 w-28 rounded-md object-cover"
                       />
                     ) : (
