@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/user/userSlice"; // Ensure the path is correct
 
-import logoViVu3Mien from "../../assets/images/logoViVu3Mien.jpg";
+// import logoViVu3Mien from "../../assets/images/logoViVu3Mien.jpg";
 import { translateRole } from "../../utils/formatRole";
 
 const Navbar = () => {
@@ -51,7 +51,7 @@ const Navbar = () => {
             </div>
           </div>
         ) : (
-          <Link to="/loginAdmin" className="text-slate-700 hover:underline">
+          <Link to="/loginAdmin" className=" text-white hover:underline">
             Đăng nhập
           </Link>
         )}

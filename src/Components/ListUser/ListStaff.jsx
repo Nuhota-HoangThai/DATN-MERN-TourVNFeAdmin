@@ -66,20 +66,6 @@ const ListUser = () => {
     <div className="max-h-[600px] w-full">
       <div className=" my-1  flex justify-between">
         <h1 className="text-center font-bold">Thông tin nhân viên</h1>
-        {/* phân trang */}
-        <div className="flex items-center justify-end">
-          {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
-            (pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
-              >
-                {pageNum}
-              </button>
-            ),
-          )}
-        </div>
       </div>
       {allUsers.length > 0 ? (
         <table className="w-full  table-auto rounded-2xl text-left text-sm">
@@ -177,7 +163,21 @@ const ListUser = () => {
         </table>
       ) : (
         <p className="mt-5 text-center">Không có người dùng nào!!!</p>
-      )}
+      )}{" "}
+      {/* phân trang */}
+      <div className="my-4 flex items-center justify-center">
+        {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
+            >
+              {pageNum}
+            </button>
+          ),
+        )}
+      </div>
     </div>
   );
 };

@@ -136,19 +136,21 @@ const ListPromotion = () => {
               <td className="border border-gray-300 px-6 py-4">
                 {formatDateVN(new Date(promotion.endDatePromotion))}
               </td>
-              <td className="border border-gray-300 px-6 py-4">
-                <Link
-                  to={`/editPromotion/${promotion._id}`}
-                  className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-green-700"
-                >
-                  Cập nhật
-                </Link>
-                <button
-                  onClick={() => remove_promotion(promotion._id)}
-                  className="ml-2 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
-                >
-                  Xóa
-                </button>
+              <td className="border border-gray-300 px-3">
+                <div className="flex gap-2">
+                  <Link
+                    to={`/editPromotion/${promotion._id}`}
+                    className="w-20 rounded bg-blue-600 px-2 py-1 text-white hover:bg-green-700"
+                  >
+                    Cập nhật
+                  </Link>
+                  <button
+                    onClick={() => remove_promotion(promotion._id)}
+                    className=" rounded bg-red-500 px-2 py-1 text-white hover:bg-red-700"
+                  >
+                    Xóa
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

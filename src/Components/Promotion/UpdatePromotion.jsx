@@ -20,11 +20,15 @@ const UpdatePromotionForm = () => {
   useEffect(() => {
     const fetchPromotionDetails = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/tourPromotion/${id}`, {
-          headers: {
-            Authorization: "Bearer " + token,
+        const response = await axios.get(
+          `${BASE_URL}/tourPromotion/getPromotionById/${id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
           },
-        });
+        );
+        console.log(setFormData);
         setFormData({
           namePromotion: response.data.namePromotion,
           descriptionPromotion: response.data.descriptionPromotion,
@@ -114,7 +118,7 @@ const UpdatePromotionForm = () => {
             className="mb-2 block text-sm font-bold text-gray-700"
             htmlFor="discountPercentage"
           >
-            Giá Khuyến Mãi
+            Giá Khuyến Mãi (Giảm %)
           </label>
           <input
             className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"

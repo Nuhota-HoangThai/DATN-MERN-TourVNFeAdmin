@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux"; // Assuming you're using Redux to store user data
 import {
   AiOutlineGift,
@@ -10,10 +10,23 @@ import { MdOutlineTour, MdOutlineCategory, MdEventSeat } from "react-icons/md";
 import { FaBlogger } from "react-icons/fa";
 import { MdOutlineRateReview } from "react-icons/md";
 import { SiFoursquarecityguide } from "react-icons/si";
+import { useEffect } from "react";
 
 const Sidebar = () => {
-  const currentUserRole = useSelector((state) => state.user.currentUser.role); // assuming role is a property of currentUser object
+  //const currentUserRole = useSelector((state) => state.user.currentUser.role); // assuming role is a property of currentUser object
   //console.log("Current user role:", currentUserRole);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const currentUserRole = currentUser ? currentUser.role : null;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect if there is no currentUser or currentUserRole
+    if (!currentUser || !currentUserRole) {
+      navigate("/loginAdmin");
+    }
+  }, [currentUser, currentUserRole, navigate]);
+
   // Xác định tất cả các mục thanh bên có vai trò truy cập
   const sidebarItems = [
     {
@@ -91,8 +104,11 @@ const Sidebar = () => {
   ];
 
   // Lọc các mục thanh bên dựa trên vai trò của người dùng
+  // const accessibleItems = sidebarItems.filter((item) =>
+  //   item.role.includes(currentUserRole),
+  // );
   const accessibleItems = sidebarItems.filter((item) =>
-    item.role.includes(currentUserRole),
+    currentUserRole ? item.role.includes(currentUserRole) : false,
   );
 
   return (

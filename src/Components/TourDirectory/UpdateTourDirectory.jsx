@@ -22,16 +22,16 @@ function UpdateTourDirectory() {
       setIsLoading(true);
       try {
         const { data } = await axios.get(
-          `${BASE_URL}/tourDirectory/getDirectory/${id}`,
+          `${BASE_URL}/tourDirectory/getTourDirectory/${id}`,
           {
             headers: {
               Authorization: "Bearer " + token,
             },
           },
         );
-
-        setDirectoryName(data.directoryName);
-        setDirectoryDescription(data.directoryDescription);
+        //console.log(data.tourDirectory);
+        setDirectoryName(data.tourDirectory.directoryName);
+        setDirectoryDescription(data.tourDirectory.directoryDescription);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -68,7 +68,6 @@ function UpdateTourDirectory() {
   return (
     <div className="mx-auto mt-10 max-h-[600px] max-w-xl rounded-2xl bg-white p-8 shadow-2xl">
       <h2 className="mb-5 text-2xl font-semibold">Cập nhật danh mục tour</h2>
-      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
