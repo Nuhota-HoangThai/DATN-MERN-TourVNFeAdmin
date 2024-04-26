@@ -34,7 +34,7 @@ const AddTour = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
+  // const [convergeTime, setConvergeTime] = useState(getDefaultConvergeTime());
   // const handleDescriptionChange = (value) => {
   //   setDescription(value);
   // };
@@ -315,8 +315,8 @@ const AddTour = () => {
                       type="datetime-local"
                       name="convergeTime"
                       id="convergeTime"
-                      value={convergeTime}
-                      onChange={(e) => setConvergeTime(e.target.value)}
+                      // value={convergeTime}
+                      // onChange={(e) => setConvergeTime(e.target.value)}
                       className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                     />
                   </div>

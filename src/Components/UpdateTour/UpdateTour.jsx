@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
@@ -23,26 +23,22 @@ import "slick-carousel/slick/slick-theme.css";
 
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [error, setError] = useState(null);
-  const [image, setImage] = useState(null);
-  const [video, setVideo] = useState(null);
-  const [previewImage, setPreviewImage] = useState([upload]);
-  const [previewVideo, setPreviewVideo] = useState([upload]);
+  const [image, setImage] = useState([]);
+  const [video, setVideo] = useState([]);
+  const [previewImage, setPreviewImage] = useState([]);
+  const [previewVideo, setPreviewVideo] = useState([]);
+  const [editorLoaded, setEditorLoaded] = useState(false);
 
   const [tourTypes, setTourTypes] = useState([]);
   const [tourDirectory, setTourDirectory] = useState([]);
   const [tourPromotion, setTourPromotion] = useState([]);
   const [allUsersGuide, setAllUsersGuide] = useState([]);
 
-  const [editorLoaded, setEditorLoaded] = useState(false);
-
-  const { id } = useParams();
-  const navigate = useNavigate();
-
   const [tourData, setTourData] = useState({
-    image: "",
-    video: "",
     nameTour: "",
     maxParticipants: "",
     price: "",
@@ -62,92 +58,81 @@ const UpdateTour = () => {
     schedule: "",
   });
 
-  const fetchInfo = async () => {
+  useEffect(() => {
+    fetchAllData();
+  }, [id]);
+
+  useEffect(() => {
+    fetchTour();
+  }, [id]);
+
+  const fetchAllData = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/user/get_all_usersGuide`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+      const resGuides = await axios.get(`${BASE_URL}/user/get_all_usersGuide`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      const data = res.data;
-      setAllUsersGuide(data);
+      setAllUsersGuide(resGuides.data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Failed to fetch user guides", error);
     }
-  };
 
-  const fetchTourTypes = async () => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/tourType/getAllTourType`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+      const resTypes = await axios.get(`${BASE_URL}/tourType/getAllTourType`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      setTourTypes(data.tourTypes);
+      setTourTypes(resTypes.data.tourTypes);
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      console.error("Failed to fetch tour types", error);
     }
-  };
 
-  const fetchTourCategories = async () => {
     try {
-      const { data } = await axios.get(
+      const resDirectories = await axios.get(
         `${BASE_URL}/tourDirectory/getAllTourDirectories`,
         {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         },
       );
-      //console.log(data);
-      setTourDirectory(data.tourDirectories);
+      setTourDirectory(resDirectories.data.tourDirectories);
     } catch (error) {
-      setError(error.message);
+      console.error("Failed to fetch tour categories", error);
     }
-  };
 
-  const fetchTourPromotion = async () => {
     try {
-      const { data } = await axios.get(
+      const resPromotions = await axios.get(
         `${BASE_URL}/tourPromotion/getAllPromotion`,
         {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         },
       );
-      setTourPromotion(data);
+      setTourPromotion(resPromotions.data);
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      console.error("Failed to fetch promotions", error);
     }
   };
 
-  const fetchTour = async () => {
+  const fetchTour = useCallback(async () => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`);
-
+      const { data } = await axios.get(`${BASE_URL}/tour/getTourById/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (Array.isArray(data.tour.image)) {
         const imagesUrls = data.tour.image.map(
           (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
         );
         setPreviewImage(imagesUrls);
       }
-      console.log("data", data);
+      if (Array.isArray(data.tour.video)) {
+        const videoUrls = data.tour.video.map(
+          (i) => `${BASE_URL}/${i.replace(/\\/g, "/")}`,
+        );
+        setPreviewVideo(videoUrls);
+      }
       setTourData(data.tour);
+      setEditorLoaded(true); // Assuming the tour data is fetched correctly and has schedule data
     } catch (error) {
       console.error("Error fetching tour:", error);
     }
-  };
-
-  useEffect(() => {
-    fetchInfo();
-    fetchTourCategories();
-    fetchTourTypes();
-    fetchTourPromotion();
-    fetchTour();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, token]);
 
   useEffect(() => {
     if (tourData && tourData.schedule) {
@@ -183,7 +168,6 @@ const UpdateTour = () => {
           },
         },
       );
-      console.log(data);
       setTourData(data.tour);
 
       alert("Cập nhật tour thành công!");
@@ -592,6 +576,12 @@ const UpdateTour = () => {
                   />
                 </div>
               </div>
+              <button
+                type="submit"
+                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Cập nhật Tour
+              </button>
             </div>
             <div className="col-span-3 space-y-4">
               <div>
@@ -622,13 +612,7 @@ const UpdateTour = () => {
                   />
                 )}
               </div>
-            </div>{" "}
-            <button
-              type="submit"
-              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-150 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              Cập nhật Tour
-            </button>
+            </div>
           </form>
         </div>
       </div>
