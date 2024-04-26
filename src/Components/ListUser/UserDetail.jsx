@@ -38,7 +38,7 @@ const UserDetail = () => {
   }
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>Đang tải...</div>;
   }
 
   return (

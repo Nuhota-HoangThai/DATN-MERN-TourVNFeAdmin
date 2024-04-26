@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const AddTourDirectory = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -49,7 +50,8 @@ const AddTourDirectory = () => {
         },
       );
       setMessage(response.data.message);
-      console.log(response.data);
+      toast("Thêm danh mục tour thành công.");
+      // console.log(response.data);
       // navigate("/listTourDirectory"); // Chỉnh sửa lại đường dẫn sau khi thêm thành công
     } catch (error) {
       setMessage(error.response?.data?.message || "Lỗi tạo danh mục tour");

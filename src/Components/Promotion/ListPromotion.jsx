@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import { formatDateVN } from "../../utils/formatDate";
 import { CgAddR } from "react-icons/cg";
+import { toast } from "react-toastify";
 
 const ListPromotion = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -57,7 +58,7 @@ const ListPromotion = () => {
           Authorization: "Bearer " + token,
         },
       });
-
+      toast("Xóa khuyến mãi thành công.");
       await fetchPromotions();
     } catch (error) {
       console.error("Error removing promotion:", error);

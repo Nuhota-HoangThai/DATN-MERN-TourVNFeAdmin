@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
 
 function UpdateTourDirectory() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -56,7 +57,7 @@ function UpdateTourDirectory() {
           },
         },
       );
-
+      toast("Cập nhật danh mục tour thành công.");
       navigate("/listTourDirectory");
     } catch (err) {
       setError(err.message);

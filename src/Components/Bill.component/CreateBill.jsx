@@ -3,6 +3,8 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
+import { toast } from "react-toastify";
+
 const CreateBillForm = () => {
   const { token } = useSelector((state) => state.user.currentUser);
 
@@ -31,10 +33,9 @@ const CreateBillForm = () => {
 
       setBookingId("");
       setNotesBill("");
-      alert("Tạo hóa đơn thành công!");
+      toast("Tạo hóa đơn thành công!");
     } catch (error) {
-      console.error("Failed to create bill:", error);
-      setError(error.response?.data?.message || "An error occurred");
+      toast("Tạo hóa đơn không thành công!");
     } finally {
       setIsLoading(false);
     }

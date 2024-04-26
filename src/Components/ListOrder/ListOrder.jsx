@@ -11,6 +11,8 @@ import {
   paymentStatusMapping,
 } from "../../utils/formatStatus";
 
+import { toast } from "react-toastify";
+
 const ListOrder = () => {
   const { token, role } = useSelector((state) => state.user.currentUser);
 
@@ -64,7 +66,7 @@ const ListOrder = () => {
           Authorization: "Bearer " + token,
         },
       });
-
+      toast("Xóa đặt tour thành công.");
       await fetchBookings();
     } catch (error) {
       console.error(error);

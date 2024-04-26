@@ -7,6 +7,7 @@ import TourDirectoriesList from "./TourDirectoryList";
 import axios from "axios";
 
 import { CgAddR } from "react-icons/cg";
+import { toast } from "react-toastify";
 
 function ListTourDirectories() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -70,6 +71,7 @@ function ListTourDirectories() {
         });
 
         fetchTourDirectories();
+        toast("Xóa danh mục tour thành công.");
       } catch (err) {
         setError(err.message);
       } finally {

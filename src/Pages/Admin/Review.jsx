@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ToursWithReviews = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -52,10 +53,10 @@ const ToursWithReviews = () => {
               : tour,
           ),
         );
-        alert("Review đã được xóa thành công.");
+        toast("Đánh giá đã được xóa thành công.");
       }
     } catch (error) {
-      alert(`Có lỗi xảy ra khi xóa review: ${error.message}`);
+      toast(`Có lỗi xảy ra khi xóa đánh giá: ${error.message}`);
     }
   };
 

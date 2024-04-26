@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function CreatePromotionForm() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -46,10 +47,10 @@ function CreatePromotionForm() {
           },
         },
       );
-      alert("Tạo khuyến mãi thành công!");
+      toast("Tạo khuyến mãi thành công!");
       //console.log(response.data);
     } catch (error) {
-      alert("Tạo khuyến mãi không thành công.");
+      toast("Tạo khuyến mãi không thành công.");
       console.error(error);
     }
   };

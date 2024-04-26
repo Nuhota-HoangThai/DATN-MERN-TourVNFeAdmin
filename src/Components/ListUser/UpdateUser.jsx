@@ -4,6 +4,7 @@ import { BASE_URL } from "../../utils/config";
 import upload from "../../assets/images/upload.png";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const UpdateUser = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -77,10 +78,10 @@ const UpdateUser = () => {
         },
       });
 
-      alert("Cập nhật thông tin người dùng thành công.");
+      toast("Cập nhật thông tin người dùng thành công.");
       navigate("/listAdmin");
     } catch (error) {
-      alert("Cập nhật thông tin người dùng thất bại!!!.");
+      toast("Cập nhật thông tin người dùng thất bại!!!.");
       console.error("Error updating user:", error);
     }
   };

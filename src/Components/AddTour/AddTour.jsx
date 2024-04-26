@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { tourService } from "../../service/tourService";
 
-import { getDefaultConvergeTime } from "../../utils/formatDate";
-
+import { toast } from "react-toastify";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -55,8 +54,9 @@ const AddTour = () => {
     try {
       await tourService.addTour(formData, token);
       setIsSuccess(true);
+      toast("Thêm tour thành công.");
     } catch (error) {
-      setError("Thêm tour thất bại.");
+      toast("Thêm tour thất bại.");
       console.error(error);
     }
   };
@@ -465,12 +465,7 @@ const AddTour = () => {
                 </div>
               </div>
             </div>
-            {isSuccess && (
-              <div className="mb-4 text-sm font-semibold text-green-500">
-                Thêm tour thành công
-              </div>
-            )}
-            {error && <div className="mb-4 text-sm text-red-500">{error}</div>}
+
             <button
               type="submit"
               className="focus:shadow-outline w-full rounded bg-blue-900 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"

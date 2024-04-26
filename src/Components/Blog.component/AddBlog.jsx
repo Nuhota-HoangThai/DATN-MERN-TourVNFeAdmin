@@ -5,6 +5,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import { createBlog } from "../../api/blogApi"; // Import hàm createBlog từ file api
+import { toast } from "react-toastify";
 
 const AddBlog = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -43,12 +44,11 @@ const AddBlog = () => {
     }
 
     try {
-      const response = await createBlog(formDataToSend, token);
-      alert("Tạo blog thành công!");
-      console.log(response);
+      await createBlog(formDataToSend, token);
+      toast("Tạo blog thành công!");
     } catch (error) {
       console.error("Error creating blog:", error);
-      alert("Tạo blog thất bại!");
+      toast("Tạo blog thất bại!");
     }
   };
 

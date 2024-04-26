@@ -2,12 +2,14 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
 
+import { toast } from "react-toastify";
+
 const SendEmailButton = ({ email, billId }) => {
   const { token } = useSelector((state) => state.user.currentUser);
 
   const handleSendEmail = async () => {
     if (!email || !billId) {
-      alert("Email và ID hóa đơn không được để trống!");
+      toast("Email và ID hóa đơn không được để trống!");
       return;
     }
 
@@ -21,10 +23,10 @@ const SendEmailButton = ({ email, billId }) => {
           },
         },
       );
-      alert("Gửi hóa đơn cho khách hàng thành công.");
+      toast("Gửi hóa đơn cho khách hàng thành công.");
     } catch (error) {
       console.error("Error sending email:", error);
-      alert("Gửi hóa đơn không thành công!!!");
+      toast("Gửi hóa đơn không thành công!!!");
     }
   };
 

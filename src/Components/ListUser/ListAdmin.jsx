@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { translateRole } from "../../utils/formatRole";
 import defaultImage from "../../assets/images/logoicon.png";
 import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 const ListUser = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -55,7 +56,7 @@ const ListUser = () => {
           Authorization: "Bearer " + token,
         },
       });
-
+      toast("Xóa người dùng thành công.");
       await fetchInfo();
     } catch (error) {
       console.error("Error removing user:", error);

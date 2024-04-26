@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { toast } from "react-toastify";
 
 const UpdateBlog = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const UpdateBlog = () => {
         setFormData(response.data);
       } catch (error) {
         console.error("Error fetching blog details:", error);
-        alert("Lỗi không lấy được blog");
+        toast("Lỗi không lấy được blog");
       }
     };
 
@@ -48,10 +49,11 @@ const UpdateBlog = () => {
           "Content-Type": "application/json",
         },
       });
+      toast("Cập nhật tin tức thành công.");
       navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Failed to update the blog:", error);
-      alert("Failed to update blog.");
+      toast("Lỗi cập nhật tin tức.");
     }
   };
 

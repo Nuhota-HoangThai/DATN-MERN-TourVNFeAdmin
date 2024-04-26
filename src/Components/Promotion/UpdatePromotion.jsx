@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const UpdatePromotionForm = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -64,10 +65,10 @@ const UpdatePromotionForm = () => {
           },
         },
       );
-      alert("Cập nhật khuyến mãi thành công!");
+      toast("Cập nhật khuyến mãi thành công!");
       navigate("/listPromotion"); // Navigate user back to the promotion list page after updating
     } catch (error) {
-      alert("Cập nhật khuyến mãi không thành công.");
+      toast("Cập nhật khuyến mãi không thành công.");
       console.error(error);
     }
   };

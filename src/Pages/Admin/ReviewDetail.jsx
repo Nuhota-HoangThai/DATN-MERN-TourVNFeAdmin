@@ -25,7 +25,7 @@ const ReviewDetails = () => {
             },
           },
         );
-        console.log(response.data);
+        // console.log(response.data);
         setReview(response.data.data);
         setIsLoading(false);
       } catch (err) {
@@ -43,7 +43,7 @@ const ReviewDetails = () => {
 
   return (
     <div className="mx-auto mt-10 max-w-xl rounded border p-5 shadow-lg">
-      <h1 className="mb-4 text-xl font-semibold">Chi Tiết Review</h1>
+      <h1 className="mb-4 text-xl font-semibold">Chi Tiết đánh giá</h1>
       <h2 className="text-lg font-bold">Tour: {review.tourId.nameTour}</h2>
       <p className="text-md">
         Người đánh giá: {review.userId.name} - {review.userId.email}

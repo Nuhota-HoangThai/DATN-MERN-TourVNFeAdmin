@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/config";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const AddUser = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -33,19 +34,19 @@ const AddUser = () => {
       const { password, confirmPassword } = formData;
 
       if (password.length < 8) {
-        setError("Mật khẩu phải có ít nhất 8 ký tự.");
+        toast("Mật khẩu không đúng định dạng.");
         return;
       }
 
       if (password !== confirmPassword) {
-        setError("Mật khẩu và xác nhận mật khẩu không khớp.");
+        toast("Mật khẩu và xác nhận mật khẩu không khớp.");
         return;
       }
       const response = await axios.post(`${BASE_URL}/user/addUser`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
-        setSuccessMessage("Thêm người dùng thành công.");
+        toast("Thêm người dùng thành công.");
         setTimeout(() => {
           navigate("/listAdmin");
         }, 3000);
@@ -63,22 +64,6 @@ const AddUser = () => {
       <h1 className="mb-6 text-xl font-bold text-gray-900">
         Thêm người dùng mới
       </h1>
-      {successMessage && (
-        <div
-          className="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700"
-          role="alert"
-        >
-          {successMessage}
-        </div>
-      )}
-      {error && (
-        <p
-          className="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700"
-          role="alert"
-        >
-          {error}
-        </p>
-      )}
 
       <form onSubmit={handleSubmit}>
         <div className="-mx-2 flex flex-wrap">

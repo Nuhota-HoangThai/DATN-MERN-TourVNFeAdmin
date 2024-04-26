@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
 
 const AddTourType = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -34,6 +35,7 @@ const AddTourType = () => {
       setMessage(response.data.message);
       setTypeName("");
       setDescription("");
+      toast("Thêm loại tour thành công.");
       navigate("/listType");
     } catch (error) {
       setMessage(error.response.data.message || "Lỗi tạo loại tour");

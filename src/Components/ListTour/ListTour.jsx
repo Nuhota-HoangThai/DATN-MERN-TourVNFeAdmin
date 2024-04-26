@@ -5,6 +5,8 @@ import axios from "axios";
 import { CgAddR } from "react-icons/cg";
 import { BASE_URL } from "../../utils/config";
 
+import { toast } from "react-toastify";
+
 const ListTour = () => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.user.currentUser);
@@ -51,6 +53,7 @@ const ListTour = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTours(pageInfo.currentPage);
+      toast("Xóa tour thành công!");
     } catch (error) {
       console.error("Error removing tour:", error);
     }
@@ -70,7 +73,7 @@ const ListTour = () => {
   };
 
   return (
-    <div className="max-h-[600px] w-full">
+    <div className="max-h-[600px]">
       <div className="my-1 flex items-center justify-between">
         <input
           type="text"
@@ -152,7 +155,7 @@ const ListTour = () => {
       ) : (
         <p className="mt-5 text-center">Không có tour nào!!!</p>
       )}
-      <div className="mt-5 flex items-center justify-center">
+      <div className="my-5 flex items-center justify-center">
         {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
           (pageNum) => (
             <button

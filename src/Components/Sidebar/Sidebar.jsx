@@ -79,7 +79,7 @@ const Sidebar = () => {
     },
     {
       icon: <FaBlogger color="gold" />,
-      text: "Blog",
+      text: "Tin tức",
       link: "/listBlog",
       role: ["admin"],
     },

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import { CgAddR } from "react-icons/cg";
+import { toast } from "react-toastify";
 
 function TourTypesList() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -73,6 +74,7 @@ function TourTypesList() {
         });
 
         fetchTourTypes();
+        toast("Xóa loại tour thành công.");
       } catch (err) {
         setError(err.message);
       } finally {

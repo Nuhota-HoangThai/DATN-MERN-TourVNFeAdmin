@@ -7,6 +7,7 @@ import { CgAddR } from "react-icons/cg";
 import { BASE_URL } from "../../utils/config";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 const BlogList = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -29,7 +30,7 @@ const BlogList = () => {
       });
     } catch (error) {
       console.error("Failed to load blogs.", error);
-      alert("Khong co blog.");
+      toast("Không có tin tức.");
     }
   };
 
@@ -45,10 +46,10 @@ const BlogList = () => {
     try {
       await deleteBlog(id, token);
       setBlogs(blogs.filter((blog) => blog._id !== id));
-      alert("Xóa blog thành công.");
+      toast("Xóa blog thành công.");
     } catch (error) {
       console.error("Failed to delete the blog", error);
-      alert("Xóa blog không thành công");
+      toast("Xóa blog không thành công");
     }
   };
 

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
 
 function UpdateTourType() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -57,7 +58,7 @@ function UpdateTourType() {
           },
         },
       );
-
+      toast("Cập nhật loại tour thành công.");
       navigate("/listType"); // Use navigate correctly
     } catch (err) {
       setError(err.message);
