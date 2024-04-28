@@ -56,10 +56,10 @@ function CreatePromotionForm() {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-4xl">
+    <div className="mx-auto mt-10 max-w-xl">
       <form
         onSubmit={handleSubmit}
-        className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md"
+        className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-lg"
       >
         <h2 className="mb-2 block text-lg font-bold text-gray-700">
           Tạo khuyến mãi mới
