@@ -50,7 +50,7 @@ const TotalBookings = () => {
   }, [startDate, endDate]);
 
   return (
-    <div className="mx-auto mt-12 max-w-xl rounded bg-white p-4 shadow">
+    <div className="mx-auto my-2 max-w-xl rounded bg-white p-4 shadow">
       <h2 className="mb-4 text-center text-2xl font-bold">Đặt Tour</h2>
       <div className="mb-4 grid grid-cols-2 gap-4">
         <div>

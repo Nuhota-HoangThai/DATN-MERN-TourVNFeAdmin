@@ -97,7 +97,7 @@ const Sidebar = () => {
     },
     {
       icon: <SiFoursquarecityguide color="black" />,
-      text: "Tour cá nhân HDV",
+      text: "Tour HDV",
       link: "/tour-guide",
       role: ["guide"],
     },

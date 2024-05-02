@@ -55,6 +55,7 @@ import AllTourGuide from "./AllTourGuide";
 
 import ReviewDetails from "./ReviewDetail";
 import UserDetail from "../../Components/ListUser/UserDetail";
+import UserBookingTourId from "../Guide/UserBookingTourId";
 const Admin = () => {
   const location = useLocation();
 
@@ -173,6 +174,11 @@ const Admin = () => {
           <Route path="/all-tour-guide" element={<AllTourGuide />} />
 
           <Route path="/review-details/:reviewId" element={<ReviewDetails />} />
+
+          <Route
+            path="/tour-bookings/:tourId"
+            element={<UserBookingTourId />}
+          />
         </Routes>
       </div>
     </div>

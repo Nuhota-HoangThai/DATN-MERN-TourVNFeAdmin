@@ -9,7 +9,7 @@ import {
 } from "../../redux/user/userSlice";
 
 import axios from "axios";
-
+import { toast } from "react-toastify";
 //import LoginGoogle from "../../Components/LoginGG/LoginGoogle"
 
 const Login = () => {
@@ -38,7 +38,7 @@ const Login = () => {
 
       if (!data.success) {
         dispatch(signInFailure(data.error));
-        alert(data.error); // Optionally replace with a more integrated notification system
+        toast(data.error); // Optionally replace with a more integrated notification system
         return;
       }
 
@@ -49,7 +49,7 @@ const Login = () => {
       dispatch(
         signInFailure(error.message || "Unable to connect to the server."),
       );
-      alert("Đã xảy ra lỗi khi cố gắng đăng nhập.");
+      toast("Đã xảy ra lỗi khi cố gắng đăng nhập.");
     }
   };
   return (
