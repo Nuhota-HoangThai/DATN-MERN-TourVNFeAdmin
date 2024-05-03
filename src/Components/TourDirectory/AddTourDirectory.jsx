@@ -50,11 +50,11 @@ const AddTourDirectory = () => {
         },
       );
       setMessage(response.data.message);
-      toast("Thêm danh mục tour thành công.");
+      toast("Thêm danh mục tour thành công");
       // console.log(response.data);
       // navigate("/listTourDirectory"); // Chỉnh sửa lại đường dẫn sau khi thêm thành công
     } catch (error) {
-      setMessage(error.response?.data?.message || "Lỗi tạo danh mục tour");
+      toast("Thêm danh mục tour không thành công");
     }
   };
 
@@ -63,7 +63,6 @@ const AddTourDirectory = () => {
       <h2 className="text-center text-2xl font-semibold text-gray-800">
         Thêm danh mục tour mới
       </h2>
-      {message && <p className="mt-4 text-center text-green-500">{message}</p>}
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         {/* Image input */}
         <div>

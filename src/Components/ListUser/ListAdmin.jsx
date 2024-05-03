@@ -56,7 +56,7 @@ const ListUser = () => {
           Authorization: "Bearer " + token,
         },
       });
-      toast("Xóa người dùng thành công.");
+      toast("Xóa người dùng thành công");
       await fetchInfo();
     } catch (error) {
       console.error("Error removing user:", error);

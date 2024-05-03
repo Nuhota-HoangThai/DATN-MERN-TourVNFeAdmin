@@ -47,10 +47,10 @@ function CreatePromotionForm() {
           },
         },
       );
-      toast("Tạo khuyến mãi thành công!");
+      toast("Tạo khuyến mãi thành công");
       //console.log(response.data);
     } catch (error) {
-      toast("Tạo khuyến mãi không thành công.");
+      toast("Tạo khuyến mãi không thành công");
       console.error(error);
     }
   };
@@ -110,7 +110,7 @@ function CreatePromotionForm() {
           </div>
           <div className="mb-4">
             <label className="mb-2 block text-sm font-bold text-gray-700">
-              Giá khuyến mãi:
+              Giá khuyến mãi (Giảm %):
               <input
                 type="number"
                 name="discountPercentage"

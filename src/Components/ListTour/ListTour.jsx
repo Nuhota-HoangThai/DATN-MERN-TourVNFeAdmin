@@ -53,7 +53,7 @@ const ListTour = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTours(pageInfo.currentPage);
-      toast("Xóa tour thành công!");
+      toast("Xóa tour thành công");
     } catch (error) {
       console.error("Error removing tour:", error);
     }

@@ -57,10 +57,11 @@ function UpdateTourDirectory() {
           },
         },
       );
-      toast("Cập nhật danh mục tour thành công.");
+      toast("Cập nhật danh mục tour thành công");
       navigate("/listTourDirectory");
     } catch (err) {
       setError(err.message);
+      toast("Cập nhật danh mục tour không thành công");
     } finally {
       setIsLoading(false);
     }

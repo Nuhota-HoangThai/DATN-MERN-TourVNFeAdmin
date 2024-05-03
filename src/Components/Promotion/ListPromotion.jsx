@@ -58,7 +58,7 @@ const ListPromotion = () => {
           Authorization: "Bearer " + token,
         },
       });
-      toast("Xóa khuyến mãi thành công.");
+      toast("Xóa khuyến mãi thành công");
       await fetchPromotions();
     } catch (error) {
       console.error("Error removing promotion:", error);

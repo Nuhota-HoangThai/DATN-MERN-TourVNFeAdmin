@@ -18,6 +18,7 @@ const AllTourGuide = () => {
         });
         setTours(response.data.tours);
         const grouped = groupToursByGuide(response.data.tours);
+        //console.log(grouped);
         setGroupedTours(grouped);
       } catch (error) {
         console.error("Error fetching tours:", error);

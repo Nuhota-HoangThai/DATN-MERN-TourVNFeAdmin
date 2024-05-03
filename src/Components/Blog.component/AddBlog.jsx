@@ -45,16 +45,16 @@ const AddBlog = () => {
 
     try {
       await createBlog(formDataToSend, token);
-      toast("Tạo blog thành công!");
+      toast("Tạo tin tức thành công");
     } catch (error) {
       console.error("Error creating blog:", error);
-      toast("Tạo blog thất bại!");
+      toast("Tạo tin tức thất bại");
     }
   };
 
   return (
     <div className="mx-auto  my-4 h-[600px]">
-      <h2 className="font-semibold text-gray-800">Tạo blog mới</h2>
+      <h2 className="font-semibold text-gray-800">Tạo tin tức mới</h2>
       <PerfectScrollbar>
         <form
           onSubmit={handleSubmit}

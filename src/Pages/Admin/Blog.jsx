@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 
 import { CgAddR } from "react-icons/cg";
 import { BASE_URL } from "../../utils/config";
-import { IoEyeSharp } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
+
 import { toast } from "react-toastify";
 
 const BlogList = () => {
@@ -46,17 +45,17 @@ const BlogList = () => {
     try {
       await deleteBlog(id, token);
       setBlogs(blogs.filter((blog) => blog._id !== id));
-      toast("Xóa blog thành công.");
+      toast("Xóa tin tức thành công");
     } catch (error) {
       console.error("Failed to delete the blog", error);
-      toast("Xóa blog không thành công");
+      toast("Xóa tin tức không thành công");
     }
   };
 
   return (
     <div className="container mx-auto">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold">Danh sách blog</h2>
+        <h2 className="font-bold">Danh sách tin tức</h2>
         <Link to="/addBlog">
           <CgAddR color="red" size={"30px"} />
         </Link>

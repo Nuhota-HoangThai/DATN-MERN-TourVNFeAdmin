@@ -65,10 +65,10 @@ const UpdatePromotionForm = () => {
           },
         },
       );
-      toast("Cập nhật khuyến mãi thành công!");
+      toast("Cập nhật khuyến mãi thành công");
       navigate("/listPromotion"); // Navigate user back to the promotion list page after updating
     } catch (error) {
-      toast("Cập nhật khuyến mãi không thành công.");
+      toast("Cập nhật khuyến mãi không thành công");
       console.error(error);
     }
   };

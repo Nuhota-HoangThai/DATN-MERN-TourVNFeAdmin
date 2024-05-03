@@ -71,7 +71,7 @@ function ListTourDirectories() {
         });
 
         fetchTourDirectories();
-        toast("Xóa danh mục tour thành công.");
+        toast("Xóa danh mục tour thành công");
       } catch (err) {
         setError(err.message);
       } finally {

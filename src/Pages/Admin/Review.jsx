@@ -53,7 +53,7 @@ const ToursWithReviews = () => {
               : tour,
           ),
         );
-        toast("Đánh giá đã được xóa thành công.");
+        toast("Đánh giá đã được xóa thành công");
       }
     } catch (error) {
       toast(`Có lỗi xảy ra khi xóa đánh giá: ${error.message}`);

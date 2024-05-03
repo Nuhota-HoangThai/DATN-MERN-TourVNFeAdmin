@@ -66,7 +66,7 @@ const ListOrder = () => {
           Authorization: "Bearer " + token,
         },
       });
-      toast("Xóa đặt tour thành công.");
+      toast("Xóa đặt tour thành công");
       await fetchBookings();
     } catch (error) {
       console.error(error);

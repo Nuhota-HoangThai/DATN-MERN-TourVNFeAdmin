@@ -20,6 +20,7 @@ import "react-perfect-scrollbar/dist/css/styles.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { toast } from "react-toastify";
 
 const UpdateTour = () => {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -170,10 +171,10 @@ const UpdateTour = () => {
       );
       setTourData(data.tour);
 
-      alert("Cập nhật tour thành công!");
+      toast("Cập nhật tour thành công");
       navigate("/listTour");
     } catch (error) {
-      alert("Cập nhật tour không thành công!");
+      toast("Cập nhật tour không thành công");
       setError(error.message);
     }
   };

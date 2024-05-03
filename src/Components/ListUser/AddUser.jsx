@@ -46,12 +46,13 @@ const AddUser = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
-        toast("Thêm người dùng thành công.");
+        toast("Thêm người dùng thành công");
         setTimeout(() => {
           navigate("/listAdmin");
         }, 3000);
       }
     } catch (error) {
+      toast("Thêm người dùng không thành công");
       console.error(
         "Error during registration:",
         error.response ? error.response.data : "No response from server",

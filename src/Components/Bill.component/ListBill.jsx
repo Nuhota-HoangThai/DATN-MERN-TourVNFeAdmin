@@ -6,6 +6,7 @@ import SendEmailButton from "../Bill.component/SendMail";
 import { useSelector } from "react-redux";
 
 import { formatDateVN } from "../../utils/formatDate";
+import { toast } from "react-toastify";
 
 const BillsList = () => {
   const { token, role } = useSelector((state) => state.user.currentUser);
@@ -50,6 +51,7 @@ const BillsList = () => {
           Authorization: "Bearer " + token,
         },
       });
+      toast("Xóa hóa đơn thành công");
       fetchBills(); // Cập nhật lại danh sách sau khi xóa
     } catch (error) {
       setError("Lỗi khi xóa bill.");
