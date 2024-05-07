@@ -134,7 +134,7 @@ const BillsList = () => {
                   </div>
                 </td>
                 <td className="border border-gray-200 px-6 py-4 text-center">
-                  <SendEmailButton email={bill.user.email} billId={bill._id} />
+                  <SendEmailButton email={bill.user?.email} billId={bill._id} />
                 </td>
               </tr>
             ))}

@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/config";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-import TourDirectoriesList from "./TourDirectoryList";
 import axios from "axios";
-
 import { CgAddR } from "react-icons/cg";
 import { toast } from "react-toastify";
+import TourDirectoriesList from "./TourDirectoryList";
 
 function ListTourDirectories() {
   const { token } = useSelector((state) => state.user.currentUser);
@@ -18,7 +16,7 @@ function ListTourDirectories() {
   });
 
   const [tourDirectories, setTourDirectories] = useState([]);
-  const [selectedTourDirectoryId, setSelectedTourDirectoryId] = useState("");
+  const [selectedTourDirectoryId, setSelectedTourDirectoryId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -52,14 +50,6 @@ function ListTourDirectories() {
     fetchTourDirectories();
   }, []);
 
-  const handlePageChange = (newPage) => {
-    fetchTourDirectories(newPage);
-  };
-
-  const selectTourDirectory = (id) => {
-    setSelectedTourDirectoryId(id);
-  };
-
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc muốn xóa danh mục tour này?")) {
       setIsLoading(true);
@@ -78,6 +68,10 @@ function ListTourDirectories() {
         setIsLoading(false);
       }
     }
+  };
+
+  const handlePageChange = (page) => {
+    fetchTourDirectories(page);
   };
 
   const handleUpdate = (id) => {
@@ -139,7 +133,13 @@ function ListTourDirectories() {
                       <p className="text-gray-500">Không có hình ảnh</p>
                     )}
                   </td>
-                  <td className="whitespace-nowrap border border-gray-300 px-6 py-2 text-sm font-medium text-gray-900">
+                  <td
+                    className="whitespace-nowrap border border-gray-300 px-6 py-2 text-sm font-medium text-gray-900"
+                    onClick={() =>
+                      setSelectedTourDirectoryId(tourDirectory._id)
+                    } // Lưu ID danh mục được chọn
+                    style={{ cursor: "pointer" }}
+                  >
                     {tourDirectory.directoryName}
                   </td>
                   <td className="border border-gray-300 px-6 py-2 text-sm font-medium text-gray-900">
@@ -169,15 +169,13 @@ function ListTourDirectories() {
               ))}
             </tbody>
           </table>
-
+          {/* Hiển thị danh sách tour thuộc danh mục được chọn */}
           {selectedTourDirectoryId && (
             <TourDirectoriesList tourDirectoryId={selectedTourDirectoryId} />
           )}
         </div>
       ) : (
-        <p className="mt-5 text-center text-gray-500">
-          Không có danh mục tour nào!
-        </p>
+        <div className="mt-5 text-center text-gray-500">Không có dữ liệu</div>
       )}
       <div className="my-5 flex items-center justify-center">
         {Array.from({ length: pageInfo.totalPages }, (_, i) => i + 1).map(
@@ -185,7 +183,7 @@ function ListTourDirectories() {
             <button
               key={pageNum}
               onClick={() => handlePageChange(pageNum)}
-              className={`mx-1 h-6 w-6 rounded ${pageInfo.currentPage === pageNum ? "bg-blue-700" : "bg-blue-500"} text-white`}
+              className={`mx-1 h-6 w-6 rounded bg-blue-500 text-white ${pageInfo.currentPage === pageNum ? "bg-blue-700" : ""}`}
             >
               {pageNum}
             </button>

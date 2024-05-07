@@ -106,7 +106,7 @@ const AddTour = () => {
 
   return (
     <>
-      <PerfectScrollbar>
+      <PerfectScrollbar className="hide-scrollbar">
         <form
           className="max-h-[600px]"
           onSubmit={(e) => {
@@ -132,7 +132,7 @@ const AddTour = () => {
                       htmlFor="nameTour"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Chuyến du lịch
+                      Chuyến du lịch <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -147,7 +147,7 @@ const AddTour = () => {
                       htmlFor="regions"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Khu vực du lịch
+                      Khu vực du lịch <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="regions"
@@ -181,7 +181,7 @@ const AddTour = () => {
                       htmlFor="maxParticipants"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Số lượng khách
+                      Số lượng khách <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="Number"
@@ -198,7 +198,7 @@ const AddTour = () => {
                       htmlFor="price"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Giá/khách
+                      Giá/khách <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="Number"
@@ -213,7 +213,7 @@ const AddTour = () => {
                       htmlFor="priceForChildren"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Giá khách (6-16) tuổi
+                      Giá khách (6-16 tuổi)
                     </label>
                     {isAllAgesRestricted ? (
                       <p className="text-red-500">
@@ -292,7 +292,7 @@ const AddTour = () => {
                       htmlFor="startDate"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Ngày khởi hành
+                      Ngày khởi hành <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="Date"
@@ -325,7 +325,7 @@ const AddTour = () => {
                       htmlFor="endDate"
                       className="mb-2 block text-sm font-bold text-gray-700"
                     >
-                      Ngày kết thúc
+                      Ngày kết thúc <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="Date"
@@ -381,7 +381,10 @@ const AddTour = () => {
                         </Slider>
                       ) : (
                         <div className="h-full w-full border border-black">
-                          <h1 className="p-20">Thêm hình ảnh</h1>
+                          <h1 className="p-20">
+                            Thêm hình ảnh{" "}
+                            <span className="text-red-500">*</span>
+                          </h1>
                         </div>
                       )}
                     </label>

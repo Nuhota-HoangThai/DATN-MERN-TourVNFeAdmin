@@ -36,7 +36,7 @@ const TourDirectory = () => {
           htmlFor="tourDirectory"
           className="mb-2 block text-sm font-bold text-gray-700"
         >
-          Danh Mục Tour
+          Danh Mục Tour <span className="text-red-500">*</span>
         </label>
         <select
           name="tourDirectory"

@@ -36,7 +36,7 @@ const TourType = ({ selectedTourType, setSelectedTourType }) => {
           htmlFor="tourType"
           className="mb-2 block text-sm font-bold text-gray-700"
         >
-          Loại Tour
+          Loại Tour <span className="text-red-500">*</span>
         </label>
         <select
           name="tourType"

@@ -15,7 +15,7 @@ const UserProfile = () => {
     phone: "",
     address: "",
     cccd: "",
-    role: "",
+    //role: "",
   });
   const { currentUser } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
@@ -63,12 +63,12 @@ const UserProfile = () => {
               Thông tin chi tiết và hồ sơ.
             </p>
           </div>
-          {/* <button
+          <button
             onClick={() => navigate(`/update_user/${userProfile._id}`)}
             className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none"
           >
             Chỉnh sửa hồ sơ
-          </button> */}
+          </button>
         </div>
         <div className="border-t border-gray-200">
           <dl>
@@ -135,12 +135,12 @@ const UserProfile = () => {
                 {userProfile.address}
               </dd>
             </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            {/* <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Vai trò</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                 {translateRole(userProfile.role)}
               </dd>
-            </div>
+            </div> */}
           </dl>
         </div>
       </div>

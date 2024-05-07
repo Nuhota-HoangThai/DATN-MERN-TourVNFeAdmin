@@ -121,12 +121,12 @@ const UserDetail = () => {
                 {translateRole(user.role)}
               </dd>
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            {/* <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Lương tháng</dt>
               <dd className="mt-1 text-sm text-red-600 sm:col-span-2">
                 {user.wage?.toLocaleString()} đ
               </dd>
-            </div>
+            </div> */}
           </dl>
         </div>
       </div>

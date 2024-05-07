@@ -29,3 +29,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+/* ẩn thanh scroll */
+.hide-scrollbar .ps__rail-y {
+  display: none !important;
+}

@@ -139,6 +139,7 @@ const UpdateTour = () => {
     if (tourData && tourData.schedule) {
       setEditorLoaded(true);
     }
+    //console.log(tourData);
   }, [tourData]);
 
   const handleSubmit = async (event) => {
@@ -202,8 +203,8 @@ const UpdateTour = () => {
   };
 
   return (
-    <PerfectScrollbar>
-      <div className="mx-auto my-1 max-h-[600px] shadow-lg">
+    <PerfectScrollbar className="hide-scrollbar">
+      <div className="mx-auto my-1 max-h-[600px] ">
         <div className=" md:p-1">
           <h1 className="mb-1 font-semibold">Cập nhật Tour</h1>
           <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-4">
@@ -294,7 +295,7 @@ const UpdateTour = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Danh mục tour
+                    Danh mục tour <span className="text-red-500">*</span>
                   </label>
                   <select
                     className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -319,7 +320,7 @@ const UpdateTour = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Loại tour
+                    Loại tour <span className="text-red-500">*</span>
                   </label>
                   <select
                     className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -381,7 +382,7 @@ const UpdateTour = () => {
               <div className="grid grid-cols-2  gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Tên tour
+                    Tên tour <span className="text-red-500">*</span>
                   </label>
                   <input
                     placeholder="Nhập tên tour"
@@ -395,7 +396,7 @@ const UpdateTour = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Khu vực du lịch
+                    Khu vực du lịch <span className="text-red-500">*</span>
                   </label>
                   <select
                     className="mt-1 block w-full rounded-md border border-gray-800 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -428,7 +429,7 @@ const UpdateTour = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Số chỗ trống
+                    Số lượng khách <span className="text-red-500">*</span>
                   </label>
                   <input
                     placeholder="Số chỗ trống"
@@ -447,7 +448,7 @@ const UpdateTour = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Giá
+                    Giá <span className="text-red-500">*</span>
                   </label>
                   <input
                     placeholder="Nhập giá tour"
@@ -550,7 +551,7 @@ const UpdateTour = () => {
               <div className="grid grid-cols-2  gap-4">
                 <div>
                   <label className="block text-sm  font-medium text-gray-700">
-                    Ngày khởi hành
+                    Ngày khởi hành <span className="text-red-500">*</span>
                   </label>
                   <input
                     placeholder="Nhập ngày khởi hành"
@@ -564,7 +565,7 @@ const UpdateTour = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Ngày kết thúc
+                    Ngày kết thúc <span className="text-red-500">*</span>
                   </label>
                   <input
                     placeholder="Nhập ngày kết thúc"

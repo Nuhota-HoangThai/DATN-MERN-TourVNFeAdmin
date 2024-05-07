@@ -134,15 +134,15 @@ const ListTour = () => {
                     </span>
                   )}
                 </td>
-                <td className="border border-gray-300 px-6 py-4 text-center">
+                <td className="flex border border-gray-300 px-6 py-4 text-center">
                   <button
-                    className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-green-700"
+                    className="w-20 rounded bg-blue-600 px-3 py-2 text-white hover:bg-green-700"
                     onClick={() => navigateToUpdateTour(tour._id)}
                   >
                     Cập nhật
                   </button>
                   <button
-                    className="ml-2 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
+                    className="ml-2 rounded bg-red-500 px-3 py-2 text-white hover:bg-red-700"
                     onClick={() => removeTour(tour._id)}
                   >
                     Xóa
