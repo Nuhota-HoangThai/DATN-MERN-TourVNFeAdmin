@@ -171,7 +171,7 @@ const UpdateTour = () => {
         },
       );
       setTourData(data.tour);
-
+      //console.log(data);
       toast("Cập nhật tour thành công");
       navigate("/listTour");
     } catch (error) {
